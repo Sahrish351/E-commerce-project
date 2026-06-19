@@ -6,14 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->unique()->constrained('orders')->cascadeOnDelete();
+            $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
             $table->enum('payment_method', ['card', 'upi', 'wallet', 'bank_transfer'])->default('card');
             $table->decimal('amount', 19, 2);
             $table->string('currency')->default('INR');
@@ -27,14 +24,11 @@ return new class extends Migration
             $table->timestamps();
 
             // Indexes
-            $table->unique('transaction_id');
             $table->index('status');
+            $table->index('order_id');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('payments');

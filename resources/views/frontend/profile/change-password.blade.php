@@ -11,7 +11,7 @@
                     <div class="text-center mb-4">
                         <i class="fas fa-key fa-3x text-danger"></i>
                         <h4 class="fw-bold mt-3">Change Password</h4>
-                        <p class="text-muted small">Enter your new password below.</p>
+                        <p class="text-muted small">Enter your current and new password below.</p>
                     </div>
 
                     @if(session('success'))
@@ -41,7 +41,17 @@
                         @csrf
                         @method('PUT')
 
-                        <!-- NEW PASSWORD -->
+                        <div class="mb-3">
+                            <label class="fw-semibold small mb-2">Current Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-0">
+                                    <i class="fas fa-lock text-muted"></i>
+                                </span>
+                                <input type="password" name="current_password" class="form-control" placeholder="Enter current password" required>
+                            </div>
+                        </div>
+
+                    
                         <div class="mb-3">
                             <label class="fw-semibold small mb-2">New Password</label>
                             <div class="input-group">
@@ -53,7 +63,6 @@
                             <small class="text-muted">Password must be at least 8 characters.</small>
                         </div>
 
-                        <!-- CONFIRM PASSWORD -->
                         <div class="mb-4">
                             <label class="fw-semibold small mb-2">Confirm New Password</label>
                             <div class="input-group">

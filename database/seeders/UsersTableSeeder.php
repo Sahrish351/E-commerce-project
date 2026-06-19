@@ -20,13 +20,13 @@ class UsersTableSeeder extends Seeder
             'role' => 'admin',
         ]);
 
-        // Test User
+        
         $user = User::create([
             'name' => 'Test User',
             'email' => 'user@test.com',
             'password' => Hash::make('password'),
             'phone' => '9876543210',
-            'role' => 'user',
+            'role' => 'customer',   
         ]);
 
         Customer::create([

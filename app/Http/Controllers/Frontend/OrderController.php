@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+    // ===== MY ORDERS (ALL) =====
     public function index()
     {
         $orders = Order::where('user_id', Auth::id())
@@ -18,65 +20,61 @@ class OrderController extends Controller
         
         return view('frontend.orders.index', compact('orders'));
     }
-    
+
+    // ===== ORDER DETAIL =====
     public function show(Order $order)
     {
-        // Ensure user owns this order
         if ($order->user_id !== Auth::id()) {
             abort(403);
         }
         
         $order->load('items.product.images');
         
-        // Status steps for tracking
-        $statusSteps = [
-            'pending' => ['status' => 'pending', 'label' => 'Order Placed', 'icon' => 'fa-clock', 'completed' => true],
-            'processing' => ['status' => 'processing', 'label' => 'Processing', 'icon' => 'fa-gear', 'completed' => in_array($order->order_status, ['processing', 'shipped', 'delivered'])],
-            'shipped' => ['status' => 'shipped', 'label' => 'Shipped', 'icon' => 'fa-truck', 'completed' => in_array($order->order_status, ['shipped', 'delivered'])],
-            'delivered' => ['status' => 'delivered', 'label' => 'Delivered', 'icon' => 'fa-check-circle', 'completed' => $order->order_status === 'delivered'],
-        ];
-        
-        return view('frontend.orders.show', compact('order', 'statusSteps'));
+        return view('frontend.orders.show', compact('order'));
     }
-    
-    public function track(Request $request)
+
+    // ===== MY RETURNS =====
+    public function returns()
     {
-        $request->validate([
-            'order_number' => 'required|string'
-        ]);
+        $returns = Order::where('user_id', Auth::id())
+            ->where('status', 'refunded')  // ✅ order_status → status, cancelled → refunded
+            ->latest()
+            ->paginate(10);
         
-        $order = Order::where('order_number', $request->order_number)->firstOrFail();
-        
-        $statusSteps = [
-            'pending' => ['icon' => 'fa-clock', 'label' => 'Order Placed', 'completed' => true],
-            'processing' => ['icon' => 'fa-gear', 'label' => 'Processing', 'completed' => in_array($order->order_status, ['processing', 'shipped', 'delivered'])],
-            'shipped' => ['icon' => 'fa-truck', 'label' => 'Shipped', 'completed' => in_array($order->order_status, ['shipped', 'delivered'])],
-            'delivered' => ['icon' => 'fa-check-circle', 'label' => 'Delivered', 'completed' => $order->order_status === 'delivered'],
-        ];
-        
-        return view('frontend.orders.track', compact('order', 'statusSteps'));
+        return view('frontend.orders.returns', compact('returns'));
     }
-    
+
+    // ===== MY CANCELLATIONS =====
+    public function cancellations()
+    {
+        $cancellations = Order::where('user_id', Auth::id())
+            ->where('status', 'cancelled')  // ✅ order_status → status
+            ->latest()
+            ->paginate(10);
+        
+        return view('frontend.orders.cancellations', compact('cancellations'));
+    }
+
+    // ===== CANCEL ORDER =====
     public function cancel(Order $order)
     {
         if ($order->user_id !== Auth::id()) {
             abort(403);
         }
         
-        if (!in_array($order->order_status, ['pending', 'processing'])) {
+        if (!in_array($order->status, ['pending', 'processing'])) {  // ✅ order_status → status
             return back()->with('error', 'This order cannot be cancelled.');
         }
         
         DB::beginTransaction();
         
         try {
-            // Restore stock
             foreach ($order->items as $item) {
                 $item->product->increment('stock_quantity', $item->quantity);
                 $item->product->decrement('sold_count', $item->quantity);
             }
             
-            $order->update(['order_status' => 'cancelled']);
+            $order->update(['status' => 'cancelled']);  // ✅ order_status → status
             
             DB::commit();
             
@@ -86,7 +84,24 @@ class OrderController extends Controller
             return back()->with('error', 'Failed to cancel order.');
         }
     }
-    
+
+    // ===== RETURN REQUEST =====
+    public function returnRequest(Order $order)
+    {
+        if ($order->user_id !== Auth::id()) {
+            abort(403);
+        }
+        
+        if ($order->status !== 'delivered') {  // ✅ order_status → status
+            return back()->with('error', 'Only delivered orders can be returned.');
+        }
+        
+        $order->update(['status' => 'refunded']);  // ✅ order_status → status, return_requested → refunded
+        
+        return back()->with('success', 'Return request submitted successfully!');
+    }
+
+    // ===== REORDER =====
     public function reorder(Order $order)
     {
         if ($order->user_id !== Auth::id()) {

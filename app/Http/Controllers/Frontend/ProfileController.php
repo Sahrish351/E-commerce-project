@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
+    // ===== DASHBOARD =====
     public function dashboard()
     {
         $user = Auth::user();
@@ -26,10 +27,23 @@ class ProfileController extends Controller
         
         $totalOrders = Order::where('user_id', Auth::id())->count();
         
-        // FIXED: Temporarily use 0 until orders table has grand_total column
-        $totalSpent = 0;
+        // ✅ FIXED: total_spent sahi se calculate karo
+        $totalSpent = Order::where('user_id', Auth::id())->sum('total_amount');
         
         $wishlistCount = Wishlist::where('user_id', Auth::id())->count();
+        
+        // ✅ ADDED: Returns aur Cancellations dashboard ke liye
+        $returns = Order::where('user_id', Auth::id())
+            ->where('status', 'refunded')
+            ->latest()
+            ->limit(5)
+            ->get();
+        
+        $cancellations = Order::where('user_id', Auth::id())
+            ->where('status', 'cancelled')
+            ->latest()
+            ->limit(5)
+            ->get();
         
         return view('frontend.profile.dashboard', compact(
             'user', 
@@ -37,10 +51,13 @@ class ProfileController extends Controller
             'recentOrders', 
             'totalOrders', 
             'totalSpent', 
-            'wishlistCount'
+            'wishlistCount',
+            'returns',
+            'cancellations'
         ));
     }
     
+    // ===== UPDATE PROFILE =====
     public function updateProfile(Request $request)
     {
         $request->validate([
@@ -57,10 +74,11 @@ class ProfileController extends Controller
         return back()->with('success', 'Profile updated successfully!');
     }
     
-    // ============ UPDATED - NO CURRENT PASSWORD ============
+    // ===== UPDATE PASSWORD ===== ✅ FIXED
     public function updatePassword(Request $request)
     {
         $request->validate([
+            'current_password' => ['required', 'current_password'],  // ✅ ADDED
             'password' => 'required|string|min:8|confirmed',
         ]);
         
@@ -70,6 +88,7 @@ class ProfileController extends Controller
         return back()->with('success', 'Password updated successfully!');
     }
     
+    // ===== UPDATE CUSTOMER PROFILE =====
     public function updateCustomerProfile(Request $request)
     {
         $request->validate([
@@ -91,40 +110,27 @@ class ProfileController extends Controller
         return back()->with('success', 'Customer profile updated!');
     }
     
-    public function orders()
+    // ===== SHOW EDIT PROFILE FORM =====
+    public function edit()
     {
-        $orders = Order::where('user_id', Auth::id())
-            ->latest()
-            ->paginate(10);
-        
-        return view('frontend.profile.orders', compact('orders'));
+        $user = Auth::user();
+        return view('frontend.profile.edit', compact('user'));
     }
     
-    // ============ OLD ADDRESSES METHOD (Replace with new) ============
+    // ===== SHOW CHANGE PASSWORD FORM =====
+    public function editPassword()
+    {
+        return view('frontend.profile.change-password');
+    }
+    
+    // ===== ADDRESS BOOK =====
     public function addresses()
     {
         $addresses = Address::where('user_id', Auth::id())->get();
         return view('frontend.profile.addresses', compact('addresses'));
     }
     
-    public function updateAddress(Request $request)
-    {
-        $request->validate([
-            'address' => 'required|string|max:500',
-            'city' => 'required|string|max:100',
-            'state' => 'required|string|max:100',
-            'postal_code' => 'required|string|max:20',
-            'country' => 'required|string|max:100',
-        ]);
-        
-        Auth::user()->update($request->only(['address', 'city', 'state', 'postal_code', 'country']));
-        
-        return back()->with('success', 'Address updated successfully!');
-    }
-    
-    // ============ NEW ADDRESS METHODS ============
-    
-    // Store new address
+    // ===== STORE ADDRESS =====
     public function storeAddress(Request $request)
     {
         $request->validate([
@@ -150,7 +156,7 @@ class ProfileController extends Controller
         return back()->with('success', 'Address added successfully!');
     }
 
-    // Delete address
+    // ===== DELETE ADDRESS =====
     public function deleteAddress($id)
     {
         $address = Address::where('user_id', Auth::id())->findOrFail($id);
@@ -159,18 +165,47 @@ class ProfileController extends Controller
         return back()->with('success', 'Address deleted successfully!');
     }
     
-    // ============ PROFILE EDIT METHODS ============
-    
-    // Show Edit Profile Form
-    public function edit()
+    // ===== UPDATE ADDRESS =====
+    public function updateAddress(Request $request)
     {
-        $user = Auth::user();
-        return view('frontend.profile.edit', compact('user'));
+        $request->validate([
+            'address' => 'required|string|max:500',
+            'city' => 'required|string|max:100',
+            'state' => 'required|string|max:100',
+            'postal_code' => 'required|string|max:20',
+            'country' => 'required|string|max:100',
+        ]);
+        
+        Auth::user()->update($request->only(['address', 'city', 'state', 'postal_code', 'country']));
+        
+        return back()->with('success', 'Address updated successfully!');
     }
     
-    // Show Change Password Form
-    public function editPassword()
+    // ===== PAYMENT OPTIONS =====
+    public function payment()
     {
-        return view('frontend.profile.change-password');
+        return view('frontend.profile.payment');
+    }
+    
+    // ===== RETURNS PAGE ===== ✅ FIXED
+    public function returns()
+    {
+        $returns = Order::where('user_id', Auth::id())
+            ->where('status', 'refunded')
+            ->latest()
+            ->paginate(10);
+        
+        return view('frontend.orders.returns', compact('returns'));
+    }
+    
+    // ===== CANCELLATIONS PAGE ===== ✅ FIXED
+    public function cancellations()
+    {
+        $cancellations = Order::where('user_id', Auth::id())
+            ->where('status', 'cancelled')
+            ->latest()
+            ->paginate(10);
+        
+        return view('frontend.orders.cancellations', compact('cancellations'));
     }
 }

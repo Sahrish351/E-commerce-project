@@ -11,46 +11,45 @@ class ShopController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::with('category', 'images')
-            ->where('is_active', true);
-        
-        // Search
-        if ($request->filled('search')) {
-            $query->where(function($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('description', 'like', '%' . $request->search . '%');
-            });
+        // Get all active categories for sidebar
+        $categories = Category::active()
+            ->withCount('products')
+            ->orderBy('sort_order', 'asc')
+            ->get();
+
+        // Get selected category (if any)
+        $selectedCategory = null;
+        if ($request->has('category') && $request->category) {
+            $selectedCategory = Category::where('id', $request->category)
+                ->orWhere('slug', $request->category)
+                ->first();
         }
+
+        // Get products with filters
+        $query = Product::where('is_active', true);
         
-        // Category Filter
-        if ($request->filled('category')) {
+        // Category filter
+        if ($selectedCategory) {
+            $query->where('category_id', $selectedCategory->id);
+        } elseif ($request->has('category') && $request->category) {
             $query->where('category_id', $request->category);
         }
         
-        // Price Range Filter
-        if ($request->filled('min_price')) {
+        // Search filter
+        if ($request->has('search') && $request->search) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        
+        // Price filter
+        if ($request->has('min_price') && $request->min_price) {
             $query->where('price', '>=', $request->min_price);
         }
-        if ($request->filled('max_price')) {
+        if ($request->has('max_price') && $request->max_price) {
             $query->where('price', '<=', $request->max_price);
         }
         
-        // Brand Filter
-        if ($request->filled('brand')) {
-            $query->where('brand', $request->brand);
-        }
-        
-        // Rating Filter
-        if ($request->filled('rating')) {
-            $query->whereHas('reviews', function($q) use ($request) {
-                $q->select('product_id')
-                  ->groupBy('product_id')
-                  ->havingRaw('AVG(rating) >= ?', [$request->rating]);
-            });
-        }
-        
-        // Sorting
-        $sort = $request->get('sort', 'latest');
+        // Sort
+        $sort = $request->sort ?? 'latest';
         switch ($sort) {
             case 'price_low':
                 $query->orderBy('price', 'asc');
@@ -61,82 +60,27 @@ class ShopController extends Controller
             case 'popular':
                 $query->orderBy('sold_count', 'desc');
                 break;
-            case 'rating':
-                $query->withAvg('reviews', 'rating')->orderBy('reviews_avg_rating', 'desc');
-                break;
-            case 'latest':
             default:
                 $query->latest();
                 break;
         }
         
-        $products = $query->paginate(12)->withQueryString();
+        $products = $query->paginate(12);
+
+        // Brands for sidebar
+        $brands = ['Samsung', 'Apple', 'Huawei', 'Xiaomi', 'OnePlus', 'Google', 'Sony', 'Nokia', 'Lenovo', 'Pocco'];
         
-        // Get all categories for filter sidebar
-        $categories = Category::where('is_active', true)->get();
-        
-        // Get unique brands for filter
-        $brands = Product::where('is_active', true)
-            ->whereNotNull('brand')
-            ->distinct()
-            ->pluck('brand');
-        
-        // Price range for filter
-        $maxPrice = Product::where('is_active', true)->max('price') ?? 10000;
-        
-        return view('frontend.shop.index', compact(
-            'products', 
-            'categories', 
-            'brands', 
-            'maxPrice'
-        ));
+        return view('frontend.shop.index', compact('products', 'categories', 'selectedCategory', 'brands'));
     }
-    
-    public function show($slug)
+
+    // Get products by category (AJAX)
+    public function getCategoryProducts(Request $request)
     {
-        $product = Product::with('category', 'images', 'variants', 'reviews.user')
-            ->where('slug', $slug)
-            ->where('is_active', true)
-            ->firstOrFail();
-        
-        // Increment view count
-        $product->increment('views_count');
-        
-        // Related products (same category)
-        $relatedProducts = Product::with('images')
-            ->where('category_id', $product->category_id)
-            ->where('id', '!=', $product->id)
-            ->where('is_active', true)
-            ->limit(4)
-            ->get();
-        
-        // Recently viewed (store in session)
-        $recentlyViewed = session()->get('recently_viewed', []);
-        if (!in_array($product->id, $recentlyViewed)) {
-            array_unshift($recentlyViewed, $product->id);
-            $recentlyViewed = array_slice($recentlyViewed, 0, 5);
-            session()->put('recently_viewed', $recentlyViewed);
-        }
-        
-        $recentProducts = Product::with('images')
-            ->whereIn('id', $recentlyViewed)
+        $categoryId = $request->category_id;
+        $products = Product::where('category_id', $categoryId)
             ->where('is_active', true)
             ->get();
-        
-        return view('frontend.shop.show', compact(
-            'product', 
-            'relatedProducts', 
-            'recentProducts'
-        ));
-    }
-    
-    // AJAX quick view
-    public function quickView($id)
-    {
-        $product = Product::with('images', 'variants')->findOrFail($id);
-        return response()->json([
-            'success' => true,
-            'html' => view('frontend.shop.quick-view', compact('product'))->render()
-        ]);
+
+        return response()->json($products);
     }
 }

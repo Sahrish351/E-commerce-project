@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('order_number')->unique();
+            $table->string('order_number')->unique();   // ← YAHAN UNIQUE HAI
             $table->enum('status', ['pending', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded'])->default('pending');
             $table->enum('payment_status', ['pending', 'completed', 'failed', 'refunded'])->default('pending');
             $table->decimal('subtotal', 19, 2);
@@ -31,7 +31,6 @@ return new class extends Migration
 
             // Indexes
             $table->index('user_id');
-            $table->unique('order_number');
             $table->index('status');
             $table->index('payment_status');
             $table->index('created_at');

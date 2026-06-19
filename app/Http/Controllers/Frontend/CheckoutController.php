@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Customer;
@@ -14,29 +15,51 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
+    /**
+     * Show checkout page
+     */
     public function index()
     {
-        $cartItems = Cart::with('product')
-            ->where('user_id', Auth::id())
+        // ✅ Get user's cart
+        $cart = Cart::where('user_id', Auth::id())->first();
+        
+        if (!$cart) {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
+        }
+        
+        // ✅ Get cart items from cart_items table
+        $cartItems = CartItem::where('cart_id', $cart->id)
+            ->with('product')
             ->get();
         
         if ($cartItems->isEmpty()) {
             return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
         
+        // Calculate subtotal
         $subtotal = $cartItems->sum(function($item) {
-            return $item->quantity * ($item->product->sale_price ?? $item->product->price);
+            $price = $item->product->sale_price ?? $item->product->price;
+            return $item->quantity * $price;
         });
         
+        // Apply coupon
         $coupon = session()->get('coupon');
         $discount = 0;
         
         if ($coupon) {
-            if ($coupon->discount_type === 'percentage') {
-                $discount = ($subtotal * $coupon->discount_value) / 100;
+            if (is_array($coupon)) {
+                $discountType = $coupon['discount_type'] ?? 'percentage';
+                $discountValue = $coupon['discount_value'] ?? 0;
+            } else {
+                $discountType = $coupon->discount_type ?? 'percentage';
+                $discountValue = $coupon->discount_value ?? 0;
+            }
+            
+            if ($discountType === 'percentage') {
+                $discount = ($subtotal * $discountValue) / 100;
                 $discount = min($discount, $subtotal);
             } else {
-                $discount = min($coupon->discount_value, $subtotal);
+                $discount = min($discountValue, $subtotal);
             }
         }
         
@@ -59,20 +82,33 @@ class CheckoutController extends Controller
         ));
     }
     
+    /**
+     * Place order
+     */
     public function placeOrder(Request $request)
     {
         $request->validate([
-            'shipping_address' => 'required|string|max:500',
-            'shipping_city' => 'required|string|max:100',
-            'shipping_state' => 'required|string|max:100',
-            'shipping_postal_code' => 'required|string|max:20',
-            'shipping_phone' => 'required|string|max:20',
-            'payment_method' => 'required|in:cod,online',
+            'first_name' => 'required|string|max:255',
+            'company_name' => 'nullable|string|max:255',
+            'street_address' => 'required|string|max:500',
+            'apartment' => 'nullable|string|max:255',
+            'town_city' => 'required|string|max:100',
+            'phone' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
+            'payment_method' => 'required|in:cod,online,bank,card',
             'notes' => 'nullable|string|max:500',
         ]);
         
-        $cartItems = Cart::with('product')
-            ->where('user_id', Auth::id())
+        // ✅ Get user's cart
+        $cart = Cart::where('user_id', Auth::id())->first();
+        
+        if (!$cart) {
+            return back()->with('error', 'Your cart is empty!');
+        }
+        
+        // ✅ Get cart items from cart_items
+        $cartItems = CartItem::where('cart_id', $cart->id)
+            ->with('product')
             ->get();
         
         if ($cartItems->isEmpty()) {
@@ -82,6 +118,7 @@ class CheckoutController extends Controller
         DB::beginTransaction();
         
         try {
+            // Calculate totals
             $subtotal = $cartItems->sum(function($item) {
                 $price = $item->product->sale_price ?? $item->product->price;
                 return $item->quantity * $price;
@@ -91,10 +128,18 @@ class CheckoutController extends Controller
             $discount = 0;
             
             if ($coupon) {
-                if ($coupon->discount_type === 'percentage') {
-                    $discount = ($subtotal * $coupon->discount_value) / 100;
+                if (is_array($coupon)) {
+                    $discountType = $coupon['discount_type'] ?? 'percentage';
+                    $discountValue = $coupon['discount_value'] ?? 0;
                 } else {
-                    $discount = $coupon->discount_value;
+                    $discountType = $coupon->discount_type ?? 'percentage';
+                    $discountValue = $coupon->discount_value ?? 0;
+                }
+                
+                if ($discountType === 'percentage') {
+                    $discount = ($subtotal * $discountValue) / 100;
+                } else {
+                    $discount = $discountValue;
                 }
                 $discount = min($discount, $subtotal);
             }
@@ -103,7 +148,7 @@ class CheckoutController extends Controller
             $tax = ($subtotal - $discount) * 0.05;
             $grandTotal = $subtotal - $discount + $shipping + $tax;
             
-            // Create order
+            // ✅ Create order
             $order = Order::create([
                 'user_id' => Auth::id(),
                 'order_number' => 'SH-' . strtoupper(uniqid()) . '-' . date('Ymd'),
@@ -115,16 +160,16 @@ class CheckoutController extends Controller
                 'payment_method' => $request->payment_method,
                 'payment_status' => 'pending',
                 'order_status' => 'pending',
-                'shipping_name' => Auth::user()->name,
-                'shipping_address' => $request->shipping_address,
-                'shipping_city' => $request->shipping_city,
-                'shipping_state' => $request->shipping_state,
-                'shipping_postal_code' => $request->shipping_postal_code,
-                'shipping_phone' => $request->shipping_phone,
+                'shipping_name' => $request->first_name . ' ' . ($request->company_name ?? ''),
+                'shipping_address' => $request->street_address,
+                'shipping_city' => $request->town_city,
+                'shipping_state' => $request->shipping_state ?? '',
+                'shipping_postal_code' => $request->shipping_postal_code ?? '',
+                'shipping_phone' => $request->phone,
                 'notes' => $request->notes,
             ]);
             
-            // Create order items
+            // ✅ Create order items from cart_items
             foreach ($cartItems as $item) {
                 $price = $item->product->sale_price ?? $item->product->price;
                 
@@ -138,45 +183,75 @@ class CheckoutController extends Controller
                 ]);
                 
                 // Update stock
-                $item->product->decrement('stock_quantity', $item->quantity);
+                if ($item->product->stock_quantity) {
+                    $item->product->decrement('stock_quantity', $item->quantity);
+                }
                 $item->product->increment('sold_count', $item->quantity);
             }
             
             // Update coupon usage
-            if ($coupon) {
+            if ($coupon && !is_array($coupon)) {
                 $coupon->increment('used_count');
                 
-                CouponUsage::create([
-                    'coupon_id' => $coupon->id,
-                    'user_id' => Auth::id(),
-                    'order_id' => $order->id,
-                ]);
+                // If CouponUsage model exists
+                if (class_exists(CouponUsage::class)) {
+                    CouponUsage::create([
+                        'coupon_id' => $coupon->id,
+                        'user_id' => Auth::id(),
+                        'order_id' => $order->id,
+                    ]);
+                }
             }
             
-            // Update customer total spent
+            // ✅ Update customer total spent
             $customer = Customer::where('user_id', Auth::id())->first();
             if ($customer) {
-                $customer->addToTotalSpent($grandTotal);
+                $customer->updateTotalSpent($grandTotal);
                 $customer->addLoyaltyPoints(floor($grandTotal / 100) * 10);
             }
             
-            // Clear cart
-            Cart::where('user_id', Auth::id())->delete();
+            // ✅ Clear cart (delete cart and cart_items)
+            $cart->items()->delete();
+            $cart->delete();
+            
             session()->forget('coupon');
             
             DB::commit();
             
-            // Redirect to payment if online
-            if ($request->payment_method === 'online') {
-                return redirect()->route('payment.process', $order);
-            }
+            // ✅ STORE ORDER NUMBER IN SESSION FOR CONFIRMATION PAGE
+            session()->put('order_number', $order->order_number);
+            session()->put('order_id', $order->id);
             
-            return redirect()->route('orders.show', $order)
-                ->with('success', 'Order placed successfully! Your order number is ' . $order->order_number);
+            // ✅ REDIRECT TO CONFIRMATION PAGE
+            return redirect()->route('order.confirmation')
+                ->with('success', 'Your order has been placed successfully!');
                 
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Something went wrong: ' . $e->getMessage());
         }
+    }
+    
+    /**
+     * ✅ ORDER CONFIRMATION PAGE
+     */
+    public function confirmation()
+    {
+        // Get order details from session
+        $orderId = session()->get('order_id');
+        $orderNumber = session()->get('order_number');
+        
+        if (!$orderId) {
+            return redirect()->route('home')->with('error', 'No order found!');
+        }
+        
+        // Get order with items
+        $order = Order::with('items.product')->find($orderId);
+        
+        if (!$order) {
+            return redirect()->route('home')->with('error', 'Order not found!');
+        }
+        
+        return view('frontend.checkout.confirmation', compact('order', 'orderNumber'));
     }
 }

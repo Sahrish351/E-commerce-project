@@ -23,6 +23,13 @@
         </div>
     @endif
 
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i> {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     @if(count($cartItems) > 0)
        
         <div class="row">
@@ -41,8 +48,8 @@
                             @foreach($cartItems as $item)
                             @php
                                 $product = $item->product;
-                                $image = $product->images->first();
-                                $imageName = $image ? $image->image_url : 'default.jpg';
+                                $price = $product->sale_price ?? $product->price;
+                                $subtotal = $item->quantity * $price;
                             @endphp
                             <tr>
                                 <td style="padding: 15px;">
@@ -56,6 +63,10 @@
                                             </button>
                                         </form>
                                       
+                                        @php
+                                            $image = $product->images->first();
+                                            $imageName = $image ? $image->image_url : 'default.jpg';
+                                        @endphp
                                         <img src="{{ asset('images/products/' . $imageName) }}" 
                                              alt="{{ $product->name }}" 
                                              style="width: 60px; height: 50px; object-fit: contain; background: #f5f5f5; border-radius: 8px;">
@@ -66,18 +77,21 @@
                                     </div>
                                  </td>
                                 <td style="padding: 15px;" class="text-dark fw-semibold">
-                                    ${{ number_format($product->price, 2) }}
+                                    ${{ number_format($price, 2) }}
                                  </td>
                                 <td style="padding: 15px;">
-                                    <form action="{{ route('cart.update', $item->id) }}" method="POST">
+                                    <form action="{{ route('cart.update', $item->id) }}" method="POST" class="d-flex align-items-center gap-2">
                                         @csrf
                                         @method('PUT')
                                         <input type="number" name="quantity" value="{{ $item->quantity }}" min="1" 
                                                class="form-control quantity-input" style="width: 80px; text-align: center;">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
                                     </form>
                                  </td>
                                 <td style="padding: 15px;" class="fw-semibold text-dark">
-                                    ${{ number_format($item->quantity * $product->price, 2) }}
+                                    ${{ number_format($subtotal, 2) }}
                                  </td>
                             </tr>
                             @endforeach
@@ -109,6 +123,15 @@
                         Apply Coupon
                     </button>
                 </div>
+                @if(session()->has('coupon'))
+                    <div class="mt-2">
+                        <span class="badge bg-success">Coupon Applied!</span>
+                        <form action="{{ route('cart.remove.coupon') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-link text-danger">Remove</button>
+                        </form>
+                    </div>
+                @endif
             </div>
 
         
@@ -122,6 +145,10 @@
                     <div class="d-flex justify-content-between mb-3 pb-2" style="border-bottom: 1px solid #eee;">
                         <span class="text-muted">Shipping:</span>
                         <span class="fw-semibold">@if($shipping > 0) ${{ number_format($shipping, 2) }} @else Free @endif</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3 pb-2" style="border-bottom: 1px solid #eee;">
+                        <span class="text-muted">Tax (5%):</span>
+                        <span class="fw-semibold">${{ number_format($tax, 2) }}</span>
                     </div>
                     @if(isset($discount) && $discount > 0)
                     <div class="d-flex justify-content-between mb-3 pb-2" style="border-bottom: 1px solid #eee;">
@@ -218,7 +245,12 @@
         color: #155724;
         border-radius: 4px;
     }
-   
+    .alert-danger {
+        background: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+        border-radius: 4px;
+    }
     .fa-times-circle {
         filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
         transition: transform 0.2s;
@@ -245,11 +277,22 @@
         }
     }
     
-  
+    // Update all cart items
     document.getElementById('updateCartBtn')?.addEventListener('click', function() {
         var forms = document.querySelectorAll('form[action*="cart/update"]');
+        if (forms.length === 0) {
+            alert('No items to update');
+            return;
+        }
         forms.forEach(function(form) {
             form.submit();
+        });
+    });
+
+    // Auto-submit on quantity change (optional)
+    document.querySelectorAll('.quantity-input').forEach(function(input) {
+        input.addEventListener('change', function() {
+            this.closest('form').submit();
         });
     });
 </script>

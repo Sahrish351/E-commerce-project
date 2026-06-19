@@ -5,10 +5,10 @@
 @section('content')
 <div class="container py-4">
     <div class="row">
-        <!-- Sidebar -->
+        
         <div class="col-md-3 mb-4">
             <div class="profile-sidebar p-3 rounded-3" style="background: #fff; border: 1px solid #eee;">
-                <!-- User Info -->
+               
                 <div class="text-center pb-3 border-bottom">
                     <div class="avatar mx-auto mb-2" style="width: 70px; height: 70px; background: #db4444; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
                         <span class="text-white fw-bold fs-3">{{ substr(Auth::user()->name, 0, 1) }}</span>
@@ -16,8 +16,7 @@
                     <h6 class="fw-bold mb-0">{{ Auth::user()->name }}</h6>
                     <p class="text-muted small mb-0">{{ Auth::user()->email }}</p>
                 </div>
-
-                <!-- Sidebar Menu -->
+              
                 <div class="mt-3">
                     <a href="{{ route('profile.dashboard') }}" class="sidebar-link d-flex align-items-center gap-2 p-2 rounded mb-1 text-decoration-none">
                         <i class="fas fa-tachometer-alt" style="width: 18px; font-size: 13px;"></i>
@@ -32,19 +31,29 @@
                         <i class="fas fa-map-marker-alt" style="width: 18px; font-size: 13px;"></i>
                         <span class="small">Address Book</span>
                     </a>
-                    <a href="#" class="sidebar-link d-flex align-items-center gap-2 p-2 rounded mb-1 text-decoration-none">
+                    
+                   
+                    <a href="{{ route('profile.payment') }}" class="sidebar-link d-flex align-items-center gap-2 p-2 rounded mb-1 text-decoration-none">
                         <i class="fas fa-credit-card" style="width: 18px; font-size: 13px;"></i>
                         <span class="small">My Payment Options</span>
                     </a>
+                    
                     <h6 class="fw-bold mt-4 mb-3" style="color: #333; font-size: 14px;">My Orders</h6>
-                    <a href="{{ route('profile.orders') }}" class="sidebar-link d-flex align-items-center gap-2 p-2 rounded mb-1 text-decoration-none">
+                    
+                   
+                    <a href="{{ route('orders.index') }}" class="sidebar-link d-flex align-items-center gap-2 p-2 rounded mb-1 text-decoration-none">
+                        <i class="fas fa-box" style="width: 18px; font-size: 13px;"></i>
+                        <span class="small">My Orders</span>
+                    </a>
+                    <a href="{{ route('orders.returns') }}" class="sidebar-link d-flex align-items-center gap-2 p-2 rounded mb-1 text-decoration-none">
                         <i class="fas fa-undo" style="width: 18px; font-size: 13px;"></i>
                         <span class="small">My Returns</span>
                     </a>
-                    <a href="#" class="sidebar-link d-flex align-items-center gap-2 p-2 rounded mb-1 text-decoration-none">
+                    <a href="{{ route('orders.cancellations') }}" class="sidebar-link d-flex align-items-center gap-2 p-2 rounded mb-1 text-decoration-none">
                         <i class="fas fa-times-circle" style="width: 18px; font-size: 13px;"></i>
                         <span class="small">My Cancellations</span>
                     </a>
+                    
                     <h6 class="fw-bold mt-4 mb-3" style="color: #333; font-size: 14px;">My Wishlist</h6>
                     <a href="{{ route('wishlist.index') }}" class="sidebar-link d-flex align-items-center gap-2 p-2 rounded mb-1 text-decoration-none">
                         <i class="fas fa-heart" style="width: 18px; font-size: 13px;"></i>
@@ -60,7 +69,6 @@
             </div>
         </div>
 
-        <!-- Main Content -->
         <div class="col-md-9">
             <div class="profile-content p-4 rounded-3" style="background: #fff; border: 1px solid #eee;">
                 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -110,7 +118,7 @@
     </div>
 </div>
 
-<!-- Add Address Modal -->
+
 <div class="modal fade" id="addAddressModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">

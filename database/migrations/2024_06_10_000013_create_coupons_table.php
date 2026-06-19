@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('coupons', function (Blueprint $table) {
@@ -28,16 +25,12 @@ return new class extends Migration
             $table->timestamps();
 
             // Indexes
-            $table->unique('code');
             $table->index('is_active');
             $table->index('valid_from');
             $table->index('valid_until');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('coupons');

@@ -15,6 +15,8 @@ class CategoriesTableSeeder extends Seeder
             ['name' => 'Earbuds', 'slug' => 'earbuds', 'is_active' => true],
             ['name' => 'Sunglasses', 'slug' => 'sunglasses', 'is_active' => true],
             ['name' => 'Mobile Accessories', 'slug' => 'mobile-accessories', 'is_active' => true],
+            ['name' => 'Power Banks', 'slug' => 'power-banks', 'is_active' => true],  // ← ADD THIS
+            ['name' => 'Chargers', 'slug' => 'chargers', 'is_active' => true],        // ← ADD THIS
         ];
 
         foreach ($categories as $category) {
