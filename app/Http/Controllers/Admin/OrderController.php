@@ -53,7 +53,7 @@ class OrderController extends Controller
         $oldStatus = $order->order_status;
         $order->update(['order_status' => $request->status]);
         
-        // If cancelled, restore stock
+       
         if ($request->status === 'cancelled' && $oldStatus !== 'cancelled') {
             foreach ($order->items as $item) {
                 $item->product->increment('stock_quantity', $item->quantity);

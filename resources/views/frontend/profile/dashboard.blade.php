@@ -154,14 +154,14 @@
                                     <td class="small text-muted">{{ $order->created_at->format('d M Y') }}</td>
                                     <td>
                                         @php
-    $statusClass = 'secondary';
-    if($order->status == 'delivered') $statusClass = 'success';  
-    elseif($order->status == 'pending') $statusClass = 'warning';
-    elseif($order->status == 'cancelled') $statusClass = 'danger';
-    elseif($order->status == 'processing') $statusClass = 'info';
-    elseif($order->status == 'shipped') $statusClass = 'primary';
-    elseif($order->status == 'refunded') $statusClass = 'warning';  
-@endphp
+                                        $statusClass = 'secondary';
+                                        if($order->status == 'delivered') $statusClass = 'success';  
+                                        elseif($order->status == 'pending') $statusClass = 'warning';
+                                        elseif($order->status == 'cancelled') $statusClass = 'danger';
+                                        elseif($order->status == 'processing') $statusClass = 'info';
+                                        elseif($order->status == 'shipped') $statusClass = 'primary';
+                                        elseif($order->status == 'refunded') $statusClass = 'warning';  
+                                        @endphp
                                         <span class="badge bg-{{ $statusClass }} px-2 py-1 rounded-pill" style="font-size: 10px; font-weight: 500;">
                                             {{ ucfirst($order->order_status) }}
                                         </span>

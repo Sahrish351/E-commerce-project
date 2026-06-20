@@ -57,30 +57,22 @@ class ShopController extends Controller
             case 'price_high':
                 $query->orderBy('price', 'desc');
                 break;
-            case 'popular':
-                $query->orderBy('sold_count', 'desc');
+            case 'oldest':
+                $query->orderBy('created_at', 'asc');
                 break;
+            case 'latest':
             default:
-                $query->latest();
+                $query->orderBy('created_at', 'desc');
                 break;
         }
         
-        $products = $query->paginate(12);
+        // ✅ DEFAULT 5 PRODUCTS PER PAGE
+        $perPage = $request->per_page ?? 5;
+        $products = $query->paginate($perPage);
 
         // Brands for sidebar
-        $brands = ['Samsung', 'Apple', 'Huawei', 'Xiaomi', 'OnePlus', 'Google', 'Sony', 'Nokia', 'Lenovo', 'Pocco'];
+        $brands = ['Nokia', 'Lenovo', 'Pocco', 'Samsung', 'Apple', 'Huawei', 'Xiaomi', 'OnePlus'];
         
         return view('frontend.shop.index', compact('products', 'categories', 'selectedCategory', 'brands'));
-    }
-
-    // Get products by category (AJAX)
-    public function getCategoryProducts(Request $request)
-    {
-        $categoryId = $request->category_id;
-        $products = Product::where('category_id', $categoryId)
-            ->where('is_active', true)
-            ->get();
-
-        return response()->json($products);
     }
 }

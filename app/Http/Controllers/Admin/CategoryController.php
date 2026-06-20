@@ -85,12 +85,12 @@ class CategoryController extends AdminController
     
     public function destroy(Category $category)
     {
-        // Check if category has products
+       
         if ($category->products()->count() > 0) {
             return back()->with('error', 'Cannot delete category with products!');
         }
         
-        // Move children to parent
+    
         if ($category->children()->count() > 0) {
             $category->children()->update(['parent_id' => $category->parent_id]);
         }
