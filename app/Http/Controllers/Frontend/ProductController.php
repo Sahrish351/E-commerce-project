@@ -12,7 +12,8 @@ class ProductController extends Controller
 {
     public function show($slug)
     {
-        $product = Product::with('category', 'images', 'variants', 'reviews.user')
+        // ✅ REMOVED 'variants' from with()
+        $product = Product::with('category', 'images', 'reviews.user')
             ->where('slug', $slug)
             ->firstOrFail();
         
@@ -33,12 +34,12 @@ class ProductController extends Controller
             1 => $product->reviews()->where('rating', 1)->count(),
         ];
         
-        // Related products
+        // Related products - SAME CATEGORY
         $relatedProducts = Product::with('images')
-            ->where('category_id', $product->category_id)
-            ->where('id', '!=', $product->id)
-            ->limit(4)
-            ->get();
+        ->where('category_id', $product->category_id)  
+        ->where('id', '!=', $product->id)
+        ->limit(4)
+        ->get();
         
         return view('frontend.products.show', compact(
             'product', 

@@ -67,7 +67,7 @@
                                             $image = $product->images->first();
                                             $imageName = $image ? $image->image_url : 'default.jpg';
                                         @endphp
-                                        <img src="{{ asset('images/products/' . $imageName) }}" 
+                                        <img src="{{ asset($item->product->images->first()->image_url ?? 'images/products/default.jpg') }}"
                                              alt="{{ $product->name }}" 
                                              style="width: 60px; height: 50px; object-fit: contain; background: #f5f5f5; border-radius: 8px;">
                                         <div>

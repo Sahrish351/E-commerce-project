@@ -211,10 +211,11 @@
                         @php
                             $image = $product->images->first();
                         @endphp
-                        <img src="{{ $image->image_url ?? asset('images/products/default.jpg') }}" 
+                       <img src="{{ asset($image->image_url ?? 'images/products/default.jpg') }}"  
                              alt="{{ $product->name }}" 
                              style="max-width: 100%; max-height: 180px; object-fit: contain;">
                     </div>
+                    
                     
                    
                     <div style="flex: 1; min-width: 200px;">
