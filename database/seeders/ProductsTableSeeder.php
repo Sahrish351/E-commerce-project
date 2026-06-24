@@ -106,7 +106,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.7,
                 'sold_count' => 1876,
                 'is_featured' => true,
-                'image_url' => 'images/products/smaetwatch6.jpg',
+                'image_url' => 'images/products/smaet watch6.jpg',
             ],
             [
                 'name' => 'Sveston Classic Watch',
@@ -175,7 +175,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.8,
                 'sold_count' => 6789,
                 'is_featured' => true,
-                'image_url' => 'images/products/',
+                'image_url' => 'images/products/bluetooth3.jpg',
             ],
             [
                 'name' => 'Samsung Galaxy Buds 3',
@@ -188,7 +188,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.6,
                 'sold_count' => 2345,
                 'is_featured' => false,
-                'image_url' => 'images/products/earbuds/galaxy-buds.jpg',
+                'image_url' => 'images/products/bluetooth5.jpg',
             ],
             [
                 'name' => 'Bose QuietComfort Earbuds',
@@ -201,7 +201,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.7,
                 'sold_count' => 3456,
                 'is_featured' => false,
-                'image_url' => 'images/products/earbuds/bose-quietcomfort.jpg',
+                'image_url' => 'images/products/bluetooth3.jpg',
             ],
             [
                 'name' => 'Jabra Elite 10',
@@ -214,11 +214,11 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.5,
                 'sold_count' => 1234,
                 'is_featured' => false,
-                'image_url' => 'images/products/earbuds/jabra-elite.jpg',
+                'image_url' => 'images/products/bluetooth.jpg',
             ],
         ];
 
-        // ============ SUNGLASSES (Category ID: 4) ============
+        
         $sunglasses = [
             [
                 'name' => 'Ray-Ban Aviator Classic',
@@ -231,7 +231,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.5,
                 'sold_count' => 5432,
                 'is_featured' => true,
-                'image_url' => 'images/products/sunglasses/ray-ban-aviator.jpg',
+                'image_url' => 'images/products/glasses1.jpg',
             ],
             [
                 'name' => 'Oakley Holbrook Sunglasses',
@@ -244,7 +244,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.6,
                 'sold_count' => 2341,
                 'is_featured' => false,
-                'image_url' => 'images/products/sunglasses/oakley-holbrook.jpg',
+                'image_url' => 'images/products/glasses3.jpg',
             ],
             [
                 'name' => 'Prada Cat Eye Sunglasses',
@@ -257,7 +257,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.4,
                 'sold_count' => 876,
                 'is_featured' => false,
-                'image_url' => 'images/products/sunglasses/prada-cat-eye.jpg',
+                'image_url' => 'images/products/glasses4.jpg',
             ],
             [
                 'name' => 'Persol PO Polarized',
@@ -270,7 +270,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.7,
                 'sold_count' => 654,
                 'is_featured' => false,
-                'image_url' => 'images/products/sunglasses/persol-po.jpg',
+                'image_url' => 'images/products/glasses5.jpg',
             ],
             [
                 'name' => 'Gucci GG Sunglasses',
@@ -283,11 +283,11 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.8,
                 'sold_count' => 432,
                 'is_featured' => true,
-                'image_url' => 'images/products/sunglasses/gucci-gg.jpg',
+                'image_url' => 'images/products/glasses9.jpg',
             ],
         ];
 
-        // ============ MOBILE ACCESSORIES (Category ID: 5) ============
+        
         $mobileAccessories = [
             [
                 'name' => 'Spigen iPhone Case',
@@ -300,7 +300,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.7,
                 'sold_count' => 8765,
                 'is_featured' => true,
-                'image_url' => 'images/products/accessories/spigen-case.jpg',
+                'image_url' => 'images/products/mobile1.jpg',
             ],
             [
                 'name' => 'OtterBox Defender Case',
@@ -313,7 +313,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.8,
                 'sold_count' => 6543,
                 'is_featured' => false,
-                'image_url' => 'images/products/accessories/otterbox-defender.jpg',
+                'image_url' => 'images/products/mobile2.jpg',
             ],
             [
                 'name' => 'PopSocket Phone Grip',
@@ -326,7 +326,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.4,
                 'sold_count' => 4321,
                 'is_featured' => false,
-                'image_url' => 'images/products/accessories/popsocket-grip.jpg',
+                'image_url' => 'images/products/mobile4.jpg',
             ],
             [
                 'name' => 'Belkin Screen Protector',
@@ -339,7 +339,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.6,
                 'sold_count' => 9876,
                 'is_featured' => false,
-                'image_url' => 'images/products/accessories/belkin-screen.jpg',
+                'image_url' => 'images/products/mobile3.jpg',
             ],
             [
                 'name' => 'Mophie Wireless Charger',
@@ -352,11 +352,11 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.5,
                 'sold_count' => 2345,
                 'is_featured' => false,
-                'image_url' => 'images/products/accessories/mophie-charger.jpg',
+                'image_url' => 'images/products/charger6.jpg',
             ],
         ];
 
-        // ============ POWER BANKS (Category ID: 6) ============
+        
         $powerBanks = [
             [
                 'name' => 'Anker 20000mAh Power Bank',
@@ -369,7 +369,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.7,
                 'sold_count' => 8765,
                 'is_featured' => true,
-                'image_url' => 'images/products/powerbanks/anker-20000mah.jpg',
+                'image_url' => 'images/products/ankercharger.jpg',
             ],
             [
                 'name' => 'Samsung 10000mAh Slim Power Bank',
@@ -382,7 +382,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.4,
                 'sold_count' => 3456,
                 'is_featured' => false,
-                'image_url' => 'images/products/powerbanks/samsung-10000mah.jpg',
+                'image_url' => 'images/products/samsungcharger.jpg',
             ],
             [
                 'name' => 'Xiaomi 20000mAh Power Bank',
@@ -395,7 +395,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.6,
                 'sold_count' => 5432,
                 'is_featured' => false,
-                'image_url' => 'images/products/powerbanks/xiaomi-20000mah.jpg',
+                'image_url' => 'images/products/xiaomi.jpg',
             ],
             [
                 'name' => 'Belkin 5000mAh Mini Power Bank',
@@ -408,7 +408,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.3,
                 'sold_count' => 2345,
                 'is_featured' => false,
-                'image_url' => 'images/products/powerbanks/belkin-5000mah.jpg',
+                'image_url' => 'images/products/belkin.jpg',
             ],
             [
                 'name' => 'Mophie PowerStation Plus',
@@ -421,11 +421,11 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.5,
                 'sold_count' => 1234,
                 'is_featured' => false,
-                'image_url' => 'images/products/powerbanks/mophie-powerstation.jpg',
+                'image_url' => 'images/products/mophiecharger.jpg',
             ],
         ];
 
-        // ============ CHARGERS (Category ID: 7) ============
+      
         $chargers = [
             [
                 'name' => '65W GaN Fast Charger',
@@ -438,7 +438,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.8,
                 'sold_count' => 4321,
                 'is_featured' => true,
-                'image_url' => 'images/products/chargers/gan-65w.jpg',
+                'image_url' => 'images/products/charger1.jpg',
             ],
             [
                 'name' => '20W USB-C PD Charger',
@@ -451,7 +451,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.5,
                 'sold_count' => 5678,
                 'is_featured' => false,
-                'image_url' => 'images/products/chargers/usb-c-20w.jpg',
+                'image_url' => 'images/products/charger2.jpg',
             ],
             [
                 'name' => 'Samsung Super Fast Charger',
@@ -464,7 +464,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.6,
                 'sold_count' => 3456,
                 'is_featured' => false,
-                'image_url' => 'images/products/chargers/samsung-fast.jpg',
+                'image_url' => 'images/products/charger3.jpg',
             ],
             [
                 'name' => 'Apple USB-C Charger',
@@ -477,7 +477,7 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.7,
                 'sold_count' => 2345,
                 'is_featured' => false,
-                'image_url' => 'images/products/chargers/apple-usb-c.jpg',
+                'image_url' => 'images/products/charger5.jpg',
             ],
             [
                 'name' => 'Ugreen 3-Port Charger',
@@ -490,11 +490,11 @@ class ProductsTableSeeder extends Seeder
                 'rating' => 4.4,
                 'sold_count' => 1234,
                 'is_featured' => false,
-                'image_url' => 'images/products/chargers/ugreen-3port.jpg',
+                'image_url' => 'images/products/3portcharger.jpg',
             ],
         ];
 
-        // Create products with their respective categories
+     
         $categoryMap = [
             1 => $shoes,
             2 => $watches,
@@ -513,7 +513,7 @@ class ProductsTableSeeder extends Seeder
                 
                 $product = Product::create($productData);
                 
-                // Create primary product image
+             
                 ProductImage::create([
                     'product_id' => $product->id,
                     'image_url' => $productData['image_url'],

@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function show($slug)
     {
-        // ✅ REMOVED 'variants' from with()
+        
         $product = Product::with('category', 'images', 'reviews.user')
             ->where('slug', $slug)
             ->firstOrFail();

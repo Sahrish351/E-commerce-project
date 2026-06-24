@@ -33,18 +33,20 @@
                     @php
                         $mainImage = $product->images->first();
                     @endphp
-                    <img src="{{ $mainImage->image_url ?? asset('images/products/default.jpg') }}" 
+                  
+                    <img src="{{ $mainImage ? asset($mainImage->image_url) : asset('images/products/default.jpg') }}" 
                          alt="{{ $product->name }}" 
                          style="max-width: 100%; max-height: 100%; object-fit: contain;">
                 </div>
                 
                
-                @if($product->images->count() > 1)
-                <div class="d-flex gap-2 mt-3" style="overflow-x: auto;">
+                @if($product->images->count() > 0)
+                <div class="d-flex gap-2 mt-3" style="overflow-x: auto; padding-bottom: 5px;">
                     @foreach($product->images as $image)
-                    <div style="width: 80px; height: 80px; background: #f5f5f5; border-radius: 4px; padding: 5px; flex-shrink: 0; cursor: pointer; border: 2px solid transparent; transition: all 0.3s;" 
-                         onclick="changeMainImage(this, '{{ $image->image_url }}')">
-                        <img src="{{ $image->image_url }}" 
+                    <div style="width: 80px; height: 80px; background: #f5f5f5; border-radius: 4px; padding: 5px; flex-shrink: 0; cursor: pointer; border: 2px solid {{ $loop->first ? '#db4444' : 'transparent' }}; transition: all 0.3s;" 
+                         onclick="changeMainImage(this, '{{ asset($image->image_url) }}')">
+                     
+                        <img src="{{ asset($image->image_url) }}" 
                              alt="{{ $product->name }}" 
                              style="width: 100%; height: 100%; object-fit: contain;">
                     </div>
@@ -269,8 +271,9 @@
                         @php
                             $relImage = $related->images->first();
                         @endphp
-                        <div style="height: 150px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
-                            <img src="{{ $relImage->image_url ?? asset('images/products/default.jpg') }}" 
+                        <div style="height: 150px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; border-radius: 4px;">
+                          
+                            <img src="{{ $relImage ? asset($relImage->image_url) : asset('images/products/default.jpg') }}" 
                                  alt="{{ $related->name }}" 
                                  style="max-width: 100%; max-height: 140px; object-fit: contain;">
                         </div>
@@ -332,7 +335,7 @@
 
     function changeMainImage(element, imageUrl) {
        
-        document.querySelectorAll('.product-gallery .thumbnails div').forEach(el => {
+        document.querySelectorAll('.product-gallery .d-flex .gap-2 div').forEach(el => {
             el.style.borderColor = 'transparent';
         });
         
