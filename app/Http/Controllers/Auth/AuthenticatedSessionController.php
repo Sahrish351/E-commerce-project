@@ -21,12 +21,13 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
 
-        // Redirect admin to admin dashboard, users to home
+        // ✅ FIX: Use route() instead of intended()
         if (Auth::user() && Auth::user()->role === 'admin') {
-            return redirect()->intended('/admin/dashboard');
+            return redirect()->route('admin.dashboard');
         }
 
-        return redirect()->intended('/');
+        // ✅ FIX: Redirect to profile dashboard for normal users
+        return redirect()->route('profile.dashboard');
     }
 
     public function destroy(Request $request): RedirectResponse

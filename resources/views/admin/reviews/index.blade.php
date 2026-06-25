@@ -1,12 +1,9 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Coupons - StyleHub Admin')
+@section('title', 'Reviews - StyleHub Admin')
 
 @section('content')
 <style>
-    /* ========================================
-       COUPONS PAGE STYLES
-       ======================================== */
     .page-header {
         display: flex;
         justify-content: space-between;
@@ -30,30 +27,6 @@
         margin: 0;
         font-size: 14px;
     }
-    .btn-primary-custom {
-        background: #db4444;
-        color: #fff;
-        border: none;
-        padding: 10px 24px;
-        border-radius: 8px;
-        font-weight: 600;
-        transition: all 0.3s;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 14px;
-    }
-    .btn-primary-custom:hover {
-        background: #c0392b;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(219,68,68,0.3);
-        color: #fff;
-    }
-    .btn-primary-custom i {
-        font-size: 13px;
-    }
-
     .filter-card {
         background: #fff;
         border-radius: 16px;
@@ -108,7 +81,6 @@
     .filter-card .btn-reset:hover {
         background: #e0e0e0;
     }
-
     .table-card {
         background: #fff;
         border-radius: 16px;
@@ -134,7 +106,6 @@
         color: #db4444;
         margin-right: 8px;
     }
-
     .table-premium {
         font-size: 14px;
         margin-bottom: 0;
@@ -160,7 +131,6 @@
     .table-premium tbody tr:hover {
         background: #fafafa;
     }
-
     .badge-status {
         padding: 4px 12px;
         border-radius: 30px;
@@ -169,27 +139,25 @@
         white-space: nowrap;
         display: inline-block;
     }
-    .badge-status.active {
+    .badge-status.approved {
         background: #d4edda;
         color: #155724;
     }
-    .badge-status.inactive {
+    .badge-status.pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+    .badge-status.rejected {
         background: #f8d7da;
         color: #721c24;
     }
-    .badge-status.expired {
-        background: #f8d7da;
-        color: #721c24;
+    .rating-stars {
+        color: #ffb800;
+        font-size: 14px;
     }
-    .badge-status.percentage {
-        background: #cce5ff;
-        color: #004085;
+    .rating-stars .empty {
+        color: #ddd;
     }
-    .badge-status.fixed {
-        background: #d4edda;
-        color: #155724;
-    }
-
     .action-btn {
         width: 32px;
         height: 32px;
@@ -208,19 +176,18 @@
         color: #fff;
         border-color: #db4444;
     }
-    .action-btn.edit:hover {
-        background: #0d6efd;
-        border-color: #0d6efd;
+    .action-btn.approve:hover {
+        background: #28a745;
+        border-color: #28a745;
+    }
+    .action-btn.reject:hover {
+        background: #dc3545;
+        border-color: #dc3545;
     }
     .action-btn.delete:hover {
         background: #dc3545;
         border-color: #dc3545;
     }
-    .action-btn.toggle:hover {
-        background: #28a745;
-        border-color: #28a745;
-    }
-
     .pagination-wrapper {
         padding: 16px 22px;
         border-top: 1px solid #f0f0f0;
@@ -255,7 +222,6 @@
         border-color: #db4444;
         color: #fff;
     }
-
     .empty-state {
         text-align: center;
         padding: 40px 20px;
@@ -277,26 +243,6 @@
         margin-bottom: 16px;
         font-size: 14px;
     }
-    .btn-primary-custom-sm {
-        background: #db4444;
-        color: #fff;
-        border: none;
-        padding: 8px 20px;
-        border-radius: 8px;
-        font-weight: 500;
-        transition: all 0.3s;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 13px;
-    }
-    .btn-primary-custom-sm:hover {
-        background: #c0392b;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(219,68,68,0.3);
-        color: #fff;
-    }
 
     @media (max-width: 768px) {
         .page-header {
@@ -312,132 +258,113 @@
     }
 </style>
 
-<!-- ========================================
-     PAGE HEADER
-     ======================================== -->
 <div class="page-header">
     <div>
-        <h4><i class="fas fa-ticket"></i> Coupons</h4>
-        <p>Manage discount coupons</p>
+        <h4><i class="fas fa-star"></i> Reviews</h4>
+        <p>Manage product reviews</p>
     </div>
-    <a href="{{ route('admin.coupons.create') }}" class="btn-primary-custom">
-        <i class="fas fa-plus-circle"></i> Add Coupon
-    </a>
 </div>
 
-<!-- ========================================
-     FILTERS
-     ======================================== -->
 <div class="filter-card">
-    <form action="{{ route('admin.coupons.index') }}" method="GET" class="row g-3">
+    <form action="{{ route('admin.reviews.index') }}" method="GET" class="row g-3">
         <div class="col-md-4">
-            <input type="text" name="search" class="form-control" placeholder="Search by coupon code..." value="{{ request('search') }}">
+            <input type="text" name="search" class="form-control" placeholder="Search by product or customer..." value="{{ request('search') }}">
         </div>
         <div class="col-md-3">
             <select name="status" class="form-select">
                 <option value="">All Status</option>
-                <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
-                <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Approved</option>
+                <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
             </select>
         </div>
         <div class="col-md-5 d-flex gap-2">
             <button type="submit" class="btn-filter">
                 <i class="fas fa-filter"></i> Filter
             </button>
-            <a href="{{ route('admin.coupons.index') }}" class="btn-reset">
+            <a href="{{ route('admin.reviews.index') }}" class="btn-reset">
                 <i class="fas fa-times"></i> Reset
             </a>
         </div>
     </form>
 </div>
 
-<!-- ========================================
-     COUPONS TABLE
-     ======================================== -->
 <div class="table-card">
     <div class="table-header">
-        <span class="title"><i class="fas fa-list"></i> All Coupons</span>
-        <span style="font-size: 13px; color: #8c8c9c;">Total: {{ $coupons->total() ?? 0 }} coupons</span>
+        <span class="title"><i class="fas fa-list"></i> All Reviews</span>
+        <span style="font-size: 13px; color: #8c8c9c;">Total: {{ $reviews->total() ?? 0 }} reviews</span>
     </div>
     <div class="table-responsive">
         <table class="table table-premium">
             <thead>
                 <tr>
                     <th style="width: 50px;">#</th>
-                    <th>Code</th>
-                    <th>Discount</th>
-                    <th>Min Order</th>
-                    <th>Uses</th>
+                    <th>Product</th>
+                    <th>Customer</th>
+                    <th>Rating</th>
+                    <th>Review</th>
                     <th>Status</th>
-                    <th>Expires</th>
+                    <th>Date</th>
                     <th style="width: 120px;">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse($coupons ?? [] as $coupon)
+                @forelse($reviews ?? [] as $review)
                 <tr>
-                    <td>{{ ($coupons->currentPage() - 1) * $coupons->perPage() + $loop->iteration }}</td>
+                    <td>{{ ($reviews->currentPage() - 1) * $reviews->perPage() + $loop->iteration }}</td>
                     <td>
-                        <span style="font-weight: 700; font-size: 15px; color: #1a1a2e; background: #f0f0f0; padding: 4px 12px; border-radius: 6px;">
-                            {{ $coupon->code }}
-                        </span>
+                        <div style="font-weight: 600; font-size: 14px;">{{ $review->product->name ?? 'Product' }}</div>
+                    </td>
+                    <td>{{ $review->user->name ?? 'Anonymous' }}</td>
+                    <td>
+                        <div class="rating-stars">
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <= $review->rating)
+                                    <i class="fas fa-star"></i>
+                                @else
+                                    <i class="far fa-star empty"></i>
+                                @endif
+                            @endfor
+                        </div>
                     </td>
                     <td>
-                        <span class="badge-status {{ $coupon->discount_type }}">
-                            @if($coupon->discount_type == 'percentage')
-                                {{ $coupon->discount_value }}%
-                            @else
-                                ${{ number_format($coupon->discount_value, 2) }}
-                            @endif
-                        </span>
+                        <div style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #666; font-size: 13px;">
+                            {{ $review->comment }}
+                        </div>
                     </td>
                     <td>
-                        @if($coupon->min_order_value > 0)
-                            ${{ number_format($coupon->min_order_value, 2) }}
+                        @if($review->trashed())
+                            <span class="badge-status rejected">Rejected</span>
+                        @elseif($review->is_approved)
+                            <span class="badge-status approved">Approved</span>
                         @else
-                            <span style="color: #999; font-size: 13px;">No min</span>
+                            <span class="badge-status pending">Pending</span>
                         @endif
                     </td>
-                    <td>
-                        <span style="font-weight: 600;">
-                            {{ $coupon->used_count ?? 0 }}
-                        </span>
-                        @if($coupon->usage_limit)
-                            <span style="color: #999; font-size: 12px;">/ {{ $coupon->usage_limit }}</span>
-                        @endif
-                    </td>
-                    <td>
-                        @if($coupon->is_active && ($coupon->expires_at === null || $coupon->expires_at >= now()))
-                            <span class="badge-status active">Active</span>
-                        @elseif($coupon->expires_at && $coupon->expires_at < now())
-                            <span class="badge-status expired">Expired</span>
-                        @else
-                            <span class="badge-status inactive">Inactive</span>
-                        @endif
-                    </td>
-                    <td style="color: #999; font-size: 13px;">
-                        @if($coupon->expires_at)
-                            {{ $coupon->expires_at->format('M d, Y') }}
-                        @else
-                            <span style="color: #999;">Never</span>
-                        @endif
-                    </td>
+                    <td style="color: #999; font-size: 13px;">{{ $review->created_at->format('M d, Y') }}</td>
                     <td>
                         <div class="d-flex gap-1">
-                            <a href="{{ route('admin.coupons.edit', $coupon->id) }}" class="action-btn edit" title="Edit">
-                                <i class="fas fa-edit" style="font-size: 13px;"></i>
-                            </a>
-                            <form action="{{ route('admin.coupons.destroy', $coupon->id) }}" method="POST" class="d-inline">
+                            @if(!$review->is_approved && !$review->trashed())
+                            <form action="{{ route('admin.reviews.approve', $review->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="action-btn approve" title="Approve">
+                                    <i class="fas fa-check" style="font-size: 13px;"></i>
+                                </button>
+                            </form>
+                            @endif
+                            @if(!$review->trashed())
+                            <form action="{{ route('admin.reviews.reject', $review->id) }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="action-btn reject" title="Reject">
+                                    <i class="fas fa-times" style="font-size: 13px;"></i>
+                                </button>
+                            </form>
+                            @endif
+                            <form action="{{ route('admin.reviews.destroy', $review->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="action-btn delete" title="Delete" onclick="return confirm('Are you sure?')">
                                     <i class="fas fa-trash" style="font-size: 13px;"></i>
-                                </button>
-                            </form>
-                            <form action="{{ route('admin.coupons.toggle', $coupon->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="action-btn toggle" title="Toggle Status">
-                                    <i class="fas fa-sync" style="font-size: 13px;"></i>
                                 </button>
                             </form>
                         </div>
@@ -447,12 +374,9 @@
                 <tr>
                     <td colspan="8">
                         <div class="empty-state">
-                            <i class="fas fa-ticket"></i>
-                            <h5>No Coupons Found</h5>
-                            <p>Start adding discount coupons to attract customers.</p>
-                            <a href="{{ route('admin.coupons.create') }}" class="btn-primary-custom-sm">
-                                <i class="fas fa-plus-circle"></i> Add Coupon
-                            </a>
+                            <i class="fas fa-star"></i>
+                            <h5>No Reviews Found</h5>
+                            <p>Reviews will appear here once customers submit them.</p>
                         </div>
                     </td>
                 </tr>
@@ -460,10 +384,10 @@
             </tbody>
         </table>
     </div>
-    @if(isset($coupons) && method_exists($coupons, 'links') && $coupons->hasPages())
+    @if(isset($reviews) && method_exists($reviews, 'links') && $reviews->hasPages())
     <div class="pagination-wrapper">
-        <span class="info">Showing {{ $coupons->firstItem() ?? 0 }} to {{ $coupons->lastItem() ?? 0 }} of {{ $coupons->total() ?? 0 }} coupons</span>
-        {{ $coupons->appends(request()->query())->links('pagination::bootstrap-5') }}
+        <span class="info">Showing {{ $reviews->firstItem() ?? 0 }} to {{ $reviews->lastItem() ?? 0 }} of {{ $reviews->total() ?? 0 }} reviews</span>
+        {{ $reviews->appends(request()->query())->links('pagination::bootstrap-5') }}
     </div>
     @endif
 </div>

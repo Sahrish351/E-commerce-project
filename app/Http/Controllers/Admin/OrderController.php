@@ -8,17 +8,19 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    // ✅ FIXED: Use AdminMiddleware::class instead of 'admin'
     public function __construct()
     {
-        $this->middleware(['auth', 'admin']);
+        $this->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class]);
     }
     
     public function index(Request $request)
     {
         $query = Order::with('user');
         
+        // ✅ FIXED: order_status → status (according to your table)
         if ($request->filled('status')) {
-            $query->where('order_status', $request->status);
+            $query->where('status', $request->status);
         }
         
         if ($request->filled('search')) {
@@ -27,12 +29,13 @@ class OrderController extends Controller
         
         $orders = $query->latest()->paginate(20);
         
+        // ✅ FIXED: order_status → status
         $statusCounts = [
-            'pending' => Order::where('order_status', 'pending')->count(),
-            'processing' => Order::where('order_status', 'processing')->count(),
-            'shipped' => Order::where('order_status', 'shipped')->count(),
-            'delivered' => Order::where('order_status', 'delivered')->count(),
-            'cancelled' => Order::where('order_status', 'cancelled')->count(),
+            'pending' => Order::where('status', 'pending')->count(),
+            'processing' => Order::where('status', 'processing')->count(),
+            'shipped' => Order::where('status', 'shipped')->count(),
+            'delivered' => Order::where('status', 'delivered')->count(),
+            'cancelled' => Order::where('status', 'cancelled')->count(),
         ];
         
         return view('admin.orders.index', compact('orders', 'statusCounts'));
@@ -50,10 +53,9 @@ class OrderController extends Controller
             'status' => 'required|in:pending,processing,shipped,delivered,cancelled'
         ]);
         
-        $oldStatus = $order->order_status;
-        $order->update(['order_status' => $request->status]);
+        $oldStatus = $order->status;
+        $order->update(['status' => $request->status]);
         
-       
         if ($request->status === 'cancelled' && $oldStatus !== 'cancelled') {
             foreach ($order->items as $item) {
                 $item->product->increment('stock_quantity', $item->quantity);

@@ -11,44 +11,69 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'admin']);
+        $this->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class]);
     }
     
     public function index()
     {
-        $users = User::with('customer')->latest()->paginate(20);
+        // ✅ ONLY USERS (clients) - Exclude admins
+        $users = User::where('role', 'user')
+            ->with('customer')
+            ->latest()
+            ->paginate(20);
+        
         return view('admin.users.index', compact('users'));
     }
     
     public function edit(User $user)
     {
+        // ✅ Check if user is admin - prevent editing admin from customer page
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.users.index')
+                ->with('error', 'Cannot edit admin from customers page!');
+        }
+        
         return view('admin.users.edit', compact('user'));
     }
     
     public function update(Request $request, User $user)
     {
+        // ✅ Prevent admin update from customer page
+        if ($user->role === 'admin') {
+            return back()->with('error', 'Cannot update admin from customers page!');
+        }
+        
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'role' => 'required|in:user,admin',
+            'phone' => 'nullable|string|max:20',
+            'password' => 'nullable|string|min:6',
         ]);
         
-        $user->update($request->only(['name', 'email', 'role']));
+        $data = $request->only(['name', 'email', 'phone']);
         
         if ($request->filled('password')) {
-            $user->update(['password' => Hash::make($request->password)]);
+            $data['password'] = Hash::make($request->password);
         }
         
-        return back()->with('success', 'User updated!');
+        $user->update($data);
+        
+        return redirect()->route('admin.users.index')
+            ->with('success', 'Customer updated successfully!');
     }
     
     public function destroy(User $user)
     {
+        // ✅ Prevent admin deletion
+        if ($user->role === 'admin') {
+            return back()->with('error', 'Cannot delete admin from customers page!');
+        }
+        
         if ($user->id === auth()->id()) {
             return back()->with('error', 'You cannot delete yourself!');
         }
         
         $user->delete();
-        return back()->with('success', 'User deleted!');
+        return back()->with('success', 'Customer deleted successfully!');
     }
 }
