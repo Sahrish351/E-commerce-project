@@ -204,9 +204,7 @@
     }
 </style>
 
-<!-- ========================================
-     PAGE HEADER
-     ======================================== -->
+
 <div class="page-header">
     <div>
         <h4><i class="fas fa-edit me-2" style="color: #db4444;"></i> Edit Product</h4>
@@ -217,15 +215,12 @@
     </a>
 </div>
 
-<!-- ========================================
-     FORM
-     ======================================== -->
 <div class="form-card">
     <form action="{{ route('admin.products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="row g-4">
-            <!-- Product Name -->
+           
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">Product Name <span class="text-danger">*</span></label>
@@ -234,7 +229,6 @@
                 </div>
             </div>
 
-            <!-- Category -->
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">Category <span class="text-danger">*</span></label>
@@ -250,7 +244,7 @@
                 </div>
             </div>
 
-            <!-- Price -->
+         
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">Price <span class="text-danger">*</span></label>
@@ -259,7 +253,6 @@
                 </div>
             </div>
 
-            <!-- Sale Price -->
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">Sale Price</label>
@@ -268,7 +261,7 @@
                 </div>
             </div>
 
-            <!-- SKU -->
+        
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">SKU</label>
@@ -277,7 +270,6 @@
                 </div>
             </div>
 
-            <!-- Stock Quantity -->
             <div class="col-md-6">
                 <div class="mb-3">
                     <label class="form-label">Stock Quantity <span class="text-danger">*</span></label>
@@ -286,7 +278,7 @@
                 </div>
             </div>
 
-            <!-- Short Description -->
+       
             <div class="col-12">
                 <div class="mb-3">
                     <label class="form-label">Short Description</label>
@@ -295,7 +287,7 @@
                 </div>
             </div>
 
-            <!-- Description -->
+            
             <div class="col-12">
                 <div class="mb-3">
                     <label class="form-label">Description <span class="text-danger">*</span></label>
@@ -304,7 +296,7 @@
                 </div>
             </div>
 
-            <!-- Current Images -->
+          
             <div class="col-12">
                 <div class="mb-3">
                     <label class="form-label">Current Images</label>
@@ -328,7 +320,7 @@
                 </div>
             </div>
 
-            <!-- Add New Images -->
+           
             <div class="col-12">
                 <div class="mb-3">
                     <label class="form-label">Add New Images</label>
@@ -339,7 +331,6 @@
                 <div class="image-preview" id="imagePreview"></div>
             </div>
 
-            <!-- Active & Featured -->
             <div class="col-md-6">
                 <div class="mb-3">
                     <div class="form-check">
@@ -357,7 +348,7 @@
                 </div>
             </div>
 
-            <!-- Buttons -->
+           
             <div class="col-12">
                 <button type="submit" class="btn-submit">
                     <i class="fas fa-save"></i> Update Product
@@ -369,7 +360,7 @@
 </div>
 
 <script>
-    // Image Preview
+   
     document.getElementById('newImages')?.addEventListener('change', function(e) {
         const preview = document.getElementById('imagePreview');
         preview.innerHTML = '';
@@ -390,7 +381,7 @@
         }
     });
 
-    // Delete Image
+  
     function deleteImage(id) {
         if (confirm('Are you sure you want to delete this image?')) {
             fetch('/admin/products/image/' + id, {
@@ -412,7 +403,7 @@
         }
     }
 
-    // Set Primary Image
+  
     function setPrimaryImage(id) {
         if (confirm('Set this as primary image?')) {
             fetch('/admin/products/image/' + id + '/primary', {

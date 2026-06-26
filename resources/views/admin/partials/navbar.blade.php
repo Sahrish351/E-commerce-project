@@ -44,18 +44,35 @@
                 <i class="fas fa-chevron-down"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="#">
-                    <i class="fas fa-user me-2"></i> My Profile
-                </a></li>
-                <li><a class="dropdown-item" href="#">
-                    <i class="fas fa-cog me-2"></i> Settings
-                </a></li>
-                <li><hr class="dropdown-divider"></li>
+                <!-- ✅ My Profile - Working Link -->
                 <li>
-                    <a class="dropdown-item text-danger" href="{{ route('logout') }}"
+                    <a class="dropdown-item" href="{{ route('admin.profile.index') }}">
+                        <i class="fas fa-user me-2"></i> My Profile
+                    </a>
+                </li>
+                <!-- ✅ Settings - Working Link -->
+                <li>
+                    <a class="dropdown-item" href="{{ route('admin.settings.index') }}">
+                        <i class="fas fa-cog me-2"></i> Settings
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <!-- ✅ View Store -->
+                <li>
+                    <a class="dropdown-item" href="{{ route('home') }}" target="_blank">
+                        <i class="fas fa-store me-2"></i> View Store
+                    </a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <!-- ✅ Logout -->
+                <li>
+                    <a class="dropdown-item text-danger" href="#"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt me-2"></i> Logout
                     </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </li>
             </ul>
         </div>
@@ -275,3 +292,10 @@
         }
     }
 </style>
+
+<script>
+    // Sidebar Toggle for Mobile
+    document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+        document.querySelector('.sidebar')?.classList.toggle('show');
+    });
+</script>

@@ -4,9 +4,7 @@
 
 @section('content')
 <style>
-    /* ========================================
-       PRODUCT SHOW PAGE STYLES
-       ======================================== */
+  
     .page-header {
         display: flex;
         justify-content: space-between;
@@ -85,7 +83,7 @@
         color: #fff;
     }
 
-    /* ----- Detail Card ----- */
+    
     .detail-card {
         background: #fff;
         border-radius: 16px;
@@ -146,7 +144,7 @@
         margin-left: 8px;
     }
 
-    /* ----- Badges ----- */
+
     .badge-status {
         padding: 4px 12px;
         border-radius: 30px;
@@ -178,7 +176,7 @@
         color: #fff;
     }
 
-    /* ----- Images ----- */
+   
     .product-images {
         display: flex;
         gap: 12px;
@@ -229,7 +227,6 @@
         margin-bottom: 8px;
     }
 
-    /* ----- Description Box ----- */
     .description-box {
         background: #f8f9fa;
         border-radius: 8px;
@@ -240,7 +237,7 @@
         margin-top: 4px;
     }
 
-    /* ----- Responsive ----- */
+    
     @media (max-width: 768px) {
         .page-header {
             flex-direction: column;
@@ -264,9 +261,6 @@
     }
 </style>
 
-<!-- ========================================
-     PAGE HEADER
-     ======================================== -->
 <div class="page-header">
     <div>
         <h4><i class="fas fa-eye"></i> {{ $product->name }}</h4>
@@ -289,14 +283,12 @@
     </div>
 </div>
 
-<!-- ========================================
-     PRODUCT DETAILS
-     ======================================== -->
+
 <div class="detail-card">
     <div class="row g-4">
-        <!-- ========== LEFT COLUMN ========== -->
+      
         <div class="col-md-8">
-            <!-- Basic Information -->
+            
             <div class="section-title"><i class="fas fa-info-circle"></i> Basic Information</div>
             
             <div class="info-row">
@@ -366,7 +358,7 @@
                 <span class="value">{{ number_format($product->sold_count ?? 0) }} orders</span>
             </div>
 
-            <!-- Descriptions -->
+          
             <div class="section-title mt-4"><i class="fas fa-align-left"></i> Descriptions</div>
             
             <div class="info-row">
@@ -385,9 +377,9 @@
             </div>
         </div>
 
-        <!-- ========== RIGHT COLUMN ========== -->
+       
         <div class="col-md-4">
-            <!-- Images -->
+           
             <div class="section-title"><i class="fas fa-images"></i> Product Images</div>
             <div class="product-images">
                 @forelse($product->images as $image)
@@ -405,7 +397,7 @@
                 @endforelse
             </div>
 
-            <!-- Quick Actions -->
+         
             <div class="section-title mt-4"><i class="fas fa-bolt"></i> Quick Actions</div>
             <div class="d-flex flex-column gap-2">
                 <a href="{{ route('admin.products.edit', $product->id) }}" class="btn-edit" style="justify-content: center;">
@@ -423,7 +415,7 @@
                 </form>
             </div>
 
-            <!-- Product Stats -->
+        
             <div class="section-title mt-4"><i class="fas fa-chart-simple"></i> Product Stats</div>
             <div style="background: #f8f9fa; border-radius: 8px; padding: 16px;">
                 <div class="d-flex justify-content-between mb-2">

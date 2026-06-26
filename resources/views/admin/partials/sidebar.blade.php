@@ -84,62 +84,39 @@
         </ul>
 
         <!-- FEATURES -->
-        <p class="menu-label mt-4">FEATURES</p>
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Analytics</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-bullhorn"></i>
-                    <span>Marketing</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-file-alt"></i>
-                    <span>Reports</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-chart-pie"></i>
-                    <span>Stocks</span>
-                </a>
-            </li>
-        </ul>
+<p class="menu-label mt-4">FEATURES</p>
+<ul class="nav flex-column">
+    <!-- Analytics -->
+    <li class="nav-item">
+        <a href="{{ route('admin.analytics.index') }}" class="nav-link {{ request()->routeIs('admin.analytics.*') ? 'active' : '' }}">
+            <i class="fas fa-chart-line"></i>
+            <span>Analytics</span>
+        </a>
+    </li>
+    <!-- Marketing -->
+    <li class="nav-item">
+        <a href="{{ route('admin.marketing.index') }}" class="nav-link {{ request()->routeIs('admin.marketing.*') ? 'active' : '' }}">
+            <i class="fas fa-bullhorn"></i>
+            <span>Marketing</span>
+        </a>
+    </li>
+    <!-- Reports -->
+    <li class="nav-item">
+        <a href="{{ route('admin.reports.index') }}" class="nav-link {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}">
+            <i class="fas fa-file-alt"></i>
+            <span>Reports</span>
+        </a>
+    </li>
+    <!-- Stocks -->
+    <li class="nav-item">
+        <a href="{{ route('admin.stocks.index') }}" class="nav-link {{ request()->routeIs('admin.stocks.*') ? 'active' : '' }}">
+            <i class="fas fa-chart-pie"></i>
+            <span>Stocks</span>
+        </a>
+    </li>
+</ul>
 
-        <!-- PAGES -->
-        <p class="menu-label mt-4">PAGES</p>
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-user"></i>
-                    <span>Profile</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-tasks"></i>
-                    <span>Tasks</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-file-alt"></i>
-                    <span>Forms</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-table"></i>
-                    <span>Tables</span>
-                </a>
-            </li>
-        </ul>
+        
     </div>
 
     <div class="sidebar-footer">

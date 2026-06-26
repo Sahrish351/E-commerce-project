@@ -4,7 +4,7 @@
 
 @section('content')
 <style>
-    /* ----- Product Page Styles ----- */
+   
     .page-header {
         display: flex;
         justify-content: space-between;
@@ -323,9 +323,7 @@
     }
 </style>
 
-<!-- ========================================
-     PAGE HEADER
-     ======================================== -->
+
 <div class="page-header">
     <div>
         <h4><i class="fas fa-box"></i> Products</h4>
@@ -336,9 +334,7 @@
     </a>
 </div>
 
-<!-- ========================================
-     FILTERS
-     ======================================== -->
+
 <div class="filter-card">
     <form action="{{ route('admin.products.index') }}" method="GET" class="row g-3">
         <div class="col-md-3">
@@ -379,9 +375,7 @@
     </form>
 </div>
 
-<!-- ========================================
-     PRODUCTS TABLE
-     ======================================== -->
+
 <div class="table-card">
     <div class="table-header">
         <span class="title"><i class="fas fa-list"></i> All Products</span>
@@ -460,7 +454,7 @@
                 @empty
                 <tr>
                     <td colspan="7">
-                        <!-- ✅ NEW (Chhota button) -->
+                       
 <div class="empty-state">
     <i class="fas fa-box-open"></i>
     <h5>No Products Found</h5>
