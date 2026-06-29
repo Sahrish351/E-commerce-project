@@ -4,9 +4,7 @@
 
 @section('content')
 <style>
-    /* ========================================
-       ORDERS PAGE STYLES
-       ======================================== */
+   
     .page-header {
         display: flex;
         justify-content: space-between;
@@ -308,9 +306,7 @@
     }
 </style>
 
-<!-- ========================================
-     PAGE HEADER
-     ======================================== -->
+
 <div class="page-header">
     <div>
         <h4><i class="fas fa-shopping-cart"></i> Orders</h4>
@@ -318,9 +314,7 @@
     </div>
 </div>
 
-<!-- ========================================
-     STATUS TABS
-     ======================================== -->
+
 <div class="status-tabs">
     <a href="{{ route('admin.orders.index') }}" class="tab-btn {{ !request('status') ? 'active' : '' }}">
         All <span class="count">{{ array_sum($statusCounts ?? []) }}</span>
@@ -342,9 +336,7 @@
     </a>
 </div>
 
-<!-- ========================================
-     FILTERS
-     ======================================== -->
+
 <div class="filter-card">
     <form action="{{ route('admin.orders.index') }}" method="GET" class="row g-3">
         <div class="col-md-4">
@@ -371,9 +363,7 @@
     </form>
 </div>
 
-<!-- ========================================
-     ORDERS TABLE
-     ======================================== -->
+
 <div class="table-card">
     <div class="table-header">
         <span class="title"><i class="fas fa-list"></i> All Orders</span>

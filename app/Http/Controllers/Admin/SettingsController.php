@@ -17,12 +17,10 @@ class SettingsController extends Controller
         $this->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class]);
     }
 
-    /**
-     * Show settings page
-     */
+  
     public function index()
     {
-        // Get current settings from database or config
+       
         $settings = [
             'store_name' => config('app.name', 'StyleHub'),
             'store_email' => config('mail.from.address', 'admin@stylehub.com'),
@@ -35,9 +33,7 @@ class SettingsController extends Controller
         return view('admin.settings.index', compact('settings'));
     }
 
-    /**
-     * Update settings
-     */
+    
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -59,11 +55,10 @@ class SettingsController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        // Save settings to database or .env file
-        // You can create a settings table to store these values
+        
         $this->updateEnvFile($request);
 
-        // Clear cache
+    
         Cache::flush();
         Artisan::call('config:clear');
 
@@ -77,9 +72,6 @@ class SettingsController extends Controller
         return back()->with('success', 'Settings updated successfully!');
     }
 
-    /**
-     * Update .env file (simple approach)
-     */
     private function updateEnvFile($request)
     {
         $envFile = base_path('.env');
@@ -104,12 +96,10 @@ class SettingsController extends Controller
         file_put_contents($envFile, $envContent);
     }
 
-    /**
-     * Reset settings to default
-     */
+    
     public function reset(Request $request)
     {
-        // Reset settings logic
+       
         Cache::flush();
 
         if ($request->ajax()) {

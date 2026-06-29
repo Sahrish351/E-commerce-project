@@ -8,13 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    // ✅ OPTION 1: Remove constructor completely
-    // public function __construct()
-    // {
-    //     // Empty
-    // }
-
-    // ✅ OPTION 2: Keep constructor with correct middleware
+   
     public function __construct()
     {
         $this->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class]);

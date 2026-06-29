@@ -13,22 +13,21 @@ class MarketingController extends Controller
         $this->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class]);
     }
 
-    // ✅ Show marketing page
     public function index()
     {
-        // Get campaigns from session or database
+        
         $campaigns = Session::get('marketing_campaigns', $this->getDefaultCampaigns());
         
         return view('admin.marketing.index', compact('campaigns'));
     }
 
-    // ✅ Show create campaign form
+    
     public function create()
     {
         return view('admin.marketing.create');
     }
 
-    // ✅ Store new campaign
+ 
     public function store(Request $request)
     {
         $request->validate([
@@ -58,7 +57,6 @@ class MarketingController extends Controller
             ->with('success', 'Campaign created successfully!');
     }
 
-    // ✅ Show single campaign
     public function show($id)
     {
         $campaigns = Session::get('marketing_campaigns', $this->getDefaultCampaigns());
@@ -72,7 +70,7 @@ class MarketingController extends Controller
         return view('admin.marketing.show', compact('campaign'));
     }
 
-    // ✅ Show edit campaign form
+   
     public function edit($id)
     {
         $campaigns = Session::get('marketing_campaigns', $this->getDefaultCampaigns());
@@ -86,7 +84,7 @@ class MarketingController extends Controller
         return view('admin.marketing.edit', compact('campaign'));
     }
 
-    // ✅ Update campaign
+  
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -116,7 +114,7 @@ class MarketingController extends Controller
             ->with('success', 'Campaign updated successfully!');
     }
 
-    // ✅ Delete campaign
+  
     public function destroy($id)
     {
         $campaigns = Session::get('marketing_campaigns', $this->getDefaultCampaigns());
@@ -134,7 +132,7 @@ class MarketingController extends Controller
             ->with('success', 'Campaign deleted successfully!');
     }
 
-    // ✅ Toggle campaign status
+  
     public function toggleStatus($id)
     {
         $campaigns = Session::get('marketing_campaigns', $this->getDefaultCampaigns());
@@ -152,7 +150,7 @@ class MarketingController extends Controller
             ->with('success', 'Campaign status updated!');
     }
 
-    // ✅ Default campaigns
+   
     private function getDefaultCampaigns()
     {
         return [

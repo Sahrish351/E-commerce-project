@@ -4,9 +4,7 @@
 
 @section('content')
 <style>
-    /* ========================================
-       CUSTOMERS PAGE STYLES
-       ======================================== */
+   
     .page-header {
         display: flex;
         justify-content: space-between;
@@ -280,9 +278,7 @@
     }
 </style>
 
-<!-- ========================================
-     PAGE HEADER
-     ======================================== -->
+
 <div class="page-header">
     <div>
         <h4><i class="fas fa-users"></i> Customers</h4>
@@ -290,9 +286,6 @@
     </div>
 </div>
 
-<!-- ========================================
-     STATS ROW
-     ======================================== -->
 <div class="stats-row">
     <div class="stat-item">
         <div class="number">{{ $users->total() ?? 0 }}</div>
@@ -308,9 +301,7 @@
     </div>
 </div>
 
-<!-- ========================================
-     FILTERS
-     ======================================== -->
+
 <div class="filter-card">
     <form action="{{ route('admin.users.index') }}" method="GET" class="row g-3">
         <div class="col-md-6">
@@ -327,9 +318,7 @@
     </form>
 </div>
 
-<!-- ========================================
-     CUSTOMERS TABLE
-     ======================================== -->
+
 <div class="table-card">
     <div class="table-header">
         <span class="title"><i class="fas fa-list"></i> All Customers</span>

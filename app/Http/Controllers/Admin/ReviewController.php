@@ -25,7 +25,7 @@ class ReviewController extends Controller
             });
         }
 
-        // ✅ FIXED: is_approved instead of status
+       
         if ($request->filled('status')) {
             if ($request->status == 'approved') {
                 $query->where('is_approved', true);

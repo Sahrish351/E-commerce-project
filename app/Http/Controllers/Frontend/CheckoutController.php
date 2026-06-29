@@ -83,10 +83,11 @@ class CheckoutController extends Controller
     }
     
     /**
-     * Place order
+     * Place order - UPDATED WITH PAYMENT METHODS
      */
     public function placeOrder(Request $request)
     {
+        // ✅ VALIDATION - Payment method and receipt
         $request->validate([
             'first_name' => 'required|string|max:255',
             'company_name' => 'nullable|string|max:255',
@@ -95,18 +96,17 @@ class CheckoutController extends Controller
             'town_city' => 'required|string|max:100',
             'phone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
-            'payment_method' => 'required|in:cod,online,bank,card',
+            'payment_method' => 'required|in:cod,bank,easypaisa',
+            'payment_receipt' => 'required_if:payment_method,bank,easypaisa|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:5120',
             'notes' => 'nullable|string|max:500',
         ]);
         
-        // ✅ Get user's cart
         $cart = Cart::where('user_id', Auth::id())->first();
         
         if (!$cart) {
             return back()->with('error', 'Your cart is empty!');
         }
         
-        // ✅ Get cart items from cart_items
         $cartItems = CartItem::where('cart_id', $cart->id)
             ->with('product')
             ->get();
@@ -148,52 +148,81 @@ class CheckoutController extends Controller
             $tax = ($subtotal - $discount) * 0.05;
             $grandTotal = $subtotal - $discount + $shipping + $tax;
             
-            // ✅ Create order
+            // ✅ Upload Payment Receipt (if bank or easypaisa)
+            $receiptPath = null;
+            if (in_array($request->payment_method, ['bank', 'easypaisa']) && $request->hasFile('payment_receipt')) {
+                $receiptPath = $request->file('payment_receipt')->store('payment_receipts', 'public');
+            }
+            
+            // ✅ CREATE ORDER - ALL FIELDS INCLUDING GRAND_TOTAL
             $order = Order::create([
                 'user_id' => Auth::id(),
                 'order_number' => 'SH-' . strtoupper(uniqid()) . '-' . date('Ymd'),
+                
+                // ✅ Customer Details
+                'first_name' => $request->first_name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                
+                // ✅ Amounts
                 'subtotal' => $subtotal,
                 'discount_amount' => $discount,
-                'shipping_charge' => $shipping,
+                'shipping_cost' => $shipping,
                 'tax_amount' => $tax,
-                'grand_total' => $grandTotal,
+                'total_amount' => $grandTotal,
+                'grand_total' => $grandTotal,  // ✅ YEH ADD KARO
+                
+                // ✅ Payment
                 'payment_method' => $request->payment_method,
-                'payment_status' => 'pending',
-                'order_status' => 'pending',
-                'shipping_name' => $request->first_name . ' ' . ($request->company_name ?? ''),
-                'shipping_address' => $request->street_address,
+                'payment_status' => in_array($request->payment_method, ['bank', 'easypaisa']) ? 'pending_approval' : 'pending',
+                'payment_receipt' => $receiptPath,
+                
+                // ✅ Status
+                'status' => 'pending',
+                
+                // ✅ Shipping
+                'shipping_address' => json_encode([
+                    'address' => $request->street_address,
+                    'city' => $request->town_city,
+                    'phone' => $request->phone,
+                    'name' => $request->first_name,
+                ]),
+                'shipping_name' => $request->first_name,
                 'shipping_city' => $request->town_city,
-                'shipping_state' => $request->shipping_state ?? '',
-                'shipping_postal_code' => $request->shipping_postal_code ?? '',
                 'shipping_phone' => $request->phone,
+                
                 'notes' => $request->notes,
             ]);
             
-            // ✅ Create order items from cart_items
+            // ✅ CREATE ORDER ITEMS
             foreach ($cartItems as $item) {
                 $price = $item->product->sale_price ?? $item->product->price;
+                $subtotalPrice = $item->quantity * $price;
                 
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $item->product_id,
+                    'variant_id' => null,
                     'product_name' => $item->product->name,
+                    'sku' => $item->product->sku ?? 'N/A',
                     'quantity' => $item->quantity,
-                    'price' => $price,
-                    'subtotal' => $item->quantity * $price,
+                    'unit_price' => $price,
+                    'total_price' => $subtotalPrice,
                 ]);
                 
                 // Update stock
                 if ($item->product->stock_quantity) {
                     $item->product->decrement('stock_quantity', $item->quantity);
                 }
-                $item->product->increment('sold_count', $item->quantity);
+                if (isset($item->product->sold_count)) {
+                    $item->product->increment('sold_count', $item->quantity);
+                }
             }
             
             // Update coupon usage
             if ($coupon && !is_array($coupon)) {
                 $coupon->increment('used_count');
                 
-                // If CouponUsage model exists
                 if (class_exists(CouponUsage::class)) {
                     CouponUsage::create([
                         'coupon_id' => $coupon->id,
@@ -203,14 +232,18 @@ class CheckoutController extends Controller
                 }
             }
             
-            // ✅ Update customer total spent
+            // Update customer total spent
             $customer = Customer::where('user_id', Auth::id())->first();
             if ($customer) {
-                $customer->updateTotalSpent($grandTotal);
-                $customer->addLoyaltyPoints(floor($grandTotal / 100) * 10);
+                if (method_exists($customer, 'updateTotalSpent')) {
+                    $customer->updateTotalSpent($grandTotal);
+                }
+                if (method_exists($customer, 'addLoyaltyPoints')) {
+                    $customer->addLoyaltyPoints(floor($grandTotal / 100) * 10);
+                }
             }
             
-            // ✅ Clear cart (delete cart and cart_items)
+            // Clear cart
             $cart->items()->delete();
             $cart->delete();
             
@@ -218,11 +251,9 @@ class CheckoutController extends Controller
             
             DB::commit();
             
-            // ✅ STORE ORDER NUMBER IN SESSION FOR CONFIRMATION PAGE
             session()->put('order_number', $order->order_number);
             session()->put('order_id', $order->id);
             
-            // ✅ REDIRECT TO CONFIRMATION PAGE
             return redirect()->route('order.confirmation')
                 ->with('success', 'Your order has been placed successfully!');
                 

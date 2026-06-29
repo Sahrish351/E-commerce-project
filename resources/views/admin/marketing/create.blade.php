@@ -4,9 +4,7 @@
 
 @section('content')
 <style>
-    /* ========================================
-       PAGE HEADER
-       ======================================== */
+ 
     .page-header {
         display: flex;
         justify-content: space-between;
@@ -48,9 +46,7 @@
         background: #e0e0e0;
     }
 
-    /* ========================================
-       FORM CARD
-       ======================================== */
+  
     .form-card {
         background: #fff;
         border-radius: 16px;
@@ -98,9 +94,7 @@
         border-color: #db4444;
     }
 
-    /* ========================================
-       BUTTONS
-       ======================================== */
+  
     .btn-submit {
         background: #db4444;
         color: #fff;
@@ -138,9 +132,7 @@
         background: #e0e0e0;
     }
 
-    /* ========================================
-       CAMPAIGN TYPE CARDS
-       ======================================== */
+   
     .type-card {
         border: 2px solid #f0f0f0;
         border-radius: 12px;
@@ -177,9 +169,7 @@
         margin-top: 2px;
     }
 
-    /* ========================================
-       RESPONSIVE
-       ======================================== */
+
     @media (max-width: 768px) {
         .page-header {
             flex-direction: column;
@@ -200,9 +190,7 @@
     }
 </style>
 
-<!-- ========================================
-     PAGE HEADER
-     ======================================== -->
+
 <div class="page-header">
     <div>
         <h4><i class="fas fa-plus-circle"></i> Create Campaign</h4>
@@ -213,15 +201,13 @@
     </a>
 </div>
 
-<!-- ========================================
-     FORM
-     ======================================== -->
+
 <div class="form-card">
     <form action="{{ route('admin.marketing.store') }}" method="POST">
         @csrf
 
         <div class="row g-4">
-            <!-- Campaign Name -->
+          
             <div class="col-12">
                 <div class="mb-2">
                     <label class="form-label">Campaign Name <span class="required">*</span></label>
@@ -232,7 +218,7 @@
                 </div>
             </div>
 
-            <!-- Campaign Type -->
+        
             <div class="col-12">
                 <label class="form-label">Campaign Type <span class="required">*</span></label>
                 <div class="row g-3">
@@ -269,7 +255,7 @@
                 @error('type') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
             </div>
 
-            <!-- Status -->
+        
             <div class="col-md-4">
                 <div class="mb-2">
                     <label class="form-label">Status <span class="required">*</span></label>
@@ -282,7 +268,7 @@
                 </div>
             </div>
 
-            <!-- Sent Count -->
+    
             <div class="col-md-4">
                 <div class="mb-2">
                     <label class="form-label">Total Sent</label>
@@ -293,7 +279,7 @@
                 </div>
             </div>
 
-            <!-- Opened Count -->
+          
             <div class="col-md-4">
                 <div class="mb-2">
                     <label class="form-label">Total Opened</label>
@@ -304,7 +290,7 @@
                 </div>
             </div>
 
-            <!-- Preview / Notes -->
+        
             <div class="col-12">
                 <div class="mb-2">
                     <label class="form-label">Notes <span class="text-muted">(optional)</span></label>
@@ -312,7 +298,7 @@
                 </div>
             </div>
 
-            <!-- Buttons -->
+           
             <div class="col-12">
                 <hr>
                 <div class="d-flex gap-3 flex-wrap">
@@ -328,22 +314,20 @@
     </form>
 </div>
 
-<!-- ========================================
-     SCRIPT
-     ======================================== -->
+
 <script>
     function selectType(element) {
-        // Remove active class from all
+      
         document.querySelectorAll('.type-card').forEach(card => {
             card.classList.remove('active');
         });
-        // Add active class to clicked
+      
         element.classList.add('active');
-        // Set hidden input value
+       
         document.getElementById('campaignType').value = element.dataset.type;
     }
 
-    // Auto-generate campaign name from type (optional)
+ 
     document.addEventListener('DOMContentLoaded', function() {
         const nameInput = document.querySelector('input[name="name"]');
         const typeCards = document.querySelectorAll('.type-card');

@@ -16,7 +16,7 @@ class UserController extends Controller
     
     public function index()
     {
-        // ✅ ONLY USERS (clients) - Exclude admins
+        
         $users = User::where('role', 'user')
             ->with('customer')
             ->latest()
@@ -27,7 +27,7 @@ class UserController extends Controller
     
     public function edit(User $user)
     {
-        // ✅ Check if user is admin - prevent editing admin from customer page
+       
         if ($user->role === 'admin') {
             return redirect()->route('admin.users.index')
                 ->with('error', 'Cannot edit admin from customers page!');
@@ -38,7 +38,7 @@ class UserController extends Controller
     
     public function update(Request $request, User $user)
     {
-        // ✅ Prevent admin update from customer page
+       
         if ($user->role === 'admin') {
             return back()->with('error', 'Cannot update admin from customers page!');
         }
@@ -64,7 +64,7 @@ class UserController extends Controller
     
     public function destroy(User $user)
     {
-        // ✅ Prevent admin deletion
+       
         if ($user->role === 'admin') {
             return back()->with('error', 'Cannot delete admin from customers page!');
         }

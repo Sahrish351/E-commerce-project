@@ -10,7 +10,7 @@
     <div class="sidebar-menu">
         <p class="menu-label">MAIN MENU</p>
         <ul class="nav flex-column">
-            <!-- Dashboard -->
+           
             <li class="nav-item">
                 <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                     <i class="fas fa-th-large"></i>
@@ -18,7 +18,7 @@
                 </a>
             </li>
 
-            <!-- Products -->
+           
             <li class="nav-item">
                 <a href="{{ route('admin.products.index') }}" class="nav-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}">
                     <i class="fas fa-box"></i>
@@ -26,7 +26,7 @@
                 </a>
             </li>
 
-            <!-- Categories -->
+           
             <li class="nav-item">
                 <a href="{{ route('admin.categories.index') }}" class="nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
                     <i class="fas fa-tags"></i>
@@ -34,7 +34,7 @@
                 </a>
             </li>
 
-            <!-- Orders -->
+         
             <li class="nav-item">
                 <a href="{{ route('admin.orders.index') }}" class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
                     <i class="fas fa-shopping-cart"></i>
@@ -42,7 +42,7 @@
                 </a>
             </li>
 
-            <!-- Customers -->
+           
             <li class="nav-item">
                 <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                     <i class="fas fa-users"></i>
@@ -50,7 +50,7 @@
                 </a>
             </li>
 
-            <!-- Coupons -->
+          
             <li class="nav-item">
                 <a href="{{ route('admin.coupons.index') }}" class="nav-link {{ request()->routeIs('admin.coupons.*') ? 'active' : '' }}">
                     <i class="fas fa-ticket"></i>
@@ -58,7 +58,7 @@
                 </a>
             </li>
 
-            <!-- Reviews - FIXED -->
+            
             <li class="nav-item">
                 <a href="{{ route('admin.reviews.index') }}" class="nav-link {{ request()->routeIs('admin.reviews.*') ? 'active' : '' }}">
                     <i class="fas fa-star"></i>
@@ -66,7 +66,7 @@
                 </a>
             </li>
 
-            <!-- Wishlist - FIXED -->
+       
             <li class="nav-item">
                 <a href="{{ route('admin.wishlist.index') }}" class="nav-link {{ request()->routeIs('admin.wishlist.*') ? 'active' : '' }}">
                     <i class="fas fa-heart"></i>
@@ -74,7 +74,6 @@
                 </a>
             </li>
 
-            <!-- Settings -->
             <li class="nav-item">
                 <a href="{{ route('admin.settings.index') }}" class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
                     <i class="fas fa-cog"></i>
@@ -83,31 +82,31 @@
             </li>
         </ul>
 
-        <!-- FEATURES -->
+      
 <p class="menu-label mt-4">FEATURES</p>
 <ul class="nav flex-column">
-    <!-- Analytics -->
+   
     <li class="nav-item">
         <a href="{{ route('admin.analytics.index') }}" class="nav-link {{ request()->routeIs('admin.analytics.*') ? 'active' : '' }}">
             <i class="fas fa-chart-line"></i>
             <span>Analytics</span>
         </a>
     </li>
-    <!-- Marketing -->
+    
     <li class="nav-item">
         <a href="{{ route('admin.marketing.index') }}" class="nav-link {{ request()->routeIs('admin.marketing.*') ? 'active' : '' }}">
             <i class="fas fa-bullhorn"></i>
             <span>Marketing</span>
         </a>
     </li>
-    <!-- Reports -->
+    
     <li class="nav-item">
         <a href="{{ route('admin.reports.index') }}" class="nav-link {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}">
             <i class="fas fa-file-alt"></i>
             <span>Reports</span>
         </a>
     </li>
-    <!-- Stocks -->
+  
     <li class="nav-item">
         <a href="{{ route('admin.stocks.index') }}" class="nav-link {{ request()->routeIs('admin.stocks.*') ? 'active' : '' }}">
             <i class="fas fa-chart-pie"></i>
@@ -136,9 +135,7 @@
 </nav>
 
 <style>
-    /* ========================================
-       SIDEBAR - NEXTADMIN STYLE
-       ======================================== */
+  
     .admin-sidebar {
         width: 280px;
         background: #1a1a2e;

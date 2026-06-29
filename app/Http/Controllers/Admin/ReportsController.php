@@ -193,7 +193,7 @@ class ReportsController extends Controller
                 $data['title'] = 'Analytics Report';
                 $data['headers'] = ['Date', 'Visitors', 'Page Views', 'Orders', 'Conversion Rate'];
                 
-                // Real data from database
+             
                 $analytics = DB::table('analytics')
                     ->orderBy('date', 'desc')
                     ->limit(30)
@@ -211,7 +211,7 @@ class ReportsController extends Controller
                         ];
                     })->toArray();
                 } else {
-                    // If no analytics table, show empty
+                  
                     $data['rows'] = [];
                 }
 

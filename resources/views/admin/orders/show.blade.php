@@ -154,9 +154,7 @@
     }
 </style>
 
-<!-- ========================================
-     PAGE HEADER
-     ======================================== -->
+
 <div class="page-header">
     <div>
         <h4><i class="fas fa-eye"></i> Order #{{ $order->order_number }}</h4>
@@ -167,9 +165,7 @@
     </a>
 </div>
 
-<!-- ========================================
-     ORDER DETAILS
-     ======================================== -->
+
 <div class="row">
     <div class="col-md-8">
         <div class="detail-card">
@@ -222,7 +218,7 @@
     </div>
 
     <div class="col-md-4">
-        <!-- Status Update -->
+       
         <div class="detail-card">
             <div class="section-title"><i class="fas fa-sync"></i> Update Status</div>
             <form action="{{ route('admin.orders.status', $order->id) }}" method="POST">
@@ -243,7 +239,7 @@
             </form>
         </div>
 
-        <!-- Customer Details -->
+     
         <div class="detail-card">
             <div class="section-title"><i class="fas fa-user"></i> Customer Details</div>
             <div class="info-row">
@@ -260,7 +256,7 @@
             </div>
         </div>
 
-        <!-- Shipping Details -->
+     
         <div class="detail-card">
             <div class="section-title"><i class="fas fa-truck"></i> Shipping Details</div>
             <div class="info-row">

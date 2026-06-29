@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    // ✅ FIXED: Use AdminMiddleware::class instead of 'admin'
+  
     public function __construct()
     {
         $this->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class]);
@@ -18,7 +18,7 @@ class OrderController extends Controller
     {
         $query = Order::with('user');
         
-        // ✅ FIXED: order_status → status (according to your table)
+       
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
@@ -29,7 +29,7 @@ class OrderController extends Controller
         
         $orders = $query->latest()->paginate(20);
         
-        // ✅ FIXED: order_status → status
+    
         $statusCounts = [
             'pending' => Order::where('status', 'pending')->count(),
             'processing' => Order::where('status', 'processing')->count(),

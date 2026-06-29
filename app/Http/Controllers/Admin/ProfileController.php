@@ -15,18 +15,13 @@ class ProfileController extends Controller
         $this->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class]);
     }
 
-    /**
-     * Show profile page
-     */
+  
     public function index()
     {
         $user = Auth::user();
         return view('admin.profile.index', compact('user'));
     }
 
-    /**
-     * Update profile
-     */
     public function update(Request $request)
     {
         $user = Auth::user();
@@ -47,7 +42,7 @@ class ProfileController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        // Update user
+      
         $user->name = $request->name;
         $user->email = $request->email;
 

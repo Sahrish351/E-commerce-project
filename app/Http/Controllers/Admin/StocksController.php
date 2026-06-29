@@ -15,21 +15,21 @@ class StocksController extends Controller
 
     public function index()
     {
-        // Total Products
+     
         $totalProducts = Product::count();
 
-        // Low Stock Products (<= 5)
+      
         $lowStock = Product::where('stock_quantity', '>', 0)
             ->where('stock_quantity', '<=', 5)
             ->count();
 
-        // Out of Stock Products
+     
         $outOfStock = Product::where('stock_quantity', '<=', 0)->count();
 
-        // Total Items in Stock
+      
         $totalItems = Product::sum('stock_quantity');
 
-        // All Products with Stock Details
+        
         $products = Product::with('category')
             ->orderBy('stock_quantity', 'asc')
             ->paginate(15);
@@ -43,7 +43,6 @@ class StocksController extends Controller
         ));
     }
 
-    // Update stock for a product
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -60,7 +59,7 @@ class StocksController extends Controller
         ]);
     }
 
-    // Get low stock products (AJAX)
+   
     public function lowStock()
     {
         $products = Product::where('stock_quantity', '>', 0)
@@ -71,7 +70,7 @@ class StocksController extends Controller
         return response()->json($products);
     }
 
-    // Get out of stock products (AJAX)
+    
     public function outOfStock()
     {
         $products = Product::where('stock_quantity', '<=', 0)

@@ -7,13 +7,13 @@
     </div>
 
     <div class="navbar-right">
-        <!-- Search -->
+        
         <div class="search-box">
             <i class="fas fa-search"></i>
             <input type="text" placeholder="Search..." />
         </div>
 
-        <!-- Notifications -->
+      
         <div class="dropdown">
             <button class="icon-btn" data-bs-toggle="dropdown">
                 <i class="fas fa-bell"></i>
@@ -31,7 +31,7 @@
             </ul>
         </div>
 
-        <!-- User Profile -->
+        
         <div class="dropdown user-dropdown">
             <button class="user-btn" data-bs-toggle="dropdown">
                 <div class="user-avatar">
@@ -44,27 +44,27 @@
                 <i class="fas fa-chevron-down"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
-                <!-- ✅ My Profile - Working Link -->
+                
                 <li>
                     <a class="dropdown-item" href="{{ route('admin.profile.index') }}">
                         <i class="fas fa-user me-2"></i> My Profile
                     </a>
                 </li>
-                <!-- ✅ Settings - Working Link -->
+               
                 <li>
                     <a class="dropdown-item" href="{{ route('admin.settings.index') }}">
                         <i class="fas fa-cog me-2"></i> Settings
                     </a>
                 </li>
                 <li><hr class="dropdown-divider"></li>
-                <!-- ✅ View Store -->
+               
                 <li>
                     <a class="dropdown-item" href="{{ route('home') }}" target="_blank">
                         <i class="fas fa-store me-2"></i> View Store
                     </a>
                 </li>
                 <li><hr class="dropdown-divider"></li>
-                <!-- ✅ Logout -->
+               
                 <li>
                     <a class="dropdown-item text-danger" href="#"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -80,9 +80,7 @@
 </nav>
 
 <style>
-    /* ========================================
-       NAVBAR - NEXTADMIN STYLE
-       ======================================== */
+   
     .admin-navbar {
         background: #fff;
         padding: 12px 28px;
@@ -96,7 +94,7 @@
         min-height: 70px;
     }
 
-    /* ----- Left Side ----- */
+  
     .navbar-left {
         display: flex;
         align-items: center;
@@ -121,14 +119,14 @@
         margin: 0;
     }
 
-    /* ----- Right Side ----- */
+   
     .navbar-right {
         display: flex;
         align-items: center;
         gap: 20px;
     }
 
-    /* Search Box */
+
     .search-box {
         position: relative;
         display: flex;
@@ -157,7 +155,7 @@
         box-shadow: 0 0 0 3px rgba(219,68,68,0.08);
     }
 
-    /* Icon Button */
+   
     .icon-btn {
         background: transparent;
         border: none;
@@ -185,7 +183,7 @@
         text-align: center;
     }
 
-    /* User Dropdown */
+  
     .user-btn {
         background: transparent;
         border: none;
@@ -233,7 +231,7 @@
         margin-left: 4px;
     }
 
-    /* Dropdown Menu */
+  
     .dropdown-menu {
         border: none;
         box-shadow: 0 8px 30px rgba(0,0,0,0.08);
@@ -261,7 +259,7 @@
         color: #db4444;
     }
 
-    /* ----- Responsive ----- */
+  
     @media (max-width: 992px) {
         .sidebar-toggle {
             display: block;
@@ -294,7 +292,7 @@
 </style>
 
 <script>
-    // Sidebar Toggle for Mobile
+    
     document.getElementById('sidebarToggle')?.addEventListener('click', function() {
         document.querySelector('.sidebar')?.classList.toggle('show');
     });

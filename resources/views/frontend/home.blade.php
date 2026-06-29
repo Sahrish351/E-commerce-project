@@ -783,7 +783,7 @@
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount" style="font-size: 10px;">0</span>
                     </a>
                     @if(auth()->check())
-                        <a href="{{ route('profile.dashboard') }}" class="ms-3 text-dark">
+                        <a href="{{ route('client.dashboard') }}" class="ms-3 text-dark">
                             <i class="fas fa-user-circle fs-5"></i>
                         </a>
                     @endif

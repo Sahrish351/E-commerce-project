@@ -68,7 +68,7 @@
         margin-bottom: 14px; 
     }
     
-    /* ===== FORMAT SELECTOR - HORIZONTAL EK LINE MEIN ===== */
+   
     .format-selector {
         display: flex;
         gap: 6px;
@@ -101,7 +101,7 @@
         border-color: #ccc;
     }
 
-    /* ===== RED GENERATE BUTTON ===== */
+  
     .report-card .generate-btn {
         background: #db4444;
         color: #fff;
@@ -141,7 +141,7 @@
         100% { transform: rotate(360deg); }
     }
 
-    /* ===== TOAST NOTIFICATION ===== */
+    
     #toast-container {
         position: fixed;
         top: 20px;
@@ -207,7 +207,7 @@
     </div>
 </div>
 
-<!-- Toast Container -->
+
 <div id="toast-container"></div>
 
 <div class="row g-4">
@@ -220,14 +220,14 @@
             <h5>{{ $report['name'] }}</h5>
             <p>{{ $report['description'] }}</p>
             
-            <!-- ===== FORMAT SELECTOR - HORIZONTAL ===== -->
+         
             <div class="format-selector" data-report="{{ $key }}">
                 <span class="format-option active" data-format="csv">CSV</span>
                 <span class="format-option" data-format="excel">Excel</span>
                 <span class="format-option" data-format="pdf">PDF</span>
             </div>
             
-            <!-- ===== RED GENERATE BUTTON ===== -->
+         
             <button class="generate-btn" data-report="{{ $key }}">
                 <i class="fas fa-download"></i> Generate
             </button>
@@ -240,7 +240,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     
-    // ===== FORMAT SELECTOR =====
+   
     document.querySelectorAll('.format-selector').forEach(selector => {
         const options = selector.querySelectorAll('.format-option');
         options.forEach(option => {
@@ -251,8 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
-
-    // ===== GENERATE BUTTONS =====
+ 
     document.querySelectorAll('.generate-btn').forEach(button => {
         button.addEventListener('click', function() {
             const reportType = this.dataset.report;
@@ -261,11 +260,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const activeFormat = formatSelector ? formatSelector.querySelector('.format-option.active') : null;
             const format = activeFormat ? activeFormat.dataset.format : 'csv';
             
-            // Disable button
+        
             this.disabled = true;
             this.innerHTML = '<i class="fas fa-spinner spinner"></i> Generating...';
             
-            // Get CSRF token
             const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || 
                          document.querySelector('input[name="_token"]')?.value;
             
@@ -276,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             showToast('Generating ' + reportType + ' report...', 'info');
             
-            // ===== AJAX REQUEST =====
+           
             fetch('{{ url("/admin/reports/generate") }}', {
                 method: 'POST',
                 body: formData,
@@ -294,7 +292,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.blob();
             })
             .then(blob => {
-                // Create download link
+              
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
@@ -317,14 +315,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 showToast('❌ ' + message, 'error');
             })
             .finally(() => {
-                // Re-enable button
+               
                 this.disabled = false;
                 this.innerHTML = '<i class="fas fa-download"></i> Generate';
             });
         });
     });
 
-    // ===== TOAST SYSTEM =====
+   
     function showToast(message, type = 'info') {
         const container = document.getElementById('toast-container');
         if (!container) return;
@@ -344,14 +342,14 @@ document.addEventListener('DOMContentLoaded', function() {
             <span class="toast-close"><i class="fas fa-times"></i></span>
         `;
         
-        // Close button
+     
         toast.querySelector('.toast-close').addEventListener('click', function() {
             removeToast(toast);
         });
         
         container.appendChild(toast);
         
-        // Auto remove after 5 seconds
+      
         setTimeout(() => {
             removeToast(toast);
         }, 5000);

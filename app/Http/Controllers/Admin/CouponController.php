@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class CouponController extends Controller
 {
-    // ✅ FIXED: Use AdminMiddleware::class instead of 'admin'
+   
     public function __construct()
     {
         $this->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class]);
@@ -36,7 +36,7 @@ class CouponController extends Controller
             'expires_at' => 'nullable|date',
         ]);
         
-        // ✅ FIXED: Use correct field names
+        
         Coupon::create([
             'code' => strtoupper($request->code),
             'discount_type' => $request->discount_type,

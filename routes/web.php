@@ -153,20 +153,6 @@ Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.d
 Route::post('/order/track', [OrderController::class, 'track'])->name('orders.track');
 
 
-// ============================================
-// PROFILE ROUTES
-// ============================================
-Route::middleware('auth')->prefix('profile')->name('profile.')->group(function () {
-    Route::get('/', [ProfileController::class, 'dashboard'])->name('dashboard');
-    Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
-    Route::put('/update', [ProfileController::class, 'updateProfile'])->name('update');
-    Route::get('/password', [ProfileController::class, 'editPassword'])->name('password');
-    Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update');
-    Route::get('/addresses', [ProfileController::class, 'addresses'])->name('addresses');
-    Route::post('/address/store', [ProfileController::class, 'storeAddress'])->name('address.store');
-    Route::delete('/address/delete/{id}', [ProfileController::class, 'deleteAddress'])->name('address.delete');
-    Route::get('/payment', [ProfileController::class, 'payment'])->name('payment');
-});
 
 
 // ============================================
@@ -255,4 +241,30 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->name('admi
     // Admin Profile
     Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile.index');
     Route::put('/profile/update', [AdminProfileController::class, 'update'])->name('profile.update');
+});
+
+/// ============================================
+// CLIENT DASHBOARD ROUTES
+// ============================================
+Route::middleware('auth')->prefix('client')->name('client.')->group(function () {
+    
+    // Dashboard
+    Route::get('/dashboard', [App\Http\Controllers\Client\DashboardController::class, 'index'])->name('dashboard');
+    
+    // Profile
+    Route::get('/profile/edit', [App\Http\Controllers\Client\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [App\Http\Controllers\Client\ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/password', [App\Http\Controllers\Client\ProfileController::class, 'password'])->name('profile.password');
+    Route::put('/profile/password', [App\Http\Controllers\Client\ProfileController::class, 'updatePassword'])->name('profile.password.update');
+    Route::get('/profile/addresses', [App\Http\Controllers\Client\ProfileController::class, 'addresses'])->name('profile.addresses');
+    Route::post('/profile/address', [App\Http\Controllers\Client\ProfileController::class, 'storeAddress'])->name('profile.address.store');
+    Route::delete('/profile/address/{id}', [App\Http\Controllers\Client\ProfileController::class, 'deleteAddress'])->name('profile.address.delete');
+    
+    // Orders
+    Route::get('/orders', [App\Http\Controllers\Client\OrderController::class, 'index'])->name('orders');
+    Route::get('/orders/{id}', [App\Http\Controllers\Client\OrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders/{id}/cancel', [App\Http\Controllers\Client\OrderController::class, 'cancel'])->name('orders.cancel');
+    
+    // Wishlist
+    Route::get('/wishlist', [App\Http\Controllers\Client\WishlistController::class, 'index'])->name('wishlist');
 });

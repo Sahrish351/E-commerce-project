@@ -19,9 +19,7 @@ class SettingController extends Controller
 
     public function update(Request $request)
     {
-        // Settings update logic here
-        // You can store settings in database or .env file
-
+       
         return back()->with('success', 'Settings updated successfully!');
     }
 }

@@ -172,7 +172,7 @@
     }
 </style>
 
-<!-- Toast Container -->
+
 <div class="toast-container" id="toastContainer"></div>
 
 <div class="page-header">
@@ -182,7 +182,6 @@
     </div>
 </div>
 
-<!-- General Settings -->
 <div class="settings-card">
     <div class="card-title"><i class="fas fa-globe"></i> General Settings</div>
     <form id="generalSettingsForm" action="{{ route('admin.settings.update') }}" method="POST">
@@ -211,7 +210,7 @@
     </form>
 </div>
 
-<!-- Payment Settings -->
+
 <div class="settings-card">
     <div class="card-title"><i class="fas fa-credit-card"></i> Payment Settings</div>
     <div class="row">
@@ -240,7 +239,7 @@
     </div>
 </div>
 
-<!-- Notification Settings -->
+
 <div class="settings-card">
     <div class="card-title"><i class="fas fa-bell"></i> Notification Settings</div>
     <div class="row">
@@ -295,7 +294,7 @@
     </div>
 </div>
 
-<!-- Security Settings -->
+
 <div class="settings-card">
     <div class="card-title"><i class="fas fa-shield-alt"></i> Security Settings</div>
     <div class="row">
@@ -337,7 +336,7 @@ function showToast(message, type = 'info') {
     }, 4000);
 }
 
-// Save Settings AJAX
+
 document.querySelectorAll('form').forEach(form => {
     form.addEventListener('submit', function(e) {
         e.preventDefault();

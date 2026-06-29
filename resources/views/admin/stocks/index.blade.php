@@ -114,7 +114,7 @@
         cursor: not-allowed;
     }
 
-    /* Stock Update Modal */
+  
     .modal-custom .modal-content {
         border-radius: 16px;
         border: none;
@@ -147,7 +147,7 @@
         box-shadow: 0 0 0 0.2rem rgba(219, 68, 68, 0.1);
     }
 
-    /* Toast */
+  
     #toast-container {
         position: fixed;
         top: 20px;
@@ -190,7 +190,7 @@
         to { transform: translateX(100%); opacity: 0; }
     }
 
-    /* ===== PAGINATION STYLES ===== */
+   
     .pagination-wrapper {
         display: flex;
         justify-content: space-between;
@@ -260,10 +260,10 @@
     </div>
 </div>
 
-<!-- Toast Container -->
+
 <div id="toast-container"></div>
 
-<!-- Stats Cards -->
+
 <div class="row g-4 mb-4">
     <div class="col-md-3 col-6">
         <div class="stat-card green">
@@ -311,7 +311,7 @@
     </div>
 </div>
 
-<!-- Stock Inventory Table -->
+
 <div class="chart-card" style="background:#fff; border-radius:16px; box-shadow:0 2px 15px rgba(0,0,0,0.04); overflow:hidden;">
     <div style="padding:15px 20px; border-bottom:1px solid #f0f0f0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
         <span style="font-weight:700; font-size:16px; color:#1a1a2e;">
@@ -373,7 +373,7 @@
             </table>
         </div>
 
-        <!-- ===== PAGINATION WITH SHOWING INFO ===== -->
+        
         <div class="pagination-wrapper">
             <div class="showing-info">
                 Showing <strong>{{ $products->firstItem() }}</strong> 
@@ -387,7 +387,6 @@
     </div>
 </div>
 
-<!-- Update Stock Modal -->
 <div class="modal fade modal-custom" id="updateStockModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -424,7 +423,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const newStock = document.getElementById('new-stock');
     const saveBtn = document.getElementById('save-stock-btn');
 
-    // ===== OPEN MODAL ON UPDATE BUTTON CLICK =====
+  
     document.querySelectorAll('.update-stock-btn').forEach(button => {
         button.addEventListener('click', function() {
             productId.value = this.dataset.id;
@@ -435,7 +434,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ===== SAVE STOCK UPDATE =====
+   
     saveBtn.addEventListener('click', function() {
         const id = productId.value;
         const stock = newStock.value;
@@ -512,7 +511,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ===== TOAST SYSTEM =====
+    
     function showToast(message, type = 'info') {
         const container = document.getElementById('toast-container');
         if (!container) return;

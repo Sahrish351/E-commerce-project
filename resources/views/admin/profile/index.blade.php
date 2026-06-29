@@ -201,10 +201,9 @@
     }
 </style>
 
-<!-- Toast Container -->
+
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- Page Header -->
 <div class="page-header">
     <div>
         <h4><i class="fas fa-user-circle"></i> My Profile</h4>
@@ -213,9 +212,9 @@
 </div>
 
 <div class="row g-4">
-    <!-- Left Column - Avatar & Info -->
+ 
     <div class="col-md-4">
-        <!-- Avatar Card -->
+      
         <div class="profile-avatar-card">
             <div class="avatar">{{ substr(auth()->user()->name, 0, 1) }}</div>
             <div class="name">{{ auth()->user()->name }}</div>
@@ -228,7 +227,7 @@
             </div>
         </div>
 
-        <!-- Info Card -->
+     
         <div class="profile-card">
             <div class="card-title"><i class="fas fa-info-circle"></i> Account Details</div>
             <div class="info-row">
@@ -254,7 +253,7 @@
         </div>
     </div>
 
-    <!-- Right Column - Edit Form -->
+  
     <div class="col-md-8">
         <div class="profile-card">
             <div class="card-title"><i class="fas fa-edit"></i> Edit Profile</div>
