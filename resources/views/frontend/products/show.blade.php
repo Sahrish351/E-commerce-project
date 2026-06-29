@@ -5,6 +5,7 @@
 @section('content')
 <div class="container py-4">
     
+    <!-- Breadcrumb -->
     <div class="row mb-4">
         <div class="col-12">
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -26,26 +27,26 @@
 
     <div class="row g-5">
        
+        <!-- Gallery -->
         <div class="col-md-6">
             <div class="product-gallery">
-              
+                <!-- Main Image -->
                 <div style="background: #f5f5f5; border-radius: 8px; padding: 20px; text-align: center; height: 400px; display: flex; align-items: center; justify-content: center; border: 1px solid #eee;">
                     @php
                         $mainImage = $product->images->first();
                     @endphp
-                  
                     <img src="{{ $mainImage ? asset($mainImage->image_url) : asset('images/products/default.jpg') }}" 
                          alt="{{ $product->name }}" 
+                         id="mainProductImage"
                          style="max-width: 100%; max-height: 100%; object-fit: contain;">
                 </div>
                 
-               
+                <!-- Thumbnails -->
                 @if($product->images->count() > 0)
                 <div class="d-flex gap-2 mt-3" style="overflow-x: auto; padding-bottom: 5px;">
                     @foreach($product->images as $image)
                     <div style="width: 80px; height: 80px; background: #f5f5f5; border-radius: 4px; padding: 5px; flex-shrink: 0; cursor: pointer; border: 2px solid {{ $loop->first ? '#db4444' : 'transparent' }}; transition: all 0.3s;" 
                          onclick="changeMainImage(this, '{{ asset($image->image_url) }}')">
-                     
                         <img src="{{ asset($image->image_url) }}" 
                              alt="{{ $product->name }}" 
                              style="width: 100%; height: 100%; object-fit: contain;">
@@ -56,7 +57,7 @@
             </div>
         </div>
 
-        
+        <!-- Product Info -->
         <div class="col-md-6">
            
             @if($product->category)
@@ -65,14 +66,14 @@
                 </span>
             @endif
             
-           
             <h1 class="fw-bold mt-1" style="font-size: 28px;">{{ $product->name }}</h1>
             
-           
+            <!-- Rating -->
             <div class="d-flex align-items-center gap-2 mt-2">
                 <span>
                     @php
-                        $rating = $product->rating ?? 4.5;
+                        $rating = $product->reviews_avg_rating ?? 0;
+                        $count = $product->reviews_count ?? 0;
                         $fullStars = (int)floor($rating);
                         $halfStar = ($rating - $fullStars) >= 0.5 ? 1 : 0;
                         $emptyStars = 5 - $fullStars - $halfStar;
@@ -87,14 +88,14 @@
                         <i class="far fa-star" style="color: #ddd;"></i>
                     @endfor
                 </span>
-                <span style="font-weight: 600;">{{ number_format($product->rating ?? 4.5, 1) }}</span>
+                <span style="font-weight: 600;">{{ number_format($rating, 1) }}</span>
                 <span class="text-muted">|</span>
-                <span class="text-muted">{{ $product->reviews->count() ?? 0 }} reviews</span>
+                <span class="text-muted">{{ $count }} reviews</span>
                 <span class="text-muted">|</span>
                 <span style="color: #28a745;">{{ number_format($product->sold_count ?? 0) }} sold</span>
             </div>
             
-           
+            <!-- Price -->
             <div class="d-flex align-items-center gap-3 mt-3">
                 <span class="fw-bold" style="color: #db4444; font-size: 28px;">
                     ${{ number_format($product->sale_price ?? $product->price, 2) }}
@@ -109,7 +110,7 @@
                 @endif
             </div>
             
-            
+            <!-- Stock -->
             <div class="mt-3">
                 @if($product->stock_quantity > 0)
                     <span style="color: #28a745; font-weight: 600;">
@@ -122,23 +123,14 @@
                 @endif
             </div>
             
-           
+            <!-- Description -->
             <div class="mt-3">
                 <p style="color: #666; line-height: 1.8;">
                     {{ $product->short_description ?? $product->description ?? 'No description available.' }}
                 </p>
             </div>
             
-           
-            @if($product->description && $product->description != $product->short_description)
-            <div class="mt-2">
-                <p style="color: #666; line-height: 1.8;">
-                    {{ $product->description }}
-                </p>
-            </div>
-            @endif
-            
-           
+            <!-- Action Buttons -->
             @if($product->stock_quantity > 0)
             <div class="d-flex gap-3 mt-4 flex-wrap">
                 <form action="{{ route('cart.add') }}" method="POST" class="d-flex gap-2 align-items-center">
@@ -158,13 +150,18 @@
                         <i class="fas fa-shopping-cart me-2"></i> Add to Cart
                     </button>
                 </form>
-                <button class="btn btn-outline-dark rounded-0 px-4" style="border-color: #ddd;">
-                    <i class="far fa-heart"></i>
-                </button>
+                
+                <!-- ✅ WISHLIST BUTTON - FIXED -->
+                <form action="{{ route('wishlist.add', $product->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-dark rounded-0 px-4" style="border-color: #ddd; transition: all 0.3s;">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </form>
             </div>
             @endif
             
-           
+            <!-- Meta -->
             <div class="mt-4 pt-3" style="border-top: 1px solid #eee;">
                 <p style="font-size: 14px; color: #666; margin-bottom: 5px;">
                     <strong>Category:</strong> 
@@ -183,21 +180,49 @@
         </div>
     </div>
 
-   
+    <!-- ===== RELATED PRODUCTS ===== -->
+    @if($relatedProducts && $relatedProducts->count() > 0)
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3 class="fw-bold mb-4">Related Products</h3>
+            <div class="row g-4">
+                @foreach($relatedProducts as $related)
+                <div class="col-6 col-md-3">
+                    <div class="product-card" style="border: 1px solid #eee; padding: 15px; text-align: center; background: #fff; border-radius: 8px; height: 100%; transition: all 0.3s;">
+                        @php
+                            $relImage = $related->images->first();
+                        @endphp
+                        <div style="height: 150px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; border-radius: 4px;">
+                            <img src="{{ $relImage ? asset($relImage->image_url) : asset('images/products/default.jpg') }}" 
+                                 alt="{{ $related->name }}" 
+                                 style="max-width: 100%; max-height: 140px; object-fit: contain;">
+                        </div>
+                        <h6 class="fw-semibold" style="font-size: 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 40px;">
+                            {{ $related->name }}
+                        </h6>
+                        <p class="fw-bold" style="color: #db4444; font-size: 16px;">
+                            ${{ number_format($related->sale_price ?? $related->price, 2) }}
+                        </p>
+                        <a href="{{ route('product.detail', $related->slug ?? $related->id) }}" class="btn btn-dark btn-sm rounded-0 w-100" style="background: #000;">
+                            View Product
+                        </a>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    @endif
+
+    <!-- ===== REVIEWS SECTION ===== -->
     <div class="row mt-5">
         <div class="col-12">
             <h3 class="fw-bold mb-4">Reviews ({{ $product->reviews->count() ?? 0 }})</h3>
             
             @if(Auth::check())
-               
+                <!-- Review Form -->
                 <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-                    <h5 class="fw-bold mb-3">
-                        @if($userReview)
-                            Edit Your Review
-                        @else
-                            Write a Review
-                        @endif
-                    </h5>
+                    <h5 class="fw-bold mb-3">Write a Review</h5>
                     <form action="{{ route('product.review', $product->id) }}" method="POST">
                         @csrf
                         <div class="mb-3">
@@ -209,14 +234,14 @@
                                     </button>
                                 @endfor
                             </div>
-                            <input type="hidden" name="rating" id="ratingInput" value="{{ $userReview->rating ?? 0 }}">
+                            <input type="hidden" name="rating" id="ratingInput" value="0">
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-semibold">Comment</label>
-                            <textarea name="comment" class="form-control rounded-0" rows="4" placeholder="Share your experience with this product..." required>{{ $userReview->comment ?? '' }}</textarea>
+                            <textarea name="comment" class="form-control rounded-0" rows="4" placeholder="Share your experience with this product..." required></textarea>
                         </div>
                         <button type="submit" class="btn btn-danger rounded-0 px-4" style="background: #db4444;">
-                            {{ $userReview ? 'Update Review' : 'Submit Review' }}
+                            Submit Review
                         </button>
                     </form>
                 </div>
@@ -226,7 +251,7 @@
                 </div>
             @endif
             
-          
+            <!-- Reviews List -->
             @if($product->reviews->count() > 0)
                 @foreach($product->reviews as $review)
                 <div style="border-bottom: 1px solid #eee; padding: 15px 0;">
@@ -258,41 +283,6 @@
             @endif
         </div>
     </div>
-
-    
-    @if($relatedProducts->count() > 0)
-    <div class="row mt-5">
-        <div class="col-12">
-            <h3 class="fw-bold mb-4">Related Products</h3>
-            <div class="row g-4">
-                @foreach($relatedProducts as $related)
-                <div class="col-6 col-md-3">
-                    <div class="product-card" style="border: 1px solid #eee; padding: 15px; text-align: center; background: #fff; border-radius: 4px; height: 100%;">
-                        @php
-                            $relImage = $related->images->first();
-                        @endphp
-                        <div style="height: 150px; background: #f5f5f5; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; border-radius: 4px;">
-                          
-                            <img src="{{ $relImage ? asset($relImage->image_url) : asset('images/products/default.jpg') }}" 
-                                 alt="{{ $related->name }}" 
-                                 style="max-width: 100%; max-height: 140px; object-fit: contain;">
-                        </div>
-                        <h6 class="fw-semibold" style="font-size: 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 40px;">
-                            {{ $related->name }}
-                        </h6>
-                        <p class="fw-bold" style="color: #db4444; font-size: 16px;">
-                            ${{ number_format($related->sale_price ?? $related->price, 2) }}
-                        </p>
-                        <a href="{{ route('product.detail', $related->slug) }}" class="btn btn-dark btn-sm rounded-0 w-100" style="background: #000;">
-                            View Product
-                        </a>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-    @endif
 </div>
 
 <style>
@@ -317,7 +307,9 @@
 </style>
 
 <script>
-   
+    // ========================================
+    // QUANTITY INCREMENT/DECREMENT
+    // ========================================
     function incrementQty() {
         const input = document.getElementById('qtyInput');
         const max = parseInt(input.getAttribute('max') || 999);
@@ -333,45 +325,32 @@
         }
     }
 
+    // ========================================
+    // CHANGE MAIN IMAGE
+    // ========================================
     function changeMainImage(element, imageUrl) {
-       
         document.querySelectorAll('.product-gallery .d-flex .gap-2 div').forEach(el => {
             el.style.borderColor = 'transparent';
         });
-        
         element.style.borderColor = '#db4444';
-        
-        const mainImage = document.querySelector('.product-gallery .main-image img');
-        if (mainImage) {
-            mainImage.src = imageUrl;
-        }
+        document.getElementById('mainProductImage').src = imageUrl;
     }
-   
+
+    // ========================================
+    // STAR RATING
+    // ========================================
     document.addEventListener('DOMContentLoaded', function() {
         const stars = document.querySelectorAll('#starRating button');
         const ratingInput = document.getElementById('ratingInput');
-        
-        
-        const initialRating = parseInt(ratingInput.value);
-        if (initialRating > 0) {
-            stars.forEach((star, index) => {
-                if (index < initialRating) {
-                    star.querySelector('i').className = 'fas fa-star';
-                    star.style.color = '#ffb800';
-                } else {
-                    star.querySelector('i').className = 'far fa-star';
-                    star.style.color = '#ffb800';
-                }
-            });
-        }
+        let selectedRating = 0;
         
         stars.forEach((star) => {
             star.addEventListener('click', function() {
-                const value = parseInt(this.dataset.value);
-                ratingInput.value = value;
+                selectedRating = parseInt(this.dataset.value);
+                ratingInput.value = selectedRating;
                 
                 stars.forEach((s, index) => {
-                    if (index < value) {
+                    if (index < selectedRating) {
                         s.querySelector('i').className = 'fas fa-star';
                         s.style.color = '#ffb800';
                     } else {
@@ -395,9 +374,8 @@
             });
             
             star.addEventListener('mouseleave', function() {
-                const value = parseInt(ratingInput.value);
                 stars.forEach((s, index) => {
-                    if (index < value) {
+                    if (index < selectedRating) {
                         s.querySelector('i').className = 'fas fa-star';
                         s.style.color = '#ffb800';
                     } else {

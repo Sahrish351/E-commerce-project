@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
+use App\Models\Cart;
+use App\Models\CartItem;
 
 class OrderController extends Controller
 {
@@ -14,17 +16,19 @@ class OrderController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * My Orders Page
-     */
-    public function index()
-    {
-        $orders = Order::where('user_id', Auth::id())
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-        
-        return view('client.orders.index', compact('orders'));
+    public function index(Request $request)
+{
+    $query = Order::where('user_id', Auth::id());
+    
+    // ✅ Filter by status
+    if ($request->has('status') && $request->status != '') {
+        $query->where('status', $request->status);
     }
+    
+    $orders = $query->orderBy('created_at', 'desc')->paginate(10);
+    
+    return view('client.orders.index', compact('orders'));
+}
 
     /**
      * Order Details
@@ -43,13 +47,70 @@ class OrderController extends Controller
      */
     public function cancel($id)
     {
+        $order = Order::where('user_id', Auth::id())
+            ->whereIn('status', ['pending', 'processing'])
+            ->findOrFail($id);
+        
+        $order->update(['status' => 'cancelled']);
+        
+        return redirect()->route('client.orders')->with('success', 'Order cancelled successfully!');
+    }
+
+    /**
+     * ✅ Reorder - Add to Cart
+     */
+    public function reorder($id)
+    {
         $order = Order::where('user_id', Auth::id())->findOrFail($id);
         
-        if ($order->status === 'pending' || $order->status === 'processing') {
-            $order->update(['status' => 'cancelled']);
-            return back()->with('success', 'Order cancelled successfully!');
+        // Get or create cart for user
+        $cart = Cart::where('user_id', Auth::id())->first();
+        
+        if (!$cart) {
+            $cart = Cart::create([
+                'user_id' => Auth::id(),
+                'total_items' => 0,
+                'total_price' => 0,
+            ]);
         }
         
-        return back()->with('error', 'This order cannot be cancelled.');
+        // Add order items to cart
+        foreach ($order->items as $item) {
+            $cartItem = CartItem::where('cart_id', $cart->id)
+                ->where('product_id', $item->product_id)
+                ->first();
+            
+            if ($cartItem) {
+                $cartItem->increment('quantity', $item->quantity);
+            } else {
+                CartItem::create([
+                    'cart_id' => $cart->id,
+                    'product_id' => $item->product_id,
+                    'quantity' => $item->quantity,
+                    'price' => $item->unit_price,
+                ]);
+            }
+        }
+        
+        // Update cart totals
+        $this->updateCartTotals($cart->id);
+        
+        return redirect()->route('cart.index')->with('success', 'Items added to cart successfully!');
+    }
+
+    /**
+     * Helper: Update Cart Totals
+     */
+    private function updateCartTotals($cart_id)
+    {
+        $cart = Cart::find($cart_id);
+        if ($cart) {
+            $items = CartItem::where('cart_id', $cart_id)->get();
+            $cart->total_items = $items->sum('quantity');
+            $cart->total_price = $items->sum(function($item) {
+                return $item->price * $item->quantity;
+            });
+            $cart->save();
+        }
     }
 }

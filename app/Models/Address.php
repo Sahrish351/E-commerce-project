@@ -7,8 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
     protected $fillable = [
-        'user_id', 'label', 'address', 'city', 'state', 
-        'postal_code', 'country', 'is_default'
+        'user_id',
+        'address_line1',   // ✅ address se change karo
+        'address_line2',   // ✅ add karo
+        'city',
+        'state',
+        'postal_code',
+        'country',
+        'is_default',
     ];
 
     public function user()

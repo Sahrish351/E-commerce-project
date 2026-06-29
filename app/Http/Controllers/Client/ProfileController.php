@@ -16,22 +16,16 @@ class ProfileController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Edit Profile Page
-     */
     public function edit()
     {
         $user = Auth::user();
         return view('client.profile.edit', compact('user'));
     }
 
-    /**
-     * Update Profile
-     */
     public function update(Request $request)
     {
         $user = Auth::user();
-
+        
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
@@ -48,20 +42,9 @@ class ProfileController extends Controller
             'phone' => $request->phone,
         ]);
 
-        return back()->with('success', 'Profile updated successfully!');
+        return back()->with('profile_success', 'Profile updated successfully!');
     }
 
-    /**
-     * Change Password Page
-     */
-    public function password()
-    {
-        return view('client.profile.password');
-    }
-
-    /**
-     * Update Password
-     */
     public function updatePassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -79,25 +62,17 @@ class ProfileController extends Controller
             return back()->withErrors(['current_password' => 'Current password is incorrect']);
         }
 
-        $user->update([
-            'password' => Hash::make($request->password)
-        ]);
+        $user->update(['password' => Hash::make($request->password)]);
 
-        return back()->with('success', 'Password updated successfully!');
+        return back()->with('password_success', 'Password changed successfully!');
     }
 
-    /**
-     * Addresses Page
-     */
     public function addresses()
     {
         $addresses = Address::where('user_id', Auth::id())->get();
         return view('client.profile.addresses', compact('addresses'));
     }
 
-    /**
-     * Store Address
-     */
     public function storeAddress(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -107,7 +82,6 @@ class ProfileController extends Controller
             'state' => 'required|string|max:100',
             'postal_code' => 'required|string|max:20',
             'country' => 'required|string|max:100',
-            'is_default' => 'boolean',
         ]);
 
         if ($validator->fails()) {
@@ -129,16 +103,29 @@ class ProfileController extends Controller
             'is_default' => $request->is_default ?? false,
         ]);
 
-        return back()->with('success', 'Address added successfully!');
+        return back()->with('address_success', 'Address added successfully!');
     }
 
     /**
-     * Delete Address
+     * ✅ Set address as default
      */
+    public function setDefaultAddress($id)
+    {
+        $address = Address::where('user_id', Auth::id())->findOrFail($id);
+        
+        // Remove default from all other addresses
+        Address::where('user_id', Auth::id())->update(['is_default' => false]);
+        
+        // Set this as default
+        $address->update(['is_default' => true]);
+        
+        return back()->with('address_success', 'Default address updated successfully!');
+    }
+
     public function deleteAddress($id)
     {
         $address = Address::where('user_id', Auth::id())->findOrFail($id);
         $address->delete();
-        return back()->with('success', 'Address deleted successfully!');
+        return back()->with('address_success', 'Address deleted successfully!');
     }
 }

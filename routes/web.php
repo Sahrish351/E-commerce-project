@@ -102,10 +102,13 @@ Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.c
 // ============================================
 // CHECKOUT ROUTES
 // ============================================
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-Route::post('/checkout/place', [CheckoutController::class, 'placeOrder'])->name('checkout.place');
-Route::get('/order-confirmation', [CheckoutController::class, 'confirmation'])->name('order.confirmation');
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout/billing', [CheckoutController::class, 'storeBilling'])->name('checkout.billing');
+    Route::get('/checkout/payment', [CheckoutController::class, 'payment'])->name('checkout.payment');
+    Route::post('/checkout/place', [CheckoutController::class, 'placeOrder'])->name('checkout.place');
+    Route::get('/order-confirmation', [CheckoutController::class, 'confirmation'])->name('order.confirmation');
+});
 
 // ============================================
 // WISHLIST ROUTES
@@ -114,8 +117,8 @@ Route::middleware('auth')->prefix('wishlist')->name('wishlist.')->group(function
     Route::get('/', [FrontendWishlistController::class, 'index'])->name('index');
     Route::post('/add/{product}', [FrontendWishlistController::class, 'add'])->name('add');
     Route::delete('/remove/{product}', [FrontendWishlistController::class, 'remove'])->name('remove');
-    Route::post('/move-to-cart/{product}', [FrontendWishlistController::class, 'moveToCart'])->name('moveToCart');
-    Route::get('/count', [FrontendWishlistController::class, 'getWishlistCount'])->name('count');  // ✅ Already exists
+    Route::post('/move-to-cart/{product}', [FrontendWishlistController::class, 'moveToCart'])->name('move-to-cart'); // ✅ YEH ADD KARO
+    Route::get('/count', [FrontendWishlistController::class, 'getWishlistCount'])->name('count');
 });
 
 
@@ -244,12 +247,24 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->name('admi
 });
 
 /// ============================================
-// CLIENT DASHBOARD ROUTES
+// CLIENT DASHBOARD ROUTES - COMPLETE
 // ============================================
 Route::middleware('auth')->prefix('client')->name('client.')->group(function () {
     
     // Dashboard
     Route::get('/dashboard', [App\Http\Controllers\Client\DashboardController::class, 'index'])->name('dashboard');
+    
+    // Orders
+    Route::get('/orders', [App\Http\Controllers\Client\OrderController::class, 'index'])->name('orders');
+    Route::get('/orders/{id}', [App\Http\Controllers\Client\OrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders/{id}/cancel', [App\Http\Controllers\Client\OrderController::class, 'cancel'])->name('orders.cancel');
+    Route::post('/orders/{id}/reorder', [App\Http\Controllers\Client\OrderController::class, 'reorder'])->name('orders.reorder');
+    
+    // Wishlist
+    Route::get('/wishlist', [App\Http\Controllers\Client\WishlistController::class, 'index'])->name('wishlist');
+    Route::post('/wishlist/add/{product}', [App\Http\Controllers\Client\WishlistController::class, 'add'])->name('wishlist.add');
+    Route::delete('/wishlist/remove/{product}', [App\Http\Controllers\Client\WishlistController::class, 'remove'])->name('wishlist.remove');
+    Route::post('/wishlist/move-to-cart/{product}', [App\Http\Controllers\Client\WishlistController::class, 'moveToCart'])->name('wishlist.move-to-cart');
     
     // Profile
     Route::get('/profile/edit', [App\Http\Controllers\Client\ProfileController::class, 'edit'])->name('profile.edit');
@@ -258,13 +273,6 @@ Route::middleware('auth')->prefix('client')->name('client.')->group(function () 
     Route::put('/profile/password', [App\Http\Controllers\Client\ProfileController::class, 'updatePassword'])->name('profile.password.update');
     Route::get('/profile/addresses', [App\Http\Controllers\Client\ProfileController::class, 'addresses'])->name('profile.addresses');
     Route::post('/profile/address', [App\Http\Controllers\Client\ProfileController::class, 'storeAddress'])->name('profile.address.store');
+    Route::post('/profile/address/{id}/default', [App\Http\Controllers\Client\ProfileController::class, 'setDefaultAddress'])->name('profile.address.default');
     Route::delete('/profile/address/{id}', [App\Http\Controllers\Client\ProfileController::class, 'deleteAddress'])->name('profile.address.delete');
-    
-    // Orders
-    Route::get('/orders', [App\Http\Controllers\Client\OrderController::class, 'index'])->name('orders');
-    Route::get('/orders/{id}', [App\Http\Controllers\Client\OrderController::class, 'show'])->name('orders.show');
-    Route::post('/orders/{id}/cancel', [App\Http\Controllers\Client\OrderController::class, 'cancel'])->name('orders.cancel');
-    
-    // Wishlist
-    Route::get('/wishlist', [App\Http\Controllers\Client\WishlistController::class, 'index'])->name('wishlist');
 });

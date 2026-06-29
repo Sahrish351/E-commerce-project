@@ -160,9 +160,15 @@
                         <span class="fw-bold fs-5">Total:</span>
                         <span class="fw-bold fs-5" style="color: #db4444;">${{ number_format($total, 2) }}</span>
                     </div>
-                    <a href="{{ route('checkout.index') }}" class="btn btn-danger w-100 rounded-0 py-3" style="background: #db4444; font-weight: 600;">
-                        Proceed to Checkout
-                    </a>
+                    @auth
+    <a href="{{ route('checkout.index') }}" class="btn btn-danger w-100 rounded-0 py-3" style="background: #db4444; font-weight: 600;">
+        Proceed to Checkout
+    </a>
+@else
+    <a href="{{ route('login') }}" class="btn btn-danger w-100 rounded-0 py-3" style="background: #db4444; font-weight: 600;">
+        Login to Checkout
+    </a>
+@endif
                 </div>
             </div>
         </div>
