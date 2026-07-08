@@ -11,6 +11,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    
     <style>
         /* ========================================
            GLOBAL STYLES
@@ -327,145 +328,146 @@
         }
         
         /* ========================================
-           MAIN FOOTER
-           ======================================== */
-        .main-footer {
-            background: #000;
-            width: 100%;
-            padding: 50px 0 20px;
-            margin: 0;
-        }
-        
-        .main-footer .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-        
-        .main-footer h5 {
-            color: #fff;
-            font-weight: 700;
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-        
-        .main-footer h6 {
-            color: #fff;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        .main-footer p {
-            color: #aaa;
-            font-size: 13px;
-            margin-bottom: 15px;
-        }
-        
-        .main-footer ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .main-footer ul li {
-            color: #aaa;
-            margin-bottom: 10px;
-            font-size: 15px;
-            line-height: 1.5;
-        }
-        
-        .main-footer ul li a {
-            color: #ccc !important;
-            text-decoration: none !important;
-            transition: color 0.3s;
-        }
-        
-        .main-footer ul li a:hover {
-            color: #db4444 !important;
-        }
-        
-        .main-footer .input-group input {
-            background: transparent;
-            border: 1px solid #fff;
-            color: #fff;
-            font-size: 14px;
-            padding: 10px 15px;
-        }
-        
-        .main-footer .input-group input::placeholder {
-            color: #888;
-        }
-        
-        .main-footer .input-group button {
-            background: #fff;
-            border: none;
-            padding: 0 18px;
-            transition: all 0.3s;
-        }
-        
-        .main-footer .input-group button i {
-            color: #000;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-        
-        .main-footer .input-group button:hover {
-            background: #db4444;
-        }
-        
-        .main-footer .input-group button:hover i {
-            color: #fff;
-        }
-        
-        .social-icons {
-            margin-top: 15px;
-        }
-        
-        .social-icons a {
-            display: inline-block;
-            width: 32px;
-            height: 32px;
-            background: #222;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 32px;
-            margin-right: 8px;
-            color: #fff;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-        
-        .social-icons a:hover {
-            background: #db4444;
-            transform: translateY(-3px);
-        }
-        
-        .social-icons .d-block {
-            background: transparent;
-            width: auto;
-            height: auto;
-            line-height: normal;
-            text-align: left;
-            color: #ccc !important;
-        }
-        
-        .social-icons .d-block:hover {
-            background: transparent;
-            color: #db4444 !important;
-            transform: none;
-        }
-        
-        .main-footer hr {
-            border-color: #333;
-            margin: 20px 0;
-        }
-        
-        .copyright {
-            text-align: center;
-            font-size: 14px;
-            color: #aaa;
-        }
+   MAIN FOOTER - FIXED
+   ======================================== */
+.main-footer {
+    background: #000;
+    width: 100%;
+    padding: 50px 0 20px;
+    margin: 0;
+}
+
+.main-footer h5 {
+    color: #fff;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.main-footer h6 {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.main-footer p {
+    color: #aaa;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.main-footer ul li {
+    color: #aaa;
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.main-footer ul li a {
+    color: #aaa !important;
+    text-decoration: none !important;
+    transition: color 0.3s;
+}
+
+.main-footer ul li a:hover {
+    color: #db4444 !important;
+}
+
+.main-footer .input-group input {
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    font-size: 14px;
+    padding: 10px 15px;
+}
+
+.main-footer .input-group input::placeholder {
+    color: #888;
+}
+
+.main-footer .input-group button {
+    background: #fff;
+    border: none;
+    padding: 0 18px;
+    transition: all 0.3s;
+}
+
+.main-footer .input-group button i {
+    color: #000;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.main-footer .input-group button:hover {
+    background: #db4444;
+}
+
+.main-footer .input-group button:hover i {
+    color: #fff;
+}
+
+.main-footer hr {
+    border-color: #333;
+    margin: 30px 0 20px;
+}
+
+/* ========================================
+   FOOTER - RESPONSIVE
+   ======================================== */
+@media (max-width: 992px) {
+    .main-footer {
+        padding: 40px 0 20px;
+    }
+    .main-footer h5 {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-footer {
+        text-align: center;
+        padding: 30px 0 15px;
+    }
+    .main-footer .col-md-6 {
+        margin-bottom: 25px !important;
+    }
+    .main-footer .input-group {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    .main-footer ul li {
+        font-size: 13px;
+    }
+    .main-footer h5 {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .main-footer {
+        padding: 25px 0 15px;
+    }
+    .main-footer .col-sm-6 {
+        margin-bottom: 20px !important;
+    }
+    .main-footer h5 {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    .main-footer ul li {
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+    .main-footer .input-group input {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+    .copyright {
+        font-size: 11px;
+    }
+}
         
         /* ========================================
            BACK TO TOP BUTTON
@@ -606,78 +608,78 @@
     </main>
 
     <!-- ========================================
-         MAIN FOOTER
-         ======================================== -->
-    <footer class="main-footer">
-        <div class="container">
-            <div class="row">
-                <!-- Column 1: StyleHub -->
-                <div class="col-md-3 mb-4">
-                    <h5>StyleHub</h5>
-                    <h6 class="mt-3">Subscribe</h6>
-                    <p class="small">Get 10% off your first order</p>
-                    <div class="input-group">
-                        <input type="email" class="form-control form-control-sm bg-transparent text-white border-white" 
-                               placeholder="Enter your email">
-                        <button class="btn btn-sm btn-outline-light" type="button">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Column 2: Support -->
-                <div class="col-md-3 mb-4">
-                    <h5>Support</h5>
-                    <ul>
-                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Fashion Street, Mumbai</li>
-                        <li><i class="fas fa-envelope me-2"></i> <a href="mailto:support@stylehub.com">support@stylehub.com</a></li>
-                        <li><i class="fas fa-phone-alt me-2"></i> +91-98765-43210</li>
-                        <li><i class="fas fa-clock me-2"></i> 10:00 AM - 10:00 PM</li>
-                    </ul>
-                </div>
-                
-                <!-- Column 3: Account -->
-                <div class="col-md-2 mb-4">
-                    <h5>Account</h5>
-                    <ul>
-                        <li><a href="#">My Account</a></li>
-                        <li><a href="{{ route('register') }}">Login / Register</a></li>
-                        <li><a href="{{ route('cart.index') }}">Cart</a></li>
-                        <li><a href="{{ route('wishlist.index') }}">Wishlist</a></li>
-                        <li><a href="{{ route('shop.index') }}">Shop</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Column 4: Quick Link -->
-                <div class="col-md-2 mb-4">
-                    <h5>Quick Link</h5>
-                    <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms Of Use</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="{{ route('contact') }}">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Column 5: Follow Us -->
-                <div class="col-md-2 mb-4">
-                    <h5>Follow Us</h5>
-                    <div class="social-icons mt-3">
-                        <a href="#" class="d-block mb-2"><i class="fab fa-facebook-f me-2"></i> Facebook</a>
-                        <a href="#" class="d-block mb-2"><i class="fab fa-twitter me-2"></i> Twitter</a>
-                        <a href="#" class="d-block mb-2"><i class="fab fa-instagram me-2"></i> Instagram</a>
-                        <a href="#" class="d-block mb-2"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a>
-                        <a href="#" class="d-block mb-2"><i class="fab fa-youtube me-2"></i> YouTube</a>
-                    </div>
+     MAIN FOOTER - FIXED
+     ======================================== -->
+<footer class="main-footer">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Column 1: StyleHub -->
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <h5 class="fw-bold">StyleHub</h5>
+                <h6 class="mt-3 text-white">Subscribe</h6>
+                <p class="text-secondary small">Get 10% off your first order</p>
+                <div class="input-group">
+                    <input type="email" class="form-control form-control-sm bg-transparent text-white border-white" 
+                           placeholder="Enter your email">
+                    <button class="btn btn-sm btn-outline-light" type="button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
                 </div>
             </div>
             
-            <hr>
-            <div class="copyright">
-                © Copyright 2022. All rights reserved.
+            <!-- Column 2: Support -->
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <h5 class="fw-bold">Support</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <span class="text-secondary">123 Fashion Street, Mumbai</span></li>
+                    <li class="mb-2"><i class="fas fa-envelope me-2 text-secondary"></i> <a href="mailto:support@stylehub.com" class="text-secondary text-decoration-none">support@stylehub.com</a></li>
+                    <li class="mb-2"><i class="fas fa-phone-alt me-2 text-secondary"></i> <span class="text-secondary">+91-98765-43210</span></li>
+                    <li class="mb-2"><i class="fas fa-clock me-2 text-secondary"></i> <span class="text-secondary">10:00 AM - 10:00 PM</span></li>
+                </ul>
+            </div>
+            
+            <!-- Column 3: Account -->
+            <div class="col-lg-2 col-md-6 col-sm-6">
+                <h5 class="fw-bold">Account</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#" class="text-secondary text-decoration-none">My Account</a></li>
+                    <li class="mb-2"><a href="{{ route('register') }}" class="text-secondary text-decoration-none">Login / Register</a></li>
+                    <li class="mb-2"><a href="{{ route('cart.index') }}" class="text-secondary text-decoration-none">Cart</a></li>
+                    <li class="mb-2"><a href="{{ route('wishlist.index') }}" class="text-secondary text-decoration-none">Wishlist</a></li>
+                    <li class="mb-2"><a href="{{ route('shop.index') }}" class="text-secondary text-decoration-none">Shop</a></li>
+                </ul>
+            </div>
+            
+            <!-- Column 4: Quick Link -->
+            <div class="col-lg-2 col-md-6 col-sm-6">
+                <h5 class="fw-bold">Quick Link</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#" class="text-secondary text-decoration-none">Privacy Policy</a></li>
+                    <li class="mb-2"><a href="#" class="text-secondary text-decoration-none">Terms Of Use</a></li>
+                    <li class="mb-2"><a href="#" class="text-secondary text-decoration-none">FAQ</a></li>
+                    <li class="mb-2"><a href="{{ route('contact') }}" class="text-secondary text-decoration-none">Contact</a></li>
+                </ul>
+            </div>
+            
+            <!-- Column 5: Follow Us -->
+            <div class="col-lg-2 col-md-6 col-sm-6">
+                <h5 class="fw-bold">Follow Us</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#" class="text-secondary text-decoration-none"><i class="fab fa-facebook-f me-2"></i> Facebook</a></li>
+                    <li class="mb-2"><a href="#" class="text-secondary text-decoration-none"><i class="fab fa-twitter me-2"></i> Twitter</a></li>
+                    <li class="mb-2"><a href="#" class="text-secondary text-decoration-none"><i class="fab fa-instagram me-2"></i> Instagram</a></li>
+                    <li class="mb-2"><a href="#" class="text-secondary text-decoration-none"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a></li>
+                    <li class="mb-2"><a href="#" class="text-secondary text-decoration-none"><i class="fab fa-youtube me-2"></i> YouTube</a></li>
+                </ul>
             </div>
         </div>
-    </footer>
+        
+        <hr class="border-secondary">
+        <div class="text-center text-secondary">
+            © Copyright 2022. All rights reserved.
+        </div>
+    </div>
+</footer>
 
     <!-- ========================================
          BACK TO TOP BUTTON
@@ -685,6 +687,11 @@
     <a href="#" class="back-to-top" id="backToTop">
         <i class="fas fa-arrow-up"></i>
     </a>
+
+     <!-- ========================================
+         BOOTSTRAP JS - ADD THIS
+         ======================================== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- ========================================
          SCRIPTS

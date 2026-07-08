@@ -23,35 +23,70 @@
     }
     @media (max-width: 992px) { .hero-slide-wrapper { height: 350px; } }
     @media (max-width: 768px) { .hero-slide-wrapper { height: 280px; } }
-    @media (max-width: 576px) {
-        .hero-slide-wrapper { height: 200px; }
-        .carousel-indicators { bottom: -22px !important; gap: 6px !important; }
-        .carousel-indicators button {
-            width: 8px !important; height: 8px !important; border-radius: 50% !important;
-            background-color: #d1d1d1 !important; border: none !important; margin: 0 !important;
-            opacity: 1 !important; padding: 0 !important; transition: all 0.3s ease !important;
-        }
-        .carousel-indicators .active {
-            background-color: #db4444 !important; width: 10px !important; height: 10px !important;
-            transform: scale(1.1);
-        }
+
+
+.carousel-indicators {
+    gap: 6px !important;
+    bottom: 20px !important;
+    z-index: 5 !important;
+    margin-bottom: 0 !important;
+}
+.carousel-indicators button {
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 50% !important;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    margin: 0 3px !important;
+    padding: 0 !important;
+    opacity: 0.9 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+}
+.carousel-indicators .active {
+    background-color: #db4444 !important;
+    border-color: #db4444 !important;
+    width: 12px !important;
+    height: 12px !important;
+    transform: scale(1.1);
+    opacity: 1 !important;
+}
+
+
+@media (max-width: 576px) {
+    .hero-slide-wrapper { height: 200px; }
+    .carousel-indicators {
+        bottom: 12px !important;
+        gap: 4px !important;
     }
-    @media (max-width: 400px) {
-        .hero-slide-wrapper { height: 160px; }
-        .carousel-indicators { bottom: -18px !important; gap: 4px !important; }
-        .carousel-indicators button { width: 6px !important; height: 6px !important; }
-        .carousel-indicators .active { width: 8px !important; height: 8px !important; }
-    }
-    .carousel-indicators { gap: 8px !important; bottom: -30px !important; }
     .carousel-indicators button {
-        width: 12px !important; height: 12px !important; border-radius: 50% !important;
-        background-color: #d1d1d1 !important; border: none !important; margin: 0 !important;
-        opacity: 1 !important; padding: 0 !important; transition: all 0.3s ease !important;
+        width: 7px !important;
+        height: 7px !important;
+        border-width: 1.5px !important;
     }
     .carousel-indicators .active {
-        background-color: #db4444 !important; width: 14px !important; height: 14px !important;
-        transform: scale(1.1);
+        width: 9px !important;
+        height: 9px !important;
     }
+}
+
+
+@media (max-width: 400px) {
+    .hero-slide-wrapper { height: 160px; }
+    .carousel-indicators {
+        bottom: 8px !important;
+        gap: 3px !important;
+    }
+    .carousel-indicators button {
+        width: 5px !important;
+        height: 5px !important;
+        border-width: 1px !important;
+    }
+    .carousel-indicators .active {
+        width: 7px !important;
+        height: 7px !important;
+    }
+}
 
    
     .flash-sales-wrapper { position: relative; overflow: hidden; margin-bottom: 10px; }
@@ -87,10 +122,19 @@
     .flash-nav-btn i { font-size: 11px; color: #333; }
     .flash-nav-btn:hover i { color: #fff; }
 
-    .category-sidebar { border-right: 1px solid #e0e0e0; padding-right: 25px; }
-    @media (max-width: 992px) { .category-sidebar { border-right: none; padding-right: 0; margin-bottom: 20px; } }
+.category-sidebar { 
+    border-right: 1px solid #e0e0e0; 
+    padding-right: 25px; 
+    height: 450px;              /* ← Fixed height (image ke barabar) */
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    overflow-y: auto;           /* ← Agar categories zyada hain toh scroll */
+}
+
+@media (max-width: 992px) { .category-sidebar { border-right: none; padding-right: 0; margin-bottom: 20px; } }
     .category-list { list-style: none; padding: 0; margin: 0; }
-    .category-list li { margin-bottom: 12px; padding: 6px 0; border-bottom: 1px solid #f0f0f0; }
+    .category-list li { margin-bottom: 12px; padding: 3px 0; border-bottom: 1px solid #f0f0f0; }
     @media (max-width: 576px) { .category-list li { margin-bottom: 8px; padding: 4px 0; } }
     .category-list li:last-child { border-bottom: none; }
     .category-list a {
@@ -106,18 +150,131 @@
   
     .enhance-banner { background: #000; border-radius: 8px; overflow: hidden; margin: 20px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
     @media (max-width: 576px) { .enhance-banner { border-radius: 4px; margin: 15px 0; } }
-    .banner-image-wrapper { width: 100%; display: flex; align-items: center; justify-content: center; padding: 20px; }
-    .banner-image-wrapper img { width: 100%; max-width: 500px; height: auto; max-height: 350px; object-fit: contain; transition: all 0.3s ease; }
-    @media (max-width: 992px) { .banner-image-wrapper img { max-height: 240px; max-width: 400px; } }
-    @media (max-width: 768px) { .banner-image-wrapper { padding: 15px; } .banner-image-wrapper img { max-height: 200px; max-width: 350px; } }
-    @media (max-width: 576px) { .banner-image-wrapper { padding: 10px; } .banner-image-wrapper img { max-height: 160px; max-width: 280px; } }
-    .timer-box {
-        background: #fff; border-radius: 50%; width: 55px; height: 55px;
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.2); transition: all 0.3s ease;
+    /* Summer Sale Banner */
+.enhance-banner {
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+@media (max-width: 576px) {
+    .enhance-banner {
+        border-radius: 4px;
+        margin: 15px 0;
     }
-    @media (max-width: 768px) { .timer-box { width: 50px; height: 50px; } }
-    @media (max-width: 576px) { .timer-box { width: 40px; height: 40px; } }
+}
+
+.banner-image-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 30px;
+    min-height: 300px;
+}
+
+.banner-image-wrapper img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 280px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .banner-image-wrapper img {
+        max-height: 220px;
+    }
+}
+@media (max-width: 768px) {
+    .banner-image-wrapper {
+        padding: 10px 15px;
+        min-height: 150px;
+    }
+    .banner-image-wrapper img {
+        max-height: 180px;
+    }
+}
+@media (max-width: 576px) {
+    .banner-image-wrapper {
+        padding: 8px 10px;
+        min-height: 120px;
+    }
+    .banner-image-wrapper img {
+        max-height: 150px;
+    }
+}
+      .timer-box {
+    background: #fff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+@media (max-width: 768px) {
+    .timer-box {
+        width: 50px;
+        height: 50px;
+    }
+}
+@media (max-width: 576px) {
+    .timer-box {
+        width: 40px;
+        height: 40px;
+    }
+}
+.timer-number {
+    font-size: 20px;
+    font-weight: 700;
+    color: #000;
+    line-height: 1;
+}
+@media (max-width: 768px) {
+    .timer-number {
+        font-size: 16px;
+    }
+}
+@media (max-width: 576px) {
+    .timer-number {
+        font-size: 13px;
+    }
+}
+.timer-label {
+    font-size: 7px;
+    color: #666;
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+@media (max-width: 576px) {
+    .timer-label {
+        font-size: 5px;
+    }
+}
+
+.timer-label {
+    font-size: 6px;
+    color: #666;
+    margin-top: 1px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+@media (max-width: 576px) {
+    .timer-label {
+        font-size: 5px;
+    }
+}
+
     .timer-number { font-size: 22px; font-weight: 700; color: #000; line-height: 1; }
     @media (max-width: 768px) { .timer-number { font-size: 18px; } }
     @media (max-width: 576px) { .timer-number { font-size: 14px; } }
@@ -512,25 +669,26 @@
 
 
 <div class="container py-3">
-    <div class="row g-4">
+    <div class="row g-4 align-items-stretch">   <!-- ← align-items-stretch ADD KAREIN -->
         <div class="col-lg-3 category-sidebar d-none d-lg-block">
             <ul class="category-list">
                 @php
                     $categoryIcons = [
-                        'Shoes' => 'fa-shoe-prints',
+                        'Joggers' => 'fa-walking',
+                        'Casual Shoes' => 'fa-shoe-prints',
+                        'Sports Shoes' => 'fa-running',
                         'Watches' => 'fa-clock',
                         'Smart Watches' => 'fa-clock',
-                        'Casual Shoes' => 'fa-shoe-prints',
                         'Earbuds' => 'fa-headphones',
                         'Sunglasses' => 'fa-glasses',
                         'Mobile Accessories' => 'fa-mobile-alt',
                         'Power Banks' => 'fa-battery-full',
+                        'Chargers' => 'fa-bolt',
                         'Laptops' => 'fa-laptop',
                         'Gaming' => 'fa-gamepad',
                         'Women' => 'fa-female',
                         'Speakers' => 'fa-volume-up',
                         'Perfume' => 'fa-spray-can',
-                        'Electronics' => 'fa-microchip',
                         'Fashion' => 'fa-tshirt',
                     ];
                 @endphp
@@ -571,6 +729,14 @@
                             <img src="{{ asset('images/banner casual shoes.png') }}" alt="Banner 4" class="hero-slide-image">
                         </div>
                     </div>
+                </div>
+                
+                <!-- Indicators - Image ke upar -->
+                <div class="carousel-indicators" style="bottom: 15px; gap: 6px; z-index: 5;">
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1" style="width: 10px; height: 10px; border-radius: 50%; background-color: #fff; border: 2px solid rgba(255,255,255,0.5); margin: 0 3px; padding: 0; opacity: 0.8; transition: all 0.3s ease;"></button>
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2" style="width: 10px; height: 10px; border-radius: 50%; background-color: #fff; border: 2px solid rgba(255,255,255,0.5); margin: 0 3px; padding: 0; opacity: 0.8; transition: all 0.3s ease;"></button>
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3" style="width: 10px; height: 10px; border-radius: 50%; background-color: #fff; border: 2px solid rgba(255,255,255,0.5); margin: 0 3px; padding: 0; opacity: 0.8; transition: all 0.3s ease;"></button>
+                    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3" aria-label="Slide 4" style="width: 10px; height: 10px; border-radius: 50%; background-color: #fff; border: 2px solid rgba(255,255,255,0.5); margin: 0 3px; padding: 0; opacity: 0.8; transition: all 0.3s ease;"></button>
                 </div>
             </div>
         </div>
@@ -654,14 +820,7 @@
     </div>
 </div>
 
-<!-- View All Button -->
-<div class="container">
-    <div class="row mt-3 mb-4">
-        <div class="col-12 text-center">
-            <button class="view-all-btn" onclick="window.location.href='{{ route('shop.index') }}'">View All Products</button>
-        </div>
-    </div>
-</div>
+
 
 <div class="container mt-4 pt-2">
     <div class="row">
@@ -689,24 +848,24 @@
         <div class="category-slider-track" id="categoryTrack">
             @php
                 $categoryIconMap = [
-                    'Shoes' => 'fa-shoe-prints',
-                    'Watches' => 'fa-clock',
-                    'Smart Watches' => 'fa-clock',
-                    'Casual Shoes' => 'fa-shoe-prints',
-                    'Earbuds' => 'fa-headphones',
-                    'Sunglasses' => 'fa-glasses',
-                    'Mobile Accessories' => 'fa-mobile-alt',
-                    'Mobile' => 'fa-mobile-alt',
-                    'Power Banks' => 'fa-battery-full',
-                    'Chargers' => 'fa-bolt',
-                    'Electronics' => 'fa-microchip',
-                    'Laptops' => 'fa-laptop',
-                    'Gaming' => 'fa-gamepad',
-                    'Women' => 'fa-female',
-                    'Speakers' => 'fa-volume-up',
-                    'Perfume' => 'fa-spray-can',
-                    'Fashion' => 'fa-tshirt',
-                ];
+    'Joggers' => 'fa-walking',
+    'Casual Shoes' => 'fa-shoe-prints',
+    'Sports Shoes' => 'fa-running',  // ← ADD
+    'Watches' => 'fa-clock',
+    'Smart Watches' => 'fa-clock',
+    'Earbuds' => 'fa-headphones',
+    'Sunglasses' => 'fa-glasses',
+    'Mobile Accessories' => 'fa-mobile-alt',
+    'Mobile' => 'fa-mobile-alt',
+    'Power Banks' => 'fa-battery-full',
+    'Chargers' => 'fa-bolt',
+    'Laptops' => 'fa-laptop',
+    'Gaming' => 'fa-gamepad',
+    'Women' => 'fa-female',
+    'Speakers' => 'fa-volume-up',
+    'Perfume' => 'fa-spray-can',
+    'Fashion' => 'fa-tshirt',
+];
             @endphp
             @foreach($categories as $category)
             <div class="category-slide-item">
@@ -780,24 +939,44 @@
     </div>
 </div>
 
+<!-- ========================================
+     SUMMER SALE BANNER - FIXED
+     ======================================== -->
 <div class="container mt-4 pt-2">
     <div class="row">
         <div class="col-12">
-            <div class="enhance-banner">
+            <div class="enhance-banner" style="border-radius: 8px; overflow: hidden; margin: 20px 0; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
                 <div class="row align-items-center g-0">
-                    <div class="col-md-6 p-3 p-md-5">
+                    <!-- Left Side - Text (thoda right shift) -->
+                    <div class="col-md-6" style="padding: 30px 40px;">
                         <span class="text-success fw-semibold d-inline-block px-3 py-1 rounded-pill" style="color: #00ff00 !important; background: rgba(0,255,0,0.1); font-size: 13px;">🔥 Summer Sale</span>
-                        <h2 class="text-white fw-bold mt-3" style="font-size: 32px; line-height: 1.2;">Step Into<br>Casual Comfort</h2>
+                        <h2 class="text-white fw-bold mt-2" style="font-size: 32px; line-height: 1.1;">Step Into<br>Casual Comfort</h2>
                         <p class="text-white-50 mt-2 mb-3" style="font-size: 14px;">Premium quality casual shoes for everyday comfort</p>
-                        <div class="d-flex gap-2 gap-sm-3 mt-3 mb-3 flex-wrap">
-                            <div class="timer-box"><span class="timer-number" id="timerDays">04</span><span class="timer-label">DAYS</span></div>
-                            <div class="timer-box"><span class="timer-number" id="timerHours">19</span><span class="timer-label">HOURS</span></div>
-                            <div class="timer-box"><span class="timer-number" id="timerMinutes">27</span><span class="timer-label">MINS</span></div>
-                            <div class="timer-box"><span class="timer-number" id="timerSeconds">28</span><span class="timer-label">SECS</span></div>
+                        <div class="d-flex gap-2 mt-3 mb-3 flex-wrap">
+                            <div class="timer-box">
+                                <span class="timer-number" id="timerDays">04</span>
+                                <span class="timer-label">DAYS</span>
+                            </div>
+                            <div class="timer-box">
+                                <span class="timer-number" id="timerHours">19</span>
+                                <span class="timer-label">HOURS</span>
+                            </div>
+                            <div class="timer-box">
+                                <span class="timer-number" id="timerMinutes">17</span>
+                                <span class="timer-label">MINS</span>
+                            </div>
+                            <div class="timer-box">
+                                <span class="timer-number" id="timerSeconds">54</span>
+                                <span class="timer-label">SECS</span>
+                            </div>
                         </div>
-                        <a href="{{ route('shop.index', ['category' => 'shoes']) }}" class="btn btn-success px-3 py-2 rounded-pill fw-semibold" style="background: #00ff00; border: none; color: #000; font-size: 14px;">Buy Now! <i class="fas fa-arrow-right ms-2"></i></a>
+                        <a href="{{ route('shop.index', ['category' => 'shoes']) }}" class="btn btn-success px-4 py-2 rounded-pill fw-semibold" style="background: #00ff00; border: none; color: #000; font-size: 14px;">Buy Now! <i class="fas fa-arrow-right ms-2"></i></a>
                     </div>
-                    <div class="col-md-6"><div class="banner-image-wrapper"><img src="{{ asset('images/summer sale.png') }}" alt="Casual Shoes"></div></div>
+                    
+                    <!-- Right Side - Image (badhi hui) -->
+                    <div class="col-md-6" style="padding: 20px 30px; display: flex; align-items: center; justify-content: center; min-height: 300px;">
+                        <img src="{{ asset('images/summer sale.png') }}" alt="Casual Shoes" style="width: 100%; max-width: 90%; height: auto; max-height: 350px; object-fit: contain;">
+                    </div>
                 </div>
             </div>
         </div>
