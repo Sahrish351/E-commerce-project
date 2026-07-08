@@ -4,7 +4,7 @@
 
 @section('content')
 <style>
-    /* ===== PAGE HEADER ===== */
+  
     .page-header-custom {
         display: flex;
         justify-content: space-between;
@@ -29,7 +29,7 @@
         font-size: 14px;
     }
 
-    /* ===== PROFILE CARDS ===== */
+    
     .profile-card {
         background: #fff;
         border-radius: 16px;
@@ -112,7 +112,7 @@
         box-shadow: 0 8px 25px rgba(219, 68, 68, 0.2);
     }
 
-    /* ===== TOAST ===== */
+
     .toast-container {
         position: fixed;
         top: 20px;
@@ -151,7 +151,7 @@
         to { transform: translateX(100%); opacity: 0; }
     }
 
-    /* ===== RESPONSIVE ===== */
+   
     @media (max-width: 768px) {
         .profile-card { padding: 18px 16px; }
         .page-header-custom { flex-direction: column; align-items: flex-start; }
@@ -163,10 +163,10 @@
     }
 </style>
 
-<!-- Toast Container -->
+
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- ===== PAGE HEADER ===== -->
+
 <div class="page-header-custom">
     <div>
         <h4><i class="fas fa-user-circle"></i> My Profile</h4>
@@ -182,7 +182,7 @@
 <div class="row">
     <div class="col-lg-8 mx-auto">
 
-        <!-- ===== EDIT PROFILE ===== -->
+      
         <div class="profile-card">
             <div class="card-title">
                 <i class="fas fa-user-edit"></i> Edit Profile
@@ -237,7 +237,7 @@
             </form>
         </div>
 
-        <!-- ===== CHANGE PASSWORD ===== -->
+      
         <div class="profile-card">
             <div class="card-title">
                 <i class="fas fa-lock"></i> Change Password

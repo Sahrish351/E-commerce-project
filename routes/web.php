@@ -169,10 +169,13 @@ Route::prefix('payment')->name('payment.')->group(function () {
 
 
 // ============================================
-// STATIC PAGES
+// STATIC PAGES & CONTACT
 // ============================================
 Route::view('/about', 'frontend.about')->name('about');
-Route::view('/contact', 'frontend.contact')->name('contact');
+
+// Contact Page - With Form Submission
+Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');
+Route::post('/contact/submit', [App\Http\Controllers\ContactController::class, 'submit'])->name('contact.submit');
 
 
 // ============================================
@@ -276,3 +279,6 @@ Route::middleware('auth')->prefix('client')->name('client.')->group(function () 
     Route::post('/profile/address/{id}/default', [App\Http\Controllers\Client\ProfileController::class, 'setDefaultAddress'])->name('profile.address.default');
     Route::delete('/profile/address/{id}', [App\Http\Controllers\Client\ProfileController::class, 'deleteAddress'])->name('profile.address.delete');
 });
+
+
+

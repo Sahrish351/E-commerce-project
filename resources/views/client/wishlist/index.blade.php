@@ -121,20 +121,26 @@
     .product-card .product-info {
         padding: 14px 16px 16px;
     }
+
+    /* ===== PRODUCT NAME - FIXED ===== */
     .product-card .product-info .product-name {
         font-weight: 600;
         font-size: 14px;
         color: #1a1a2e;
         margin-bottom: 4px;
         display: -webkit-box;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 1;  /* ✅ Sirf 1 line */
         -webkit-box-orient: vertical;
         overflow: hidden;
-        height: 40px;
+        height: 22px;  /* ✅ Height fixed */
     }
     .product-card .product-info .product-name a {
         color: #1a1a2e;
         text-decoration: none;
+        white-space: nowrap;  /* ✅ Text wrap nahi hoga */
+        overflow: hidden;
+        text-overflow: ellipsis;  /* ✅ ... show hoga */
+        display: block;
     }
     .product-card .product-info .product-name a:hover {
         color: #db4444;
@@ -289,7 +295,7 @@
         .wishlist-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
         .product-card .image-wrapper { height: 140px; }
         .product-card .product-info { padding: 10px 12px 12px; }
-        .product-card .product-info .product-name { font-size: 12px; height: 32px; }
+        .product-card .product-info .product-name { font-size: 12px; height: 20px; }
         .product-card .product-info .product-price { font-size: 15px; }
         .product-card .product-info .add-to-cart-btn { font-size: 11px; padding: 6px; }
         .page-header-custom h4 { font-size: 18px; }
@@ -298,7 +304,7 @@
     @media (max-width: 400px) {
         .wishlist-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
         .product-card .image-wrapper { height: 120px; }
-        .product-card .product-info .product-name { font-size: 11px; height: 28px; }
+        .product-card .product-info .product-name { font-size: 11px; height: 18px; }
         .product-card .product-info .product-price { font-size: 13px; }
         .product-card .product-info .add-to-cart-btn { font-size: 10px; padding: 5px; }
     }
@@ -352,8 +358,9 @@
         </div>
 
         <div class="product-info">
+            <!-- ===== PRODUCT NAME - FIXED ===== -->
             <div class="product-name">
-                <a href="{{ route('product.detail', $item->product->slug ?? $item->product->id) }}">
+                <a href="{{ route('product.detail', $item->product->slug ?? $item->product->id) }}" title="{{ $item->product->name }}">
                     {{ $item->product->name }}
                 </a>
             </div>

@@ -1,6 +1,4 @@
-<!-- ========================================
-     CLIENT SIDEBAR - ATTACHED WITH TOPBAR
-     ======================================== -->
+
 <style>
     .sidebar {
         width: 260px;
@@ -103,7 +101,6 @@
     .sidebar::-webkit-scrollbar-track { background: transparent; }
     .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
 
-    /* Mobile Overlay */
     .sidebar-overlay {
         display: none;
         position: fixed;
@@ -131,10 +128,9 @@
     }
 </style>
 
-<!-- Sidebar Overlay -->
+
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-<!-- Sidebar -->
 <aside class="sidebar" id="clientSidebar">
     <div class="logo">
         Style<span>Hub</span>

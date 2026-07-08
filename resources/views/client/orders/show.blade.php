@@ -236,7 +236,7 @@
     </a>
 </div>
 
-<!-- ===== INFO GRID ===== -->
+
 <div class="order-detail-card">
     <div class="title"><i class="fas fa-info-circle"></i> Order Information</div>
     <div class="info-grid">
@@ -273,7 +273,7 @@
     </div>
 </div>
 
-<!-- ===== ORDER ITEMS ===== -->
+
 <div class="order-detail-card">
     <div class="title"><i class="fas fa-box"></i> Order Items</div>
     <div class="table-responsive">
@@ -308,7 +308,7 @@
     </div>
 </div>
 
-<!-- ===== TOTALS + ADDRESS + ACTIONS ===== -->
+
 <div class="row g-4">
     <div class="col-md-6">
         <div class="order-detail-card">
@@ -363,7 +363,7 @@
     </div>
 </div>
 
-<!-- ===== ACTIONS ===== -->
+
 <div class="order-detail-card">
     <div class="title"><i class="fas fa-cog"></i> Actions</div>
     <div class="action-buttons">

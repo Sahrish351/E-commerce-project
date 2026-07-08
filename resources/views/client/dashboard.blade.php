@@ -4,9 +4,7 @@
 
 @section('content')
 <style>
-    /* ========================================
-       CLIENT DASHBOARD - WITH CHART
-       ======================================== */
+   
     :root {
         --bg-body: #f4f6f9;
         --bg-card: #ffffff;
@@ -348,9 +346,7 @@
     }
 </style>
 
-<!-- ========================================
-     STATS CARDS
-     ======================================== -->
+
 <div class="stats-grid">
     <div class="stat-card">
         <div class="icon-box blue"><i class="fas fa-shopping-bag"></i></div>
@@ -378,35 +374,7 @@
     </div>
 </div>
 
-<!-- ========================================
-     QUICK STATS
-     ======================================== -->
-<div class="quick-stats">
-    <div class="quick-stat">
-        <div class="number">{{ $orderStats['pending'] ?? 0 }}</div>
-        <div class="label">Pending</div>
-        <div class="change">↑ 0%</div>
-    </div>
-    <div class="quick-stat">
-        <div class="number">{{ $orderStats['processing'] ?? 0 }}</div>
-        <div class="label">Processing</div>
-        <div class="change">↑ 0%</div>
-    </div>
-    <div class="quick-stat">
-        <div class="number">{{ $orderStats['shipped'] ?? 0 }}</div>
-        <div class="label">Shipped</div>
-        <div class="change">↑ 0%</div>
-    </div>
-    <div class="quick-stat">
-        <div class="number">{{ $orderStats['delivered'] ?? 0 }}</div>
-        <div class="label">Delivered</div>
-        <div class="change">↑ 0%</div>
-    </div>
-</div>
 
-<!-- ========================================
-     CHART + ORDER STATUS
-     ======================================== -->
 <div class="chart-row">
     <div class="chart-box">
         <div class="box-title">
@@ -450,9 +418,7 @@
     </div>
 </div>
 
-<!-- ========================================
-     RECENT ORDERS
-     ======================================== -->
+
 <div class="chart-box" style="margin-bottom:0;">
     <div class="box-title">
         Recent Orders
@@ -482,14 +448,10 @@
     @endforelse
 </div>
 
-<!-- ========================================
-     CHART SCRIPT - CDN LOAD
-     ======================================== -->
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
-    // ========================================
-    // CHART DATA
-    // ========================================
+   
     var chartData = {
         daily: {
             labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -543,9 +505,7 @@
 
     var orderChart = null;
 
-    // ========================================
-    // INIT CHART
-    // ========================================
+    
     function initChart() {
         var ctx = document.getElementById('orderChart');
         if (!ctx) {
@@ -608,9 +568,7 @@
         console.log('Chart initialized successfully');
     }
 
-    // ========================================
-    // UPDATE CHART
-    // ========================================
+   
     function updateChart(period) {
         var data = chartData[period];
         if (data && orderChart) {
@@ -623,18 +581,16 @@
         }
     }
 
-    // ========================================
-    // DOM READY
-    // ========================================
+ 
     document.addEventListener('DOMContentLoaded', function() {
         console.log('DOM loaded, initializing chart...');
-        // Small delay to ensure canvas is rendered
+      
         setTimeout(function() {
             initChart();
         }, 100);
     });
     
-    // Also run when window is fully loaded
+   
     window.addEventListener('load', function() {
         if (!orderChart) {
             console.log('Re-initializing chart on load');

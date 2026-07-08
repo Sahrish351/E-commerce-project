@@ -4,7 +4,7 @@
 
 @section('content')
 <style>
-    /* ===== PAGE HEADER ===== */
+    
     .page-header-custom {
         display: flex;
         justify-content: space-between;
@@ -37,7 +37,6 @@
         font-weight: 600;
     }
 
-    /* ===== FILTER TABS ===== */
     .filter-tabs {
         display: flex;
         gap: 8px;
@@ -64,7 +63,7 @@
         color: #fff;
     }
 
-    /* ===== ORDER CARD ===== */
+
     .order-card {
         background: #fff;
         border-radius: 14px;
@@ -80,7 +79,7 @@
         transform: translateY(-2px);
     }
 
-    /* Order Header */
+  
     .order-card .order-header {
         padding: 14px 20px;
         background: #f8f9fa;
@@ -110,7 +109,7 @@
         margin-right: 4px;
     }
 
-    /* Order Body - Products */
+  
     .order-card .order-products {
         padding: 14px 20px;
     }
@@ -255,7 +254,7 @@
         transform: translateY(-2px);
     }
 
-    /* ===== EMPTY STATE ===== */
+ 
     .empty-orders {
         text-align: center;
         padding: 60px 20px;
@@ -296,7 +295,6 @@
         color: #fff;
     }
 
-    /* ===== TOAST ===== */
     .toast-container {
         position: fixed;
         top: 20px;
@@ -335,7 +333,7 @@
         to { transform: translateX(100%); opacity: 0; }
     }
 
-    /* ===== PAGINATION ===== */
+   
     .pagination-custom {
         margin-top: 20px;
     }
@@ -385,10 +383,10 @@
     }
 </style>
 
-<!-- Toast Container -->
+
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- ===== PAGE HEADER ===== -->
+
 <div class="page-header-custom">
     <div>
         <h4><i class="fas fa-shopping-bag"></i> My Orders</h4>
@@ -399,7 +397,7 @@
     </span>
 </div>
 
-<!-- ===== FILTER TABS ===== -->
+
 <div class="filter-tabs">
     <a href="{{ route('client.orders') }}" class="tab {{ !request()->get('status') ? 'active' : '' }}">All</a>
     <a href="{{ route('client.orders', ['status' => 'pending']) }}" class="tab {{ request()->get('status') == 'pending' ? 'active' : '' }}">Pending</a>
@@ -426,7 +424,7 @@
 @if($orders->count() > 0)
     @foreach($orders as $order)
     <div class="order-card">
-        <!-- ===== HEADER ===== -->
+       
         <div class="order-header">
             <div class="order-id">
                 #{{ $order->order_number ?? $order->id }}
@@ -437,7 +435,7 @@
             </div>
         </div>
 
-        <!-- ===== PRODUCTS ===== -->
+       
         <div class="order-products">
             @php
                 $items = $order->items;
@@ -469,7 +467,7 @@
             @endif
         </div>
 
-        <!-- ===== FOOTER ===== -->
+        
         <div class="order-footer">
             <div class="left">
                 <span class="status-badge {{ $order->status ?? 'pending' }}">
@@ -503,12 +501,11 @@
     </div>
     @endforeach
 
-    <!-- Pagination -->
     <div class="pagination-custom">
         {{ $orders->links() }}
     </div>
 @else
-    <!-- Empty State -->
+  
     <div class="empty-orders">
         <i class="fas fa-box-open"></i>
         <h5>No Orders Found</h5>
@@ -520,9 +517,7 @@
 @endif
 
 <script>
-    // ========================================
-    // CANCEL ORDER
-    // ========================================
+   
     function cancelOrder(orderId) {
         if (confirm('Are you sure you want to cancel this order?')) {
             const form = document.createElement('form');
@@ -534,9 +529,6 @@
         }
     }
 
-    // ========================================
-    // TOAST SYSTEM
-    // ========================================
     function showToast(message, type = 'info') {
         const container = document.getElementById('toastContainer');
         const toast = document.createElement('div');

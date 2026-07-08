@@ -11,9 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* ========================================
-           ROOT VARIABLES - LIGHT THEME
-           ======================================== */
+     
         :root {
             --bg-body: #f4f6f9;
             --bg-card: #ffffff;
@@ -31,9 +29,6 @@
             --input-bg: #f8f9fa;
         }
 
-        /* ========================================
-           DARK THEME
-           ======================================== */
         [data-theme="dark"] {
             --bg-body: #0a0a15;
             --bg-card: #1a1a2e;
@@ -49,9 +44,6 @@
             --sidebar-hover: #1e293b;
         }
 
-        /* ========================================
-           GLOBAL
-           ======================================== */
         * {
             margin: 0;
             padding: 0;
@@ -69,9 +61,7 @@
             min-height: 100vh;
         }
         
-        /* ========================================
-           CONTENT WRAPPER
-           ======================================== */
+  
         .content-wrapper {
             flex: 1;
             margin-left: 260px;
@@ -83,9 +73,7 @@
             transition: background 0.3s ease;
         }
         
-        /* ========================================
-           TOPBAR
-           ======================================== */
+
         .topbar {
             background: var(--bg-topbar);
             padding: 10px 24px;
@@ -185,9 +173,7 @@
             display: none;
         }
 
-        /* ========================================
-           PAGE CONTENT
-           ======================================== */
+      
         .page-content {
             padding: 18px 24px 24px;
             flex: 1;
@@ -195,9 +181,7 @@
             transition: background 0.3s ease;
         }
 
-        /* ========================================
-           SIDEBAR - DARK ALWAYS
-           ======================================== */
+   
         .sidebar {
             width: 260px;
             background: var(--bg-sidebar);
@@ -300,9 +284,6 @@
         .sidebar::-webkit-scrollbar-track { background: transparent; }
         .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
 
-        /* ========================================
-           MOBILE OVERLAY
-           ======================================== */
         .sidebar-overlay {
             display: none;
             position: fixed;
@@ -315,9 +296,7 @@
         }
         .sidebar-overlay.show { display: block; }
 
-        /* ========================================
-           RESPONSIVE
-           ======================================== */
+      
         @media (max-width: 768px) {
             .content-wrapper {
                 margin-left: 0;
@@ -390,7 +369,7 @@
     <div class="main-wrapper">
         @include('client.partials.sidebar')
         <div class="content-wrapper">
-            <!-- Topbar -->
+       
             <header class="topbar">
                 <div class="left">
                     <button class="sidebar-toggle" id="sidebarToggle">
@@ -410,7 +389,7 @@
                 </div>
             </header>
 
-            <!-- Page Content -->
+           
             <div class="page-content">
                 @yield('content')
             </div>
@@ -420,13 +399,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Sidebar Toggle
+       
         document.getElementById('sidebarToggle')?.addEventListener('click', function() {
             document.querySelector('.sidebar')?.classList.toggle('show');
             document.getElementById('sidebarOverlay')?.classList.toggle('show');
         });
 
-        // Theme Toggle - FULL PAGE DARK
+     
         document.addEventListener('DOMContentLoaded', function() {
             const themeToggle = document.getElementById('themeToggle');
             const themeIcon = document.getElementById('themeIcon');

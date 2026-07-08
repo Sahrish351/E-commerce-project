@@ -156,7 +156,7 @@
         color: #fff;
     }
 
-    /* Toast */
+   
     .toast-container {
         position: fixed;
         top: 20px;
@@ -201,10 +201,10 @@
     }
 </style>
 
-<!-- Toast Container -->
+
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- ===== PAGE HEADER ===== -->
+
 <div class="page-header-custom">
     <div>
         <h4><i class="fas fa-map-marker-alt"></i> My Addresses</h4>
@@ -265,7 +265,7 @@
     </div>
 @endif
 
-<!-- ===== ADD ADDRESS MODAL ===== -->
+
 <div class="modal fade" id="addAddressModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius:16px; border:none; box-shadow:0 20px 60px rgba(0,0,0,0.1);">

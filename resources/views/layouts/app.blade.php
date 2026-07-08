@@ -42,20 +42,36 @@
             text-decoration: underline;
             font-weight: 500;
         }
+
+        @media (max-width: 576px) {
+            .top-banner {
+                font-size: 10px;
+                padding: 6px 0;
+            }
+            .top-banner span {
+                display: block;
+            }
+        }
         
         /* ========================================
-           NAVBAR
+           NAVBAR - SAME ON ALL PAGES
            ======================================== */
         .navbar {
-            padding: 15px 0;
+            padding: 12px 0;
             background: #fff;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
         
         .navbar-brand {
             font-weight: 700;
-            font-size: 28px;
+            font-size: 26px;
             color: #000;
+        }
+
+        @media (max-width: 576px) {
+            .navbar-brand {
+                font-size: 20px;
+            }
         }
         
         .nav-link {
@@ -63,37 +79,255 @@
             font-weight: 500;
             margin: 0 10px;
             transition: color 0.3s;
+            font-size: 15px;
         }
         
         .nav-link:hover {
             color: #db4444;
         }
-        
-        /* Search Bar */
+
+        /* ========================================
+           NAVBAR TOGGLE - Hamburger
+           ======================================== */
+        .navbar-toggler {
+            border: none !important;
+            padding: 6px 10px !important;
+            outline: none !important;
+            box-shadow: none !important;
+            background: transparent !important;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none !important;
+            outline: none !important;
+        }
+
+        .navbar-toggler-icon {
+            width: 28px;
+            height: 28px;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0,0,0,0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+            transition: all 0.3s ease;
+        }
+
+        /* ========================================
+           SEARCH BAR - COLORFUL ON CLICK
+           ======================================== */
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
         .search-bar {
             position: relative;
+            display: flex;
+            align-items: center;
         }
         
         .search-bar input {
             border-radius: 25px;
-            padding: 8px 35px 8px 15px;
+            padding: 8px 40px 8px 16px;
             background: #f5f5f5;
-            border: none;
+            border: 2px solid transparent;
             width: 220px;
             font-size: 13px;
+            transition: all 0.4s ease;
+            color: #333;
         }
-        
+
+        /* SEARCH BAR - COLORFUL ON FOCUS/CLICK */
+        .search-bar input:focus {
+            outline: none;
+            background: #fff;
+            border-color: #db4444;
+            box-shadow: 0 0 0 4px rgba(219, 68, 68, 0.15),
+                        0 0 20px rgba(219, 68, 68, 0.08);
+            width: 260px;
+            transform: scale(1.02);
+        }
+
+        /* Search Bar Placeholder Color */
+        .search-bar input::placeholder {
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .search-bar input:focus::placeholder {
+            color: #db4444;
+        }
+
+        /* Search Icon - Colorful on Focus */
         .search-bar i {
             position: absolute;
-            right: 12px;
+            right: 14px;
             top: 50%;
             transform: translateY(-50%);
             color: #888;
             cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .search-bar input:focus + i,
+        .search-bar i:hover {
+            color: #db4444;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* ========================================
+           SEARCH BAR - ANIMATION ON FOCUS
+           ======================================== */
+        @keyframes searchPulse {
+            0% { box-shadow: 0 0 0 0 rgba(219, 68, 68, 0.2); }
+            100% { box-shadow: 0 0 0 10px rgba(219, 68, 68, 0); }
+        }
+
+        .search-bar input:focus {
+            animation: searchPulse 0.6s ease-out;
+        }
+
+        /* ========================================
+           SEARCH BAR - RESPONSIVE
+           ======================================== */
+        @media (max-width: 992px) {
+            .search-bar input {
+                width: 100% !important;
+                padding: 10px 45px 10px 15px;
+                font-size: 14px;
+                border-radius: 30px;
+                background: #f5f5f5;
+                border: 2px solid transparent;
+            }
+            
+            .search-bar input:focus {
+                width: 100% !important;
+                border-color: #db4444;
+                background: #fff;
+                box-shadow: 0 0 0 4px rgba(219, 68, 68, 0.12),
+                            0 0 25px rgba(219, 68, 68, 0.06);
+                transform: scale(1.01);
+            }
+            
+            .search-bar i {
+                right: 15px;
+                font-size: 16px;
+                color: #888;
+            }
+
+            .search-bar input:focus + i {
+                color: #db4444;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .search-bar input {
+                padding: 8px 40px 8px 12px;
+                font-size: 13px;
+            }
+            .search-bar input:focus {
+                box-shadow: 0 0 0 3px rgba(219, 68, 68, 0.12);
+                transform: scale(1.005);
+            }
+            .search-bar i {
+                right: 12px;
+                font-size: 14px;
+            }
         }
         
         /* ========================================
-           MAIN FOOTER - BLACK BACKGROUND
+           NAVBAR ICONS
+           ======================================== */
+        .navbar-icons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .navbar-icons a {
+            color: #333;
+            transition: color 0.3s;
+            font-size: 20px;
+            position: relative;
+        }
+
+        .navbar-icons a:hover {
+            color: #db4444;
+        }
+
+        .navbar-icons .badge {
+            font-size: 10px;
+            padding: 2px 6px;
+        }
+
+        /* ========================================
+           MOBILE MENU
+           ======================================== */
+        @media (max-width: 992px) {
+            .navbar-collapse {
+                background: #fff;
+                padding: 20px 20px 15px;
+                border-radius: 16px;
+                margin-top: 12px;
+                box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+                border: 1px solid #f0f0f0;
+            }
+            
+            .navbar-nav .nav-item {
+                border-bottom: 1px solid #f5f5f5;
+            }
+            .navbar-nav .nav-item:last-child {
+                border-bottom: none;
+            }
+            .navbar-nav .nav-link {
+                padding: 12px 0 !important;
+                font-size: 15px;
+                font-weight: 500;
+                color: #222;
+            }
+            .navbar-nav .nav-link:hover {
+                color: #db4444;
+            }
+            
+            .navbar-right {
+                width: 100%;
+                margin-top: 12px;
+                padding-top: 15px;
+                border-top: 1px solid #f0f0f0;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .search-bar {
+                flex: 1;
+                min-width: 60%;
+            }
+            
+            .navbar-icons {
+                gap: 15px;
+            }
+            
+            .navbar-icons a {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-collapse {
+                padding: 15px 15px 12px;
+                border-radius: 12px;
+            }
+            .navbar-nav .nav-link {
+                padding: 10px 0 !important;
+                font-size: 14px;
+            }
+            .navbar-icons a {
+                font-size: 18px;
+            }
+        }
+        
+        /* ========================================
+           MAIN FOOTER
            ======================================== */
         .main-footer {
             background: #000;
@@ -128,7 +362,6 @@
             margin-bottom: 15px;
         }
         
-        /* Footer Lists */
         .main-footer ul {
             list-style: none;
             padding: 0;
@@ -138,11 +371,10 @@
         .main-footer ul li {
             color: #aaa;
             margin-bottom: 10px;
-            font-size: 16px;
+            font-size: 15px;
             line-height: 1.5;
         }
         
-        /* Footer Links - WHITE, NO BLUE */
         .main-footer ul li a {
             color: #ccc !important;
             text-decoration: none !important;
@@ -153,54 +385,12 @@
             color: #db4444 !important;
         }
         
-        /* Subscribe Form */
-        .subscribe-form {
-            display: flex;
-            max-width: 250px;
-        }
-        
-        .subscribe-form input {
-            background: transparent;
-            border: 1px solid #fff;
-            color: #fff;
-            padding: 8px 12px;
-            font-size: 13px;
-            border-radius: 4px 0 0 4px;
-            flex: 1;
-        }
-        
-        .subscribe-form input::placeholder {
-            color: #888;
-        }
-        
-        .subscribe-form button {
-            background: #fff;
-            border: none;
-            padding: 0 15px;
-            border-radius: 0 4px 4px 0;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .subscribe-form button i {
-            color: #000;
-            font-size: 14px;
-        }
-        
-        .subscribe-form button:hover {
-            background: #db4444;
-        }
-        
-        .subscribe-form button:hover i {
-            color: #fff;
-        }
-        
-        /* Subscribe Input Group (Alternative) */
         .main-footer .input-group input {
             background: transparent;
             border: 1px solid #fff;
             color: #fff;
-            font-size: 18px;
+            font-size: 14px;
+            padding: 10px 15px;
         }
         
         .main-footer .input-group input::placeholder {
@@ -210,10 +400,14 @@
         .main-footer .input-group button {
             background: #fff;
             border: none;
+            padding: 0 18px;
+            transition: all 0.3s;
         }
         
         .main-footer .input-group button i {
             color: #000;
+            font-size: 16px;
+            transition: all 0.3s;
         }
         
         .main-footer .input-group button:hover {
@@ -224,7 +418,6 @@
             color: #fff;
         }
         
-        /* Social Icons */
         .social-icons {
             margin-top: 15px;
         }
@@ -248,7 +441,6 @@
             transform: translateY(-3px);
         }
         
-        /* For text social links (Facebook, Twitter etc as text) */
         .social-icons .d-block {
             background: transparent;
             width: auto;
@@ -264,21 +456,19 @@
             transform: none;
         }
         
-        /* Divider */
         .main-footer hr {
             border-color: #333;
             margin: 20px 0;
         }
         
-        /* Copyright */
         .copyright {
             text-align: center;
-            font-size: 15px;
+            font-size: 14px;
             color: #aaa;
         }
         
         /* ========================================
-           BACK TO TOP BUTTON - RIGHT SIDE
+           BACK TO TOP BUTTON
            ======================================== */
         .back-to-top {
             position: fixed;
@@ -304,6 +494,18 @@
             transform: translateY(-3px);
             color: #fff;
         }
+
+        @media (max-width: 576px) {
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 38px;
+                height: 38px;
+            }
+            .back-to-top i {
+                font-size: 16px;
+            }
+        }
         
         /* ========================================
            RESPONSIVE
@@ -312,27 +514,31 @@
             .main-footer {
                 text-align: center;
             }
-            
-            .subscribe-form {
-                margin: 0 auto;
-            }
-            
             .social-icons {
                 margin-bottom: 20px;
             }
-            
-            .back-to-top {
-                bottom: 20px;
-                right: 20px;
-                width: 40px;
-                height: 40px;
+        }
+
+        @media (max-width: 576px) {
+            .main-footer h5 {
+                font-size: 16px;
+            }
+            .main-footer ul li {
+                font-size: 13px;
+            }
+            .main-footer .input-group input {
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+            .copyright {
+                font-size: 12px;
             }
         }
     </style>
 </head>
 <body>
-<!-- 
-    <! ========================================
+
+    <!-- ========================================
          TOP BANNER
          ======================================== -->
     <div class="top-banner">
@@ -343,56 +549,64 @@
     </div>
 
     <!-- ========================================
-         NAVBAR
+         NAVBAR - SAME ON ALL PAGES
          ======================================== -->
     <nav class="navbar navbar-expand-lg sticky-top bg-white">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home') }}">StyleHub</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            
+            <!-- Hamburger Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            
             <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Navbar Links -->
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('shop.index') }}">Shop</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">About</a></li>
                     @if(!auth()->check())
                         <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Sign Up</a></li>
                     @endif
                 </ul>
-                <div class="d-flex align-items-center">
-                    <div class="search-bar me-3">
-                        <input type="text" id="searchInput" placeholder="Search products...">
+                
+                <!-- Right Side: Search + Icons (Horizontal) -->
+                <div class="navbar-right">
+                    <div class="search-bar">
+                        <input type="text" id="searchInput" placeholder="What are you looking for?">
                         <i class="fas fa-search"></i>
                     </div>
-                    <a href="{{ route('wishlist.index') }}" class="text-dark me-3 position-relative">
-                        <i class="far fa-heart fs-5"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="wishlistCount" style="font-size: 10px;">0</span>
-                    </a>
-                    <a href="{{ route('cart.index') }}" class="text-dark position-relative">
-                        <i class="fas fa-shopping-cart fs-5"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount" style="font-size: 10px;">0</span>
-                    </a>
-                    @if(auth()->check())
-                        <a href="{{ route('client.dashboard') }}" class="ms-3 text-dark">
-                            <i class="fas fa-user-circle fs-5"></i>
+                    <div class="navbar-icons">
+                        <a href="{{ route('wishlist.index') }}" class="position-relative">
+                            <i class="far fa-heart"></i>
+                            <span class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle" id="wishlistCount">0</span>
                         </a>
-                    @endif
+                        <a href="{{ route('cart.index') }}" class="position-relative">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle" id="cartCount">0</span>
+                        </a>
+                        @if(auth()->check())
+                            <a href="{{ route('client.dashboard') }}" class="ms-1">
+                                <i class="fas fa-user-circle"></i>
+                            </a>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
-    </nav> 
+    </nav>
 
     <!-- ========================================
-         MAIN CONTENT (Different for each page)
+         MAIN CONTENT
          ======================================== -->
     <main>
         @yield('content')
     </main>
 
     <!-- ========================================
-         MAIN FOOTER - BLACK BACKGROUND (SAB PAGES PE)
+         MAIN FOOTER
          ======================================== -->
     <footer class="main-footer">
         <div class="container">
@@ -466,7 +680,7 @@
     </footer>
 
     <!-- ========================================
-         BACK TO TOP BUTTON - RIGHT SIDE
+         BACK TO TOP BUTTON
          ======================================== -->
     <a href="#" class="back-to-top" id="backToTop">
         <i class="fas fa-arrow-up"></i>
@@ -475,8 +689,7 @@
     <!-- ========================================
          SCRIPTS
          ======================================== -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script>
         // Back to Top Button
         $('#backToTop').click(function(e) {
@@ -500,6 +713,32 @@
             if(e.which === 13) {
                 window.location.href = '{{ route("shop.index") }}?search=' + $(this).val();
             }
+        });
+
+        // ========================================
+        // FIX: Mobile Menu Close Properly
+        // ========================================
+        $(document).ready(function() {
+            // Close menu when clicking on nav link
+            $('.navbar-nav .nav-link').on('click', function() {
+                var navbarCollapse = document.getElementById('navbarNav');
+                if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                    $(navbarCollapse).collapse('hide');
+                }
+            });
+
+            // Close menu when clicking outside
+            $(document).on('click', function(event) {
+                var navbar = $('.navbar');
+                var target = $(event.target);
+                
+                if (!navbar.is(target) && !navbar.has(target).length) {
+                    var navbarCollapse = document.getElementById('navbarNav');
+                    if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                        $(navbarCollapse).collapse('hide');
+                    }
+                }
+            });
         });
     </script>
     @stack('scripts')
