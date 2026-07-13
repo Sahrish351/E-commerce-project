@@ -1,5 +1,5 @@
 <!-- ========================================
-     ADMIN SIDEBAR - FULL HEIGHT FIXED
+     ADMIN SIDEBAR - COMPLETE
      ======================================== -->
 <nav class="admin-sidebar" id="adminSidebar">
     
@@ -116,37 +116,9 @@
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
 <!-- ========================================
-     CSS - FULL HEIGHT FIX
+     CSS
      ======================================== -->
 <style>
-    /* ===== SIDEBAR - FULL HEIGHT ===== */
-    .admin-sidebar {
-        width: 280px;
-        background: #1a1a2e;
-        flex-shrink: 0;
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        min-height: 100vh;
-        max-height: 100vh;
-        overflow-y: auto;
-        overflow-x: hidden;
-        transition: all 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        border-right: 1px solid rgba(255,255,255,0.05);
-        z-index: 100;
-    }
-    
-    .admin-sidebar::-webkit-scrollbar {
-        width: 4px;
-    }
-    .admin-sidebar::-webkit-scrollbar-thumb {
-        background: #db4444;
-        border-radius: 10px;
-    }
-
-    /* ===== SIDEBAR HEADER ===== */
     .sidebar-header {
         padding: 24px 24px 18px;
         border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -176,7 +148,6 @@
         margin-top: 2px;
     }
 
-    /* ===== SIDEBAR MENU ===== */
     .sidebar-menu {
         flex: 1;
         padding: 20px 16px 10px;
@@ -221,7 +192,6 @@
         box-shadow: 0 4px 15px rgba(219,68,68,0.3);
     }
 
-    /* ===== SIDEBAR FOOTER ===== */
     .sidebar-footer {
         padding: 16px 16px 20px;
         border-top: 1px solid rgba(255,255,255,0.05);
@@ -249,176 +219,5 @@
     .sidebar-footer .nav-link:hover {
         background: rgba(255,255,255,0.06);
         color: #fff !important;
-    }
-
-    /* ===== TOGGLE BUTTON ===== */
-    .sidebar-toggle-btn {
-        display: none;
-        position: fixed;
-        top: 15px;
-        left: 15px;
-        z-index: 1001;
-        background: #1a1a2e;
-        color: #fff;
-        border: none;
-        width: 44px;
-        height: 44px;
-        border-radius: 10px;
-        font-size: 20px;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        transition: all 0.3s;
-        align-items: center;
-        justify-content: center;
-    }
-    .sidebar-toggle-btn:hover {
-        background: #db4444;
-    }
-
-    /* ===== OVERLAY ===== */
-    .sidebar-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        z-index: 99;
-    }
-    .sidebar-overlay.active {
-        display: block;
-    }
-
-    /* ========================================
-       RESPONSIVE - FULL HEIGHT
-       ======================================== */
-    @media (max-width: 992px) {
-        .admin-sidebar {
-            position: fixed;
-            left: -280px;
-            top: 0;
-            width: 280px;
-            height: 100vh !important;
-            min-height: 100vh !important;
-            max-height: 100vh !important;
-            z-index: 100;
-            transition: all 0.3s ease;
-        }
-        .admin-sidebar.open {
-            left: 0;
-        }
-        .sidebar-toggle-btn {
-            display: flex;
-        }
-        .sidebar-overlay.active {
-            display: block;
-        }
-        .admin-content {
-            margin-left: 0 !important;
-        }
-        .sidebar-header {
-            padding: 20px 20px 16px;
-        }
-        .sidebar-header .logo {
-            font-size: 22px;
-        }
-        .sidebar-menu .nav-link {
-            font-size: 13px;
-            padding: 9px 12px;
-        }
-        .sidebar-footer .nav-link {
-            font-size: 13px;
-            padding: 9px 12px;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .admin-sidebar {
-            width: 260px;
-            left: -260px;
-            height: 100vh !important;
-            min-height: 100vh !important;
-            max-height: 100vh !important;
-        }
-        .sidebar-header {
-            padding: 16px 16px 14px;
-        }
-        .sidebar-header .logo {
-            font-size: 20px;
-        }
-        .sidebar-header .logo i {
-            font-size: 22px;
-        }
-        .sidebar-header small {
-            font-size: 11px;
-            padding-left: 32px;
-        }
-        .sidebar-menu {
-            padding: 15px 12px 8px;
-        }
-        .sidebar-menu .menu-label {
-            font-size: 10px;
-            padding: 0 10px;
-        }
-        .sidebar-menu .nav-link {
-            font-size: 12px;
-            padding: 8px 10px;
-            gap: 10px;
-        }
-        .sidebar-menu .nav-link i {
-            font-size: 14px;
-            width: 18px;
-        }
-        .sidebar-footer {
-            padding: 12px 12px 16px;
-        }
-        .sidebar-footer .nav-link {
-            font-size: 12px;
-            padding: 8px 10px;
-            gap: 10px;
-        }
-        .sidebar-toggle-btn {
-            width: 38px;
-            height: 38px;
-            font-size: 17px;
-            top: 12px;
-            left: 12px;
-        }
-    }
-
-    @media (max-width: 400px) {
-        .admin-sidebar {
-            width: 240px;
-            left: -240px;
-            height: 100vh !important;
-            
-        }
-        .sidebar-header .logo {
-            font-size: 18px;
-        }
-        .sidebar-header .logo i {
-            font-size: 20px;
-        }
-        .sidebar-header small {
-            font-size: 10px;
-            padding-left: 28px;
-        }
-        .sidebar-menu .nav-link {
-            font-size: 11px;
-            padding: 6px 8px;
-            gap: 8px;
-        }
-        .sidebar-menu .nav-link i {
-            font-size: 12px;
-            width: 16px;
-        }
-        .sidebar-toggle-btn {
-            width: 34px;
-            height: 34px;
-            font-size: 15px;
-            top: 10px;
-            left: 10px;
-        }
     }
 </style>

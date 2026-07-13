@@ -11,11 +11,29 @@ class ShopController extends Controller
 {
     public function index(Request $request)
     {
-        // Get all active categories for sidebar
-        $categories = Category::active()
+        // ========================================
+        // CATEGORIES - HOME PAGE WALI SAME
+        // ========================================
+        $categoryNames = [
+            'Joggers',
+            'Casual Shoes',
+            'Sports Shoes',
+            'Watches', 
+            'Earbuds', 
+            'Sunglasses', 
+            'Mobile Accessories', 
+            'Power Banks', 
+            'Chargers'
+        ];
+        
+        $categories = Category::where('is_active', true)
+            ->whereIn('name', $categoryNames)
             ->withCount('products')
-            ->orderBy('sort_order', 'asc')
-            ->get();
+            ->get()
+            ->sortBy(function($category) use ($categoryNames) {
+                return array_search($category->name, $categoryNames);
+            })
+            ->values();
 
         // Get selected category (if any)
         $selectedCategory = null;
@@ -48,6 +66,18 @@ class ShopController extends Controller
             $query->where('price', '<=', $request->max_price);
         }
         
+        // ✅ BRAND FILTER
+        if ($request->has('brand') && $request->brand) {
+            $query->where('brand', 'like', '%' . $request->brand . '%');
+        }
+        
+        // ✅ RATING FILTER
+        if ($request->has('rating') && $request->rating) {
+            $query->where('rating', '>=', $request->rating);
+        }
+        
+        // ❌ CONDITION FILTER - REMOVED (column nahi hai)
+        
         // Sort
         $sort = $request->sort ?? 'latest';
         switch ($sort) {
@@ -66,12 +96,21 @@ class ShopController extends Controller
                 break;
         }
         
-        // ✅ DEFAULT 5 PRODUCTS PER PAGE
+        // 5 PRODUCTS PER PAGE
         $perPage = $request->per_page ?? 5;
         $products = $query->paginate($perPage);
 
         // Brands for sidebar
-        $brands = ['Nokia', 'Lenovo', 'Pocco', 'Samsung', 'Apple', 'Huawei', 'Xiaomi', 'OnePlus'];
+        $brands = Product::where('is_active', true)
+            ->whereNotNull('brand')
+            ->select('brand')
+            ->distinct()
+            ->pluck('brand')
+            ->toArray();
+        
+        if (empty($brands)) {
+            $brands = ['Nike', 'Adidas', 'Puma', 'Samsung', 'Apple', 'Sony', 'Bose', 'OnePlus', 'Ray-Ban', 'Gucci'];
+        }
         
         return view('frontend.shop.index', compact('products', 'categories', 'selectedCategory', 'brands'));
     }

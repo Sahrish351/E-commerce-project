@@ -18,7 +18,8 @@ class OrderController extends Controller
             ->latest()
             ->paginate(10);
         
-        return view('frontend.orders.index', compact('orders'));
+        // ✅ FIX: frontend.orders.index → client.orders.index
+        return view('client.orders.index', compact('orders'));
     }
 
     // ===== ORDER DETAIL =====
@@ -30,29 +31,32 @@ class OrderController extends Controller
         
         $order->load('items.product.images');
         
-        return view('frontend.orders.show', compact('order'));
+        // ✅ FIX: frontend.orders.show → client.orders.show
+        return view('client.orders.show', compact('order'));
     }
 
     // ===== MY RETURNS =====
     public function returns()
     {
         $returns = Order::where('user_id', Auth::id())
-            ->where('status', 'refunded')  // ✅ order_status → status, cancelled → refunded
+            ->where('status', 'refunded')
             ->latest()
             ->paginate(10);
         
-        return view('frontend.orders.returns', compact('returns'));
+        // ✅ FIX: frontend.orders.returns → client.orders.returns
+        return view('client.orders.returns', compact('returns'));
     }
 
     // ===== MY CANCELLATIONS =====
     public function cancellations()
     {
         $cancellations = Order::where('user_id', Auth::id())
-            ->where('status', 'cancelled')  // ✅ order_status → status
+            ->where('status', 'cancelled')
             ->latest()
             ->paginate(10);
         
-        return view('frontend.orders.cancellations', compact('cancellations'));
+        // ✅ FIX: frontend.orders.cancellations → client.orders.cancellations
+        return view('client.orders.cancellations', compact('cancellations'));
     }
 
     // ===== CANCEL ORDER =====
@@ -62,7 +66,7 @@ class OrderController extends Controller
             abort(403);
         }
         
-        if (!in_array($order->status, ['pending', 'processing'])) {  // ✅ order_status → status
+        if (!in_array($order->status, ['pending', 'processing'])) {
             return back()->with('error', 'This order cannot be cancelled.');
         }
         
@@ -74,7 +78,7 @@ class OrderController extends Controller
                 $item->product->decrement('sold_count', $item->quantity);
             }
             
-            $order->update(['status' => 'cancelled']);  // ✅ order_status → status
+            $order->update(['status' => 'cancelled']);
             
             DB::commit();
             
@@ -92,11 +96,11 @@ class OrderController extends Controller
             abort(403);
         }
         
-        if ($order->status !== 'delivered') {  // ✅ order_status → status
+        if ($order->status !== 'delivered') {
             return back()->with('error', 'Only delivered orders can be returned.');
         }
         
-        $order->update(['status' => 'refunded']);  // ✅ order_status → status, return_requested → refunded
+        $order->update(['status' => 'refunded']);
         
         return back()->with('success', 'Return request submitted successfully!');
     }

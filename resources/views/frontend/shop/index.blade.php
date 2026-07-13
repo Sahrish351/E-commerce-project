@@ -60,50 +60,45 @@
         
         <div class="col-lg-3" style="flex: 0 0 25%; max-width: 25%; align-self: flex-start; padding-left: 0; padding-right: 15px;">
            
-            <div class="sidebar-section mb-4" style="border: 1px solid #eee; padding: 20px; background: #fff; border-radius: 4px;">
-                <h5 class="fw-bold mb-3" style="font-size: 16px; color: #333;">Categories</h5>
-                
-                <a href="{{ route('shop.index') }}" 
-                   class="d-flex justify-content-between align-items-center text-decoration-none py-2 px-2 mb-1" 
-                   style="color: {{ !isset($selectedCategory) ? '#db4444' : '#333' }}; background: {{ !isset($selectedCategory) ? '#fef0f0' : 'transparent' }}; border-radius: 4px; font-weight: {{ !isset($selectedCategory) ? '600' : '400' }};">
-                    <span>📦 All Products</span>
-                    <span style="font-size: 12px; color: #999;">{{ $products->total() ?? 0 }}</span>
-                </a>
+            <!-- Categories Sidebar -->
+<div class="sidebar-section mb-4" style="border: 1px solid #eee; padding: 20px; background: #fff; border-radius: 4px;">
+    <h5 class="fw-bold mb-3" style="font-size: 16px; color: #333;">Categories</h5>
+    
+    <!-- All Products Link -->
+    <a href="{{ route('shop.index') }}" 
+       class="d-flex justify-content-between align-items-center text-decoration-none py-2 px-2 mb-1" 
+       style="color: {{ !isset($selectedCategory) ? '#db4444' : '#333' }}; background: {{ !isset($selectedCategory) ? '#fef0f0' : 'transparent' }}; border-radius: 4px; font-weight: {{ !isset($selectedCategory) ? '600' : '400' }};">
+        <span>📦 All Products</span>
+        <span style="font-size: 12px; color: #999;">{{ $products->total() ?? 0 }}</span>
+    </a>
 
-                @foreach($categories as $category)
-                    <a href="{{ route('shop.index', ['category' => $category->id]) }}" 
-                       class="d-flex justify-content-between align-items-center text-decoration-none py-2 px-2 mb-1" 
-                       style="color: {{ isset($selectedCategory) && $selectedCategory->id == $category->id ? '#db4444' : '#333' }}; background: {{ isset($selectedCategory) && $selectedCategory->id == $category->id ? '#fef0f0' : 'transparent' }}; border-radius: 4px; font-weight: {{ isset($selectedCategory) && $selectedCategory->id == $category->id ? '600' : '400' }};">
-                        <span>
-                            @if(str_contains(strtolower($category->name), 'mobile') && !str_contains(strtolower($category->name), 'charger'))
-                                📱
-                            @elseif(str_contains(strtolower($category->name), 'watch'))
-                                ⌚
-                            @elseif(str_contains(strtolower($category->name), 'bluetooth'))
-                                🔊
-                            @elseif(str_contains(strtolower($category->name), 'shoe'))
-                                👟
-                            @elseif(str_contains(strtolower($category->name), 'glass'))
-                                👓
-                            @elseif(str_contains(strtolower($category->name), 'charger'))
-                                🔋
-                            @elseif(str_contains(strtolower($category->name), 'electronic'))
-                                💻
-                            @elseif(str_contains(strtolower($category->name), 'smartphone'))
-                                📱
-                            @elseif(str_contains(strtolower($category->name), 'accessorie'))
-                                🎧
-                            @elseif(str_contains(strtolower($category->name), 'wearable'))
-                                ⌚
-                            @else
-                                🏷️
-                            @endif
-                            {{ $category->name }}
-                        </span>
-                        <span style="font-size: 12px; color: #999;">{{ $category->products_count }}</span>
-                    </a>
-                @endforeach
-            </div>
+    <!-- Categories - Same as Home Page -->
+    @php
+        $categoryIcons = [
+            'Joggers' => '🚶',
+            'Casual Shoes' => '👞',
+            'Sports Shoes' => '👟',
+            'Watches' => '⌚',
+            'Earbuds' => '🎧',
+            'Sunglasses' => '🕶️',
+            'Mobile Accessories' => '📱',
+            'Power Banks' => '🔋',
+            'Chargers' => '🔌',
+        ];
+    @endphp
+    
+    @foreach($categories as $category)
+        <a href="{{ route('shop.index', ['category' => $category->id]) }}" 
+           class="d-flex justify-content-between align-items-center text-decoration-none py-2 px-2 mb-1" 
+           style="color: {{ isset($selectedCategory) && $selectedCategory->id == $category->id ? '#db4444' : '#333' }}; background: {{ isset($selectedCategory) && $selectedCategory->id == $category->id ? '#fef0f0' : 'transparent' }}; border-radius: 4px; font-weight: {{ isset($selectedCategory) && $selectedCategory->id == $category->id ? '600' : '400' }};">
+            <span>
+                {{ $categoryIcons[$category->name] ?? '🏷️' }}
+                {{ $category->name }}
+            </span>
+            <span style="font-size: 12px; color: #999;">{{ $category->products_count }}</span>
+        </a>
+    @endforeach
+</div>
 
             
             <div class="sidebar-section mb-4" style="border: 1px solid #eee; padding: 20px; background: #fff; border-radius: 4px;">
@@ -120,85 +115,61 @@
             </div>
 
            
-            <div class="sidebar-section mb-4" style="border: 1px solid #eee; padding: 20px; background: #fff; border-radius: 4px;">
-                <h5 class="fw-bold mb-3" style="font-size: 16px;">Condition</h5>
-                <div class="form-check">
-                    <input type="radio" name="condition" class="form-check-input" id="any" checked>
-                    <label for="any" class="form-check-label" style="font-size: 14px;">Any</label>
-                </div>
-                <div class="form-check">
-                    <input type="radio" name="condition" class="form-check-input" id="refurbished">
-                    <label for="refurbished" class="form-check-label" style="font-size: 14px;">Refurbished</label>
-                </div>
-                <div class="form-check">
-                    <input type="radio" name="condition" class="form-check-input" id="brandNew">
-                    <label for="brandNew" class="form-check-label" style="font-size: 14px;">Brand new</label>
-                </div>
-                <div class="form-check">
-                    <input type="radio" name="condition" class="form-check-input" id="oldItems">
-                    <label for="oldItems" class="form-check-label" style="font-size: 14px;">Old items</label>
-                </div>
-            </div>
+            <!-- <div class="sidebar-section mb-4" style="border: 1px solid #eee; padding: 20px; background: #fff; border-radius: 4px;">
+    <h5 class="fw-bold mb-3" style="font-size: 16px;">Condition</h5>
+    @foreach(['Any' => '', 'New' => 'new', 'Refurbished' => 'refurbished', 'Used' => 'used'] as $label => $value)
+    <div class="form-check">
+        <input type="radio" name="condition_filter" class="form-check-input" 
+               id="condition_{{ $value ?: 'any' }}"
+               {{ (request()->condition == $value) ? 'checked' : '' }}
+               onchange="window.location.href='{{ route('shop.index', array_merge(request()->all(), ['condition' => $value])) }}'">
+        <label for="condition_{{ $value ?: 'any' }}" class="form-check-label" style="font-size: 14px; cursor: pointer;">
+            {{ $label }}
+        </label>
+    </div>
+    @endforeach
+</div> -->
 
             
             <div class="sidebar-section mb-4" style="border: 1px solid #eee; padding: 20px; background: #fff; border-radius: 4px;">
-                <h5 class="fw-bold mb-3" style="font-size: 16px;">Ratings</h5>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="rating5">
-                    <label for="rating5" class="form-check-label" style="font-size: 14px;">
-                        <i class="fas fa-star" style="color: #ffb800;"></i>
-                        <i class="fas fa-star" style="color: #ffb800;"></i>
-                        <i class="fas fa-star" style="color: #ffb800;"></i>
-                        <i class="fas fa-star" style="color: #ffb800;"></i>
-                        <i class="fas fa-star" style="color: #ffb800;"></i>
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="rating4">
-                    <label for="rating4" class="form-check-label" style="font-size: 14px;">
-                        <i class="fas fa-star" style="color: #ffb800;"></i>
-                        <i class="fas fa-star" style="color: #ffb800;"></i>
-                        <i class="fas fa-star" style="color: #ffb800;"></i>
-                        <i class="fas fa-star" style="color: #ffb800;"></i>
-                        <i class="far fa-star" style="color: #ddd;"></i>
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="rating3">
-                    <label for="rating3" class="form-check-label" style="font-size: 14px;">
-                        <i class="fas fa-star" style="color: #ffb800;"></i>
-                        <i class="fas fa-star" style="color: #ffb800;"></i>
-                        <i class="fas fa-star" style="color: #ffb800;"></i>
-                        <i class="far fa-star" style="color: #ddd;"></i>
-                        <i class="far fa-star" style="color: #ddd;"></i>
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="rating2">
-                    <label for="rating2" class="form-check-label" style="font-size: 14px;">
-                        <i class="fas fa-star" style="color: #ffb800;"></i>
-                        <i class="fas fa-star" style="color: #ffb800;"></i>
-                        <i class="far fa-star" style="color: #ddd;"></i>
-                        <i class="far fa-star" style="color: #ddd;"></i>
-                        <i class="far fa-star" style="color: #ddd;"></i>
-                    </label>
-                </div>
-            </div>
+    <h5 class="fw-bold mb-3" style="font-size: 16px;">Ratings</h5>
+    @foreach([5,4,3,2] as $star)
+    <div class="form-check">
+        <input type="radio" name="rating_filter" class="form-check-input" 
+               id="rating{{ $star }}"
+               {{ request()->rating == $star ? 'checked' : '' }}
+               onchange="window.location.href='{{ route('shop.index', array_merge(request()->all(), ['rating' => $star])) }}'">
+        <label for="rating{{ $star }}" class="form-check-label" style="font-size: 14px; cursor: pointer;">
+            @for($i = 1; $i <= 5; $i++)
+                @if($i <= $star)
+                    <i class="fas fa-star" style="color: #ffb800;"></i>
+                @else
+                    <i class="far fa-star" style="color: #ddd;"></i>
+                @endif
+            @endfor
+            @if($star < 5) & Up @endif
+        </label>
+    </div>
+    @endforeach
+</div>
 
-            <div class="sidebar-section mb-4" style="border: 1px solid #eee; padding: 20px; background: #fff; border-radius: 4px;">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-bold mb-0" style="font-size: 16px;">Brands</h5>
-                    <a href="#" class="text-decoration-none text-danger" style="font-size: 13px;">See all</a>
-                </div>
-                <ul class="list-unstyled" style="font-size: 14px;">
-                    <li class="mb-2"><a href="#" class="text-decoration-none text-dark">Nokia</a></li>
-                    <li class="mb-2"><a href="#" class="text-decoration-none text-dark">Lenovo</a></li>
-                    <li class="mb-2"><a href="#" class="text-decoration-none text-dark">Pocco</a></li>
-                    <li class="mb-2"><a href="#" class="text-decoration-none text-dark">Samsung</a></li>
-                    <li class="mb-2"><a href="#" class="text-decoration-none text-dark">Apple</a></li>
-                </ul>
-            </div>
-        </div>
+    <div class="sidebar-section mb-4" style="border: 1px solid #eee; padding: 20px; background: #fff; border-radius: 4px;">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold mb-0" style="font-size: 16px;">Brands</h5>
+        <a href="{{ route('shop.index') }}" class="text-decoration-none text-danger" style="font-size: 13px;">Reset</a>
+    </div>
+    <ul class="list-unstyled" style="font-size: 14px;">
+        @foreach($brands as $brand)
+            <li class="mb-2">
+                <a href="{{ route('shop.index', array_merge(request()->all(), ['brand' => $brand])) }}" 
+                   class="text-decoration-none {{ request()->brand == $brand ? 'text-danger fw-bold' : 'text-dark' }}">
+                    {{ $brand }}
+                </a>
+            </li>
+        @endforeach
+    </ul>
+</div>
+</div>
 
         <div class="col-lg-9" style="flex: 0 0 75%; max-width: 75%; align-self: flex-start; padding-left: 15px; padding-right: 0;">
             
