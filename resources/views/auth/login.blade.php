@@ -7,7 +7,12 @@
     <title>StyleHub - Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ========================================
+           GLOBAL STYLES
+           ======================================== */
         * {
             margin: 0;
             padding: 0;
@@ -15,404 +20,459 @@
         }
         
         body {
-            font-family: 'Poppins', sans-serif;
-            background: #fff;
-        }
-        
-       
-        .top-banner {
-            background: #000;
-            color: #fff;
-            font-size: 13px;
-            padding: 10px 0;
-        }
-        
-        .top-banner a {
-            color: #fff;
-            text-decoration: underline;
-        }
-        
-      
-        .navbar {
-            padding: 15px 0;
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 28px;
-            color: #000;
-        }
-        
-        .nav-link {
-            color: #333;
-            font-weight: 500;
-            margin: 0 10px;
-            transition: color 0.3s;
-        }
-        
-        .nav-link:hover {
-            color: #db4444;
-        }
-        
-        .search-bar {
-            position: relative;
-        }
-        
-        .search-bar input {
-            border-radius: 25px;
-            padding: 8px 35px 8px 15px;
-            background: #f5f5f5;
-            border: none;
-            width: 220px;
-            font-size: 13px;
-        }
-        
-        .search-bar i {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #888;
-            cursor: pointer;
-        }
-        
-        .login-section {
-            padding: 10px 0;
-            min-height: calc(100vh - 150px);
-        }
-        
-        .login-card {
-            max-width: 360px;
-            margin: 0 auto;
-            padding: 2px;
-        }
-        
-        .login-title {
-            font-size: 33px;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-        
-        .login-subtitle {
-            color: #555;
-            margin-bottom: 35px;
-            font-size: 14px;
-        }
-        
-        .form-control-custom {
-            width: 100%;
-            padding: 12px 0;
-            border: none;
-            border-bottom: 1px solid #ddd;
-            outline: none;
-            font-size: 14px;
-            background: transparent;
-            margin-bottom: 35px;
-        }
-        
-        .form-control-custom:focus {
-            border-bottom-color: #db4444;
-        }
-        
-        .btn-login {
-            background: #db4444;
-            color: #fff;
-            border: none;
-            padding: 14px;
-            border-radius: 4px;
-            font-weight: 600;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
-            margin-bottom: 15px;
-            font-size: 14px;
-        }
-        
-        .btn-login:hover {
-            background: #c0392b;
-        }
-        
-        .forgot-link {
-            text-align: right;
-            margin-top: 5px;
-        }
-        
-        .forgot-link a {
-            color: #555;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        
-        .forgot-link a:hover {
-            color: #db4444;
-        }
-        
-        .error-message {
-            color: #db4444;
-            font-size: 12px;
-            margin-top: 5px;
-            margin-bottom: 0;
-        }
-        
-        .form-control-custom.is-invalid {
-            border-bottom-color: #db4444;
-        }
-        
-      
-        .image-side {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f2f5 0%, #e8ecf1 50%, #f0f2f5 100%);
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
         
-        .image-side img {
-            max-width: 100%;
-            max-height: 500px;
-            object-fit: contain;
+        /* ========================================
+           LOGIN CARD - ONLY CARD
+           ======================================== */
+        .login-wrapper {
+            max-width: 420px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.08), 0 10px 30px rgba(0, 0, 0, 0.03);
+            padding: 45px 40px 40px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
         }
         
-       
-        .main-footer {
-            background: #000;
-            color: #fff;
-            padding: 50px 0 30px;
+        .login-wrapper:hover {
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.10), 0 15px 40px rgba(0, 0, 0, 0.04);
+            transform: translateY(-2px);
         }
         
-        .main-footer h5 {
+        /* ========================================
+           LOGIN HEADER
+           ======================================== */
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        
+        .login-header .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
             font-weight: 700;
-            margin-bottom: 20px;
+            color: #1a1a2e;
+            display: inline-block;
+            margin-bottom: 8px;
         }
         
-        .main-footer ul {
-            list-style: none;
-            padding: 0;
+        .login-header .logo span {
+            color: #e94560;
         }
         
-        .main-footer li {
-            margin-bottom: 10px;
+        .login-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin: 0;
+            letter-spacing: -0.5px;
         }
         
-        .main-footer a {
-            color: #ccc;
-            text-decoration: none;
+        .login-header h2 span {
+            color: #e94560;
+        }
+        
+        .login-header p {
+            color: #8888aa;
+            font-size: 14px;
+            margin-top: 4px;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+        }
+        
+        /* ========================================
+           FORM
+           ======================================== */
+        .form-group {
+            margin-bottom: 22px;
+        }
+        
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #2a2a4a;
+            display: block;
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
+        }
+        
+        .form-group label .required {
+            color: #e94560;
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        .input-wrapper .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaaacc;
+            font-size: 15px;
             transition: color 0.3s;
         }
         
-        .main-footer a:hover {
-            color: #db4444;
+        .form-control-custom {
+            width: 100%;
+            padding: 13px 16px 13px 44px;
+            border: 2px solid #e8e8f0;
+            border-radius: 12px;
+            outline: none;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fc;
+            transition: all 0.3s;
+            color: #1a1a2e;
+            font-weight: 400;
         }
         
-        .social-icons a {
-            color: #fff;
-            margin-right: 15px;
-            font-size: 18px;
+        .form-control-custom::placeholder {
+            color: #b0b0c8;
+            font-weight: 400;
         }
         
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #db4444;
+        .form-control-custom:focus {
+            border-color: #e94560;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(233, 69, 96, 0.06);
+        }
+        
+        .form-control-custom.is-invalid {
+            border-color: #dc3545;
+            background: #fff8f8;
+        }
+        
+        .form-control-custom.is-invalid + .input-icon {
+            color: #dc3545;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #b0b0c8;
+            cursor: pointer;
+            font-size: 15px;
+            padding: 0;
+            transition: color 0.3s;
+        }
+        
+        .password-toggle:hover {
+            color: #e94560;
+        }
+        
+        /* ========================================
+           FORGOT PASSWORD
+           ======================================== */
+        .forgot-password-wrapper {
+            text-align: right;
+            margin-top: 8px;
+        }
+        
+        .forgot-password-wrapper a {
+            color: #8888aa;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
+            letter-spacing: 0.2px;
+        }
+        
+        .forgot-password-wrapper a:hover {
+            color: #e94560;
+        }
+        
+        /* ========================================
+           REMEMBER ME
+           ======================================== */
+        .form-options {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin: 6px 0 28px;
+        }
+        
+        .form-options .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #4a4a6a;
+            cursor: pointer;
+            font-weight: 400;
+        }
+        
+        .form-options .remember-me input[type="checkbox"] {
+            width: 17px;
+            height: 17px;
+            accent-color: #e94560;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        /* ========================================
+           LOGIN BUTTON
+           ======================================== */
+        .btn-login {
+            background: linear-gradient(135deg, #e94560 0%, #c23152 100%);
             color: #fff;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
-            z-index: 999;
+            gap: 12px;
+            letter-spacing: 0.3px;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.2);
         }
         
-        @media (max-width: 768px) {
-            .login-title { font-size: 28px; }
-            .login-section { padding: 40px 0; }
-            .image-side { display: none; }
+        .btn-login:hover {
+            background: linear-gradient(135deg, #c23152 0%, #a02040 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(233, 69, 96, 0.35);
         }
+        
+        .btn-login:active {
+            transform: translateY(0);
+        }
+        
+        .btn-login i {
+            font-size: 16px;
+        }
+        
+        /* ========================================
+           REGISTER LINK
+           ======================================== */
+        .register-link {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: #4a4a6a;
+        }
+        
+        .register-link a {
+            color: #e94560;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .register-link a:hover {
+            color: #c23152;
+            text-decoration: underline;
+        }
+        
+        /* ========================================
+           ALERT
+           ======================================== */
+        .alert-custom {
+            background: #fff5f5;
+            border-left: 4px solid #e94560;
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 22px;
+            text-align: left;
+        }
+        
+        .alert-custom ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #dc3545;
+            font-size: 13px;
+        }
+        
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 576px) {
+            body {
+                padding: 15px;
+                background: #f0f2f5;
+            }
+            .login-wrapper {
+                padding: 30px 22px 28px;
+                border-radius: 18px;
+            }
+            .login-header .logo {
+                font-size: 24px;
+            }
+            .login-header h2 {
+                font-size: 24px;
+            }
+            .login-header p {
+                font-size: 13px;
+            }
+            .form-control-custom {
+                font-size: 13px;
+                padding: 11px 12px 11px 40px;
+            }
+            .btn-login {
+                font-size: 14px;
+                padding: 13px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .login-wrapper {
+                padding: 22px 16px 20px;
+                border-radius: 14px;
+            }
+            .login-header h2 {
+                font-size: 20px;
+            }
+            .form-control-custom {
+                font-size: 12px;
+                padding: 9px 10px 9px 36px;
+            }
+            .btn-login {
+                font-size: 13px;
+                padding: 11px;
+            }
+            .login-header .logo {
+                font-size: 20px;
+            }
+        }
+        
+        /* ========================================
+           NO FOOTER - NO IMAGE
+           ======================================== */
+        /* No footer, no image - pure login card */
     </style>
 </head>
 <body>
 
-   
-    <div class="top-banner">
-        <div class="container text-center">
-            <span>🔥 Summer Sale Is Live! Up to 50% off on Fashion & Tech Accessories - </span>
-            <a href="{{ route('shop.index') }}">Shop Now →</a>
+    <!-- ========================================
+         LOGIN CARD - ONLY
+         ======================================== -->
+    <div class="login-wrapper">
+        
+        <!-- Login Header -->
+        <div class="login-header">
+        
+            <h2>Welcome <span>Back</span></h2>
+            <p>Please enter your credentials to sign in</p>
         </div>
-    </div>
 
-    <nav class="navbar navbar-expand-lg sticky-top bg-white">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">StyleHub</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Sign Up</a></li>
+        <!-- Error Messages -->
+        @if($errors->any())
+            <div class="alert-custom">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
                 </ul>
-                <div class="d-flex align-items-center">
-                    <div class="search-bar me-3">
-                        <input type="text" id="searchInput" placeholder="What are you looking for?">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <a href="{{ route('wishlist.index') }}" class="text-dark me-3 position-relative">
-                        <i class="far fa-heart fs-5"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="wishlistCount" style="font-size: 10px;">0</span>
-                    </a>
-                    <a href="{{ route('cart.index') }}" class="text-dark position-relative">
-                        <i class="fas fa-shopping-cart fs-5"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount" style="font-size: 10px;">0</span>
-                    </a>
+            </div>
+        @endif
+
+        <!-- Login Form -->
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+
+            <!-- Email Field -->
+            <div class="form-group">
+                <label>Email Address <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" name="email" 
+                           class="form-control-custom @error('email') is-invalid @enderror" 
+                           placeholder="your@email.com" value="{{ old('email') }}" 
+                           required autocomplete="email">
+                    @error('email')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
-        </div>
-    </nav>
 
-  
-    <div class="container login-section">
-        <div class="row align-items-center">
-         
-            <div class="col-lg-6 image-side">
-                <img src="{{ asset('images/login.jpg') }}" alt="Login Illustration">
-            </div>
-
-            <div class="col-lg-6">
-                <div class="login-card">
-                    <h2 class="login-title">Log in to StyleHub</h2>
-                    <p class="login-subtitle">Enter your details below</p>
-
-                    @if($errors->any())
-                        <div class="alert alert-danger py-2">
-                            <ul class="mb-0">
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
-
-
-<div class="form-floating-custom">
-    <input type="email" name="email" class="form-control-custom @error('email') is-invalid @enderror" 
-           placeholder="Email" value="{{ old('email') }}" required autocomplete="email">
-    @error('email')
-        <div class="error-message">{{ $message }}</div>
-    @enderror
-</div>
-
-
-<div class="form-floating-custom">
-    <input type="password" name="password" class="form-control-custom @error('password') is-invalid @enderror" 
-           placeholder="Password" required autocomplete="new-password">
-    @error('password')
-        <div class="error-message">{{ $message }}</div>
-    @enderror
-</div>
-
-            
-<div class="forgot-link text-end mb-3">
-    <a href="{{ route('password.request') }}" class="text-muted text-decoration-none small">Forgot Password?</a>
-</div>
-
-
-<button type="submit" class="btn-login">Log In</button>
-                    </form>
+            <!-- Password Field -->
+            <div class="form-group">
+                <label>Password <span class="required">*</span></label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" name="password" id="password"
+                           class="form-control-custom @error('password') is-invalid @enderror" 
+                           placeholder="Enter your password" required autocomplete="current-password">
+                    <button type="button" class="password-toggle" id="togglePassword">
+                        <i class="far fa-eye"></i>
+                    </button>
+                    @error('password')
+                        <div class="error-message">{{ $message }}</div>
+                    @enderror
+                </div>
+                <!-- Forgot Password -->
+                <div class="forgot-password-wrapper">
+                    <a href="{{ route('password.request') }}">Forgot Password?</a>
                 </div>
             </div>
+
+            <!-- Remember Me -->
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                    Remember me
+                </label>
+            </div>
+
+            <!-- Login Button -->
+            <button type="submit" class="btn-login">
+                <i class="fas fa-sign-in-alt"></i> Sign In
+            </button>
+        </form>
+
+        <!-- Register Link -->
+        <div class="register-link">
+            Don't have an account? <a href="{{ route('register') }}">Create Account</a>
         </div>
+        
     </div>
 
-
-    <footer class="main-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 mb-4">
-                    <h5>StyleHub</h5>
-                    <h6 class="mt-3">Subscribe</h6>
-                    <p class="small">Get 10% off your first order</p>
-                    <div class="input-group">
-                        <input type="email" class="form-control form-control-sm bg-transparent text-white border-white" 
-                               placeholder="Enter your email">
-                        <button class="btn btn-sm btn-outline-light" type="button"><i class="fas fa-paper-plane"></i></button>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <h5>Support</h5>
-                    <ul>
-                        <li><i class="fas fa-map-marker-alt me-2 text-muted"></i> 123 Fashion Street, Mumbai</li>
-                        <li><i class="fas fa-envelope me-2 text-muted"></i> <a href="mailto:support@stylehub.com">support@stylehub.com</a></li>
-                        <li><i class="fas fa-phone-alt me-2 text-muted"></i> +91-98765-43210</li>
-                        <li><i class="fas fa-clock me-2 text-muted"></i> 10:00 AM - 10:00 PM</li>
-                    </ul>
-                </div>
-                <div class="col-md-2 mb-4">
-                    <h5>Account</h5>
-                    <ul>
-                        <li><a href="#">My Account</a></li>
-                        <li><a href="{{ route('register') }}">Login / Register</a></li>
-                        <li><a href="{{ route('cart.index') }}">Cart</a></li>
-                        <li><a href="{{ route('wishlist.index') }}">Wishlist</a></li>
-                        <li><a href="{{ route('shop.index') }}">Shop</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 mb-4">
-                    <h5>Quick Link</h5>
-                    <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms Of Use</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="{{ route('contact') }}">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 mb-4">
-                    <h5>Follow Us</h5>
-                    <div class="social-icons mt-3">
-                        <a href="#" class="d-block mb-2"><i class="fab fa-facebook-f me-2"></i> Facebook</a>
-                        <a href="#" class="d-block mb-2"><i class="fab fa-twitter me-2"></i> Twitter</a>
-                        <a href="#" class="d-block mb-2"><i class="fab fa-instagram me-2"></i> Instagram</a>
-                        <a href="#" class="d-block mb-2"><i class="fab fa-linkedin-in me-2"></i> LinkedIn</a>
-                        <a href="#" class="d-block mb-2"><i class="fab fa-youtube me-2"></i> YouTube</a>
-                    </div>
-                </div>
-            </div>
-            <hr class="bg-secondary">
-            <div class="text-center small">
-                © Copyright 2022. All rights reserved.
-            </div>
-        </div>
-    </footer>
-
-   
-    <a href="#" class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
-    </a>
-
+    <!-- ========================================
+         SCRIPTS
+         ======================================== -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $('#backToTop').click(function(e) {
-            e.preventDefault();
-            $('html, body').animate({scrollTop: 0}, 500);
-        });
-        
-        $.get('{{ url("/cart/count") }}', function(data) { $('#cartCount').text(data.count); });
-        $.get('{{ url("/wishlist/count") }}', function(data) { $('#wishlistCount').text(data.count); });
-        
-        $('#searchInput').on('keypress', function(e) {
-            if(e.which === 13) {
-                window.location.href = '{{ route("shop.index") }}?search=' + $(this).val();
+        // Toggle Password Visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordField = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
             }
         });
     </script>

@@ -24,15 +24,24 @@
         }
         .admin-wrapper {
             display: flex;
-            min-height: 100vh;
+            height: 100vh;
         }
         .admin-content {
             flex: 1;
-            min-height: 100vh;
+            height: 100vh;
+            margin-left: 280px;
+            transition: all 0.3s ease;
         }
         .admin-main {
             padding: 25px 30px;
         }
+        
+        @media (max-width: 992px) {
+            .admin-content {
+                margin-left: 0 !important;
+            }
+        }
+        
         @media (max-width: 768px) {
             .admin-main {
                 padding: 15px;
@@ -43,7 +52,7 @@
 </head>
 <body>
     <div class="admin-wrapper">
-        <!-- Sidebar -->
+        <!-- Sidebar (includes toggle button and overlay) -->
         @include('admin.partials.sidebar')
 
         <!-- Main Content -->
@@ -75,12 +84,57 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- ===== SIDEBAR TOGGLE SCRIPT ===== -->
     <script>
-        // Sidebar toggle for mobile
-        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
-            document.querySelector('.admin-sidebar').classList.toggle('d-none');
+        document.addEventListener('DOMContentLoaded', function() {
+            var sidebar = document.getElementById('adminSidebar');
+            var toggleBtn = document.getElementById('sidebarToggle');
+            var overlay = document.getElementById('sidebarOverlay');
+            
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', function() {
+                    sidebar.classList.toggle('open');
+                    if (overlay) {
+                        overlay.classList.toggle('active');
+                    }
+                    var icon = this.querySelector('i');
+                    if (icon) {
+                        if (sidebar.classList.contains('open')) {
+                            icon.className = 'fas fa-times';
+                        } else {
+                            icon.className = 'fas fa-bars';
+                        }
+                    }
+                });
+            }
+            
+            if (overlay) {
+                overlay.addEventListener('click', function() {
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('active');
+                    var icon = toggleBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-bars';
+                    }
+                });
+            }
+            
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 992) {
+                    sidebar.classList.remove('open');
+                    if (overlay) {
+                        overlay.classList.remove('active');
+                    }
+                    var icon = toggleBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-bars';
+                    }
+                }
+            });
         });
     </script>
+    
     @stack('scripts')
 </body>
 </html>

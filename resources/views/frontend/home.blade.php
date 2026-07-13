@@ -973,7 +973,7 @@
                         <a href="{{ route('shop.index', ['category' => 'shoes']) }}" class="btn btn-success px-4 py-2 rounded-pill fw-semibold" style="background: #00ff00; border: none; color: #000; font-size: 14px;">Buy Now! <i class="fas fa-arrow-right ms-2"></i></a>
                     </div>
                     
-                    <!-- Right Side - Image (badhi hui) -->
+                  
                     <div class="col-md-6" style="padding: 20px 30px; display: flex; align-items: center; justify-content: center; min-height: 300px;">
                         <img src="{{ asset('images/summer sale.png') }}" alt="Casual Shoes" style="width: 100%; max-width: 90%; height: auto; max-height: 350px; object-fit: contain;">
                     </div>
@@ -992,10 +992,7 @@
                     <span class="text-danger fw-semibold fs-6">Our Products</span>
                     <h2 class="fw-bold fs-2 mt-1 mb-0">Explore Our Products</h2>
                 </div>
-                <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
-                    <button class="explore-nav-btn" style="width:30px; height:30px; border-radius:50%; border:1px solid #ddd; background:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.3s;"><i class="fas fa-chevron-left" style="font-size:11px; color:#333;"></i></button>
-                    <button class="explore-nav-btn" style="width:30px; height:30px; border-radius:50%; border:1px solid #ddd; background:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.3s;"><i class="fas fa-chevron-right" style="font-size:11px; color:#333;"></i></button>
-                </div>
+                
             </div>
         </div>
     </div>

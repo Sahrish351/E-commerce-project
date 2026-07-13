@@ -74,6 +74,13 @@ Route::middleware('auth')->group(function () {
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 });
 
+// ============================================
+// TERMS & PRIVACY PAGES (ADD THESE)
+// ============================================
+Route::view('/terms', 'pages.terms')->name('terms');
+Route::view('/privacy', 'pages.privacy')->name('privacy');
+
+
 
 // ============================================
 // FRONTEND ROUTES
